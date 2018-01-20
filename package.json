@@ -1,0 +1,22 @@
+{
+  "name": "rscreeps",
+  "version": "1.0.0",
+  "description": "screeps ai",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reggaeguitar/rscreeps.git"
+  },
+  "keywords": [
+    "screeps"
+  ],
+  "author": "reggaeguitar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/reggaeguitar/rscreeps/issues"
+  },
+  "homepage": "https://github.com/reggaeguitar/rscreeps#readme"
+}
