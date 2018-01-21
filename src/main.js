@@ -1,7 +1,7 @@
 var _ = require('lodash');
 var roleHarvester = require('role_harvester');
 var roleUpgrader = require('role_upgrader');
-var roleBuilder = require('role_builder');
+var roleBuilder = require('role_builder'); 
 
 var creepData = {
     'harvester': { roleObj: roleHarvester, ratio: 1 },
