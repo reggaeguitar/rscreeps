@@ -1,4 +1,4 @@
-var worker = require('role_worker.js');
+var worker = require('role_worker');
 
 var roleHarvester = {
 
