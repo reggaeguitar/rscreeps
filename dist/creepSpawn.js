@@ -1,4 +1,5 @@
 var util = require('util');
+var data = require('data');
 
 module.exports = {    
     run: function(room, spawn) {
@@ -19,8 +20,8 @@ module.exports = {
         }
         //console.log(creepData.keys.length);
         //console.log(costForCreep);
-        if (spawn.energy >= costForCreep) {
-            var role = roles[_.random(roles.length - 1)];
+        if (room.energyCapacityAvailable >= costForCreep) {
+            var role = data.roles[_.random(data.roles.length - 1)];
             var harvesterCount = _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester').length;
             if (harvesterCount <= 1) {
                 role = 'harvester';
