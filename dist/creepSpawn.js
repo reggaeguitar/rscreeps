@@ -20,7 +20,7 @@ module.exports = {
         }
         //console.log(creepData.keys.length);
         //console.log(costForCreep);
-        if (room.energyCapacityAvailable >= costForCreep) {
+        if (room.energyAvailable >= costForCreep) {
             var role = data.roles[_.random(data.roles.length - 1)];
             var harvesterCount = _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester').length;
             if (harvesterCount <= 1) {
