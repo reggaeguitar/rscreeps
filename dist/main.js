@@ -9,9 +9,9 @@ var firstRoom = Game.rooms['W47N46'];
 module.exports.loop = function () {
     
     function main() {
-        //util.printCreepRoleCounts(creepData);
+        //util.printCreepRoleCounts(data.creepData);
         util.clearDeadCreepsFromMemory();
-        creepSpawn.spawnCreepIfPossible(firstRoom, spawn1);
+        creepSpawn.run(firstRoom, spawn1);
         runCreepRoles();
     }
     
