@@ -26,7 +26,7 @@ module.exports = {
             if (harvesterCount <= 1) {
                 role = 'harvester';
             }
-            spawnCreepImpl(bodyParts, role);
+            this.spawnCreepImpl(bodyParts, role);
         }
     },
     spawnCreepImpl: function(bodyParts, role, spawn) {
