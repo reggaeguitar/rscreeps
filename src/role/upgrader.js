@@ -4,7 +4,7 @@ var roleUpgrader = {
 
     /** @param {Creep} creep **/
     run: function(creep) {
-        workeer.run(creep, this.doWork);        
+        worker.run(creep, this.doWork);        
     },
     doWork: function(creep) {
         if (creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
