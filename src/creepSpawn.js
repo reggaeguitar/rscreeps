@@ -1,6 +1,6 @@
 
 module.exports = {
-    spawnCreepIfPossible: function(room) {
+    spawnCreepIfPossible: function(room, spawn) {
         var bodyParts = [WORK, WORK, CARRY, MOVE, MOVE, MOVE];
         var costForCreep = this.creepCost(bodyParts);
         //console.log('costForCreep: ' + costForCreep);

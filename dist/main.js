@@ -3,7 +3,7 @@ var util = require('util');
 var creepSpawn = require('creepSpawn');
 var data = require('data');
 
-var spawn = Game.spawns['Spawn1'];
+var spawn1 = Game.spawns['Spawn1'];
 var firstRoom = Game.rooms['W47N46'];
 
 module.exports.loop = function () {
@@ -11,7 +11,7 @@ module.exports.loop = function () {
     function main() {
         //util.printCreepRoleCounts(creepData);
         util.clearDeadCreepsFromMemory();
-        creepSpawn.spawnCreepIfPossible(firstRoom);
+        creepSpawn.spawnCreepIfPossible(firstRoom, spawn1);
         runCreepRoles();
     }
     
