@@ -4,10 +4,10 @@ module.exports = {
     run: function(room, spawn) {
         var creepRoleCounts = util.getCreepRoleCounts();
         if (creepRoleCounts['harvester'] > 0) {
-            spawnCreepIfPossible(room, spawn);
+            this.spawnCreepIfPossible(room, spawn);
         } else {
             var cheapestHarvester = [WORK, MOVE, CARRY];
-            spawnCreepImpl(cheapestHarvester, 'harvester', spawn);
+            this.spawnCreepImpl(cheapestHarvester, 'harvester', spawn);
         }
     },
     spawnCreepIfPossible: function(room, spawn) {
