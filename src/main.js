@@ -12,6 +12,7 @@ var creepData = {
 var roles = ['harvester', 'upgrader', 'builder'];
 
 var spawn = Game.spawns['Spawn1'];
+var firstRoom = Game.rooms['W47N46'];
 
 module.exports.loop = function () {
     
@@ -36,10 +37,10 @@ module.exports.loop = function () {
     }
     
     function spawnCreepIfPossible() {
-        var bodyParts = [WORK, CARRY, MOVE, MOVE, MOVE];
+        var bodyParts = [WORK, WORK, CARRY, MOVE, MOVE, MOVE];
         var costForCreep = creepCost(bodyParts);
         //console.log('costForCreep: ' + costForCreep);
-        if (costForCreep > spawn.energyCapacity) {
+        if (costForCreep > firstRoom.energyCapacityAvailable) {
             console.log('Error: body parts cost too much for spawner. ');
         }
         //console.log(creepData.keys.length);
