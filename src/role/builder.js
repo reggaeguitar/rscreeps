@@ -9,26 +9,26 @@ module.exports = {
     doWork: function(creep) {
         var rand = _.random(1);
         if (rand == 0) {
-            this.repair();
+            repair();
         } else if (rand == 1) {
-            this.build();
+            build();
         }
-    },
-    repair: function() {
-        var closestDamagedStructure = creep.pos.findClosestByRange(FIND_STRUCTURES, {
-            filter: struc => struc.hits < struc.hitsMax
-        });
-        if (closestDamagedStructure) {
-            creep.repair(closestDamagedStructure);
-        }
-    },
-    build: function() {
-        var targets = creep.room.find(FIND_CONSTRUCTION_SITES);
-        if (targets.length) {
-            if (creep.build(targets[0]) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(targets[0], 
-                    { visualizePathStyle: { stroke: '#ffffff' } });
+        var repair = function() {
+            var closestDamagedStructure = creep.pos.findClosestByRange(FIND_STRUCTURES, {
+                filter: struc => struc.hits < struc.hitsMax
+            });
+            if (closestDamagedStructure) {
+                creep.repair(closestDamagedStructure);
             }
-        }
-    },
+        };
+        var build = function() {
+            var targets = creep.room.find(FIND_CONSTRUCTION_SITES);
+            if (targets.length) {
+                if (creep.build(targets[0]) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(targets[0], 
+                        { visualizePathStyle: { stroke: '#ffffff' } });
+                }
+            }
+        };
+    }
 };
