@@ -16,7 +16,7 @@ module.exports = {
         }
     },
     spawnCreepIfPossible: function(room, spawn) {
-        var bodyParts = [WORK, WORK, CARRY, MOVE, MOVE, MOVE];
+        var bodyParts = [WORK, WORK, WORK, CARRY, MOVE, MOVE];
         var costForCreep = this.creepCost(bodyParts);
         //console.log('costForCreep: ' + costForCreep);
         if (costForCreep > room.energyCapacityAvailable) {
