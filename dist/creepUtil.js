@@ -32,10 +32,9 @@ module.exports = {
         }
     },
     isPassable: function(pos) {
-        // returns false for swamp currently
         // is passable if not wall or occupied by a creep
         var terrain = Game.map.getTerrainAt(pos);
         var posHasCreep = pos.findClosestByRange(FIND_MY_CREEPS).pos.isEqualTo(pos);
-        return terrain == 'plain' && !posHasCreep;
+        return terrain != 'wall' && !posHasCreep;
     },
 }
