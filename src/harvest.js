@@ -9,7 +9,7 @@ module.exports = {
         }
     },
     startHarvest: function(creep) {
-        var sourcesAssigned = this.getCreepSourcesToMine;
+        var sourcesAssigned = this.getCreepSourcesToMine();
         var min = _.minBy(sourcesAssigned, s => s);
         // todo pick the math.min of sources assigned to mine
         var sources = this.getSources(creep);
