@@ -7,7 +7,7 @@ module.exports = {
         worker.run(creep, this.doWork);
     },
     doWork: function(creep) {
-        var repair = function() {
+        function repair() {
             var closestDamagedStructure = creep.pos.findClosestByRange(FIND_STRUCTURES, {
                 filter: struc => struc.hits < struc.hitsMax
             });
@@ -15,7 +15,7 @@ module.exports = {
                 creep.repair(closestDamagedStructure);
             }
         };
-        var build = function() {
+        function build() {
             var targets = creep.room.find(FIND_CONSTRUCTION_SITES);
             if (targets.length) {
                 if (creep.build(targets[0]) == ERR_NOT_IN_RANGE) {
