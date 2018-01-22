@@ -20,10 +20,10 @@ module.exports = {
     getCreepSourcesToMine: function() {
         var ret = {};
         for (var creep in Game.creeps) {
-            var sourceToMine = creep.memory.sourceToHarvest;
-            if (sourceToMine != undefined) {
+            if (creep.hasOwnProperty('sourceToHarvest')) {
+                var sourceToMine = creep.memory.sourceToHarvest;
                 ret[sourceToMine] = ret[sourceToMine] + 1;
-            }
+            }            
         }
         return ret;
     },
