@@ -34,7 +34,9 @@ module.exports = {
     isPassable: function(pos) {
         // is passable if not wall or occupied by a creep
         var terrain = Game.map.getTerrainAt(pos);
-        var posHasCreep = pos.findClosestByRange(FIND_MY_CREEPS).pos.isEqualTo(pos);
+        var creepsOtherThanThisOne = _.pull(Object.keys(Game.creeps), creep.name);        
+        var posHasCreep = _.findIndex(creepsOtherThanThisOne,
+            c => Game.creeps[c].pos.isEqualTo(newPos)) != -1;
         return terrain != 'wall' && !posHasCreep;
     },
 }
