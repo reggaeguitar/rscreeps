@@ -35,7 +35,7 @@ module.exports = {
         }
     },
     spawnCreepImpl: function(bodyParts, role, spawn) {
-        var ret = spawn.spawnCreep(bodyParts, Game.time, { memory: { role: role } });
+        var ret = spawn.spawnCreep(bodyParts, role + Game.time, { memory: { role: role } });
         if (ret != OK) {
             console.log('could not spawn creep: ' + JSON.stringify(ret));
         }
