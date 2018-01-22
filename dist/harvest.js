@@ -1,4 +1,5 @@
 var _ = require('lodash');
+var util = require('util');
 
 module.exports = {    
     doHarvest: function (creep) {
