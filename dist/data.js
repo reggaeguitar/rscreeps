@@ -7,6 +7,5 @@ module.exports = {
         'harvester': { roleObj: roleHarvester },
         'upgrader': { roleObj: roleUpgrader },
         'builder': { roleObj: roleBuilder },
-    },
-    roles: ['harvester', 'upgrader', 'builder']
+    }
 };

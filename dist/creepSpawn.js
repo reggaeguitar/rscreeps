@@ -20,13 +20,14 @@ module.exports = {
         var costForCreep = this.creepCost(bodyParts);
         //console.log('costForCreep: ' + costForCreep);
         if (costForCreep > room.energyCapacityAvailable) {
-            console.log('Error: body parts cost too much for spawner. ');
+            console.log('Error: body parts cost too much for spawner and extensions.');
         }
         //console.log(creepData.keys.length);
         //console.log(costForCreep);
         if (room.energyAvailable >= costForCreep) {
-            var role = data.roles[_.random(data.roles.length - 1)];
-            var harvesterCount = _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester').length;
+            var roles = Object.keys(data.creepData);
+            var role = roles[_.random(roles.length - 1)];
+            var harvesterCount = _.filter(Game.creeps, cr => cr.memory.role == 'harvester').length;
             if (harvesterCount <= 1) {
                 role = 'harvester';
             }
