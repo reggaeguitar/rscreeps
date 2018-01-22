@@ -26,12 +26,12 @@ module.exports = {
         for (let i = 0; i < this.directions.length; i++) {
             const element = this.directions[i];
             var newPos = element.mutatorFunc(creep.pos);
-            if (this.isPassable(creep)) {
+            if (this.isPassable(creep, newPos)) {
                 creep.moveTo(newPos);
             }
         }
     },
-    isPassable: function(creep) {
+    isPassable: function(creep, newPos) {
         // is passable if not wall or occupied by a creep
         var terrain = Game.map.getTerrainAt(creep.pos);
         var creepsOtherThanThisOne = _.pull(Object.keys(Game.creeps), creep.name);        
