@@ -31,8 +31,9 @@ module.exports = {
             var closestDamagedStructure = creep.pos.findClosestByRange(FIND_STRUCTURES, {
                 filter: struc => struc.hits < struc.hitsMax
             });
-            if (closestDamagedStructure) {
-                creep.repair(closestDamagedStructure);
+            if (creep.repair(closestDamagedStructure) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(closestDamagedStructure, 
+                    { visualizePathStyle: {stroke: '#ffbb00' } });                
             }
         };
         function build() {
