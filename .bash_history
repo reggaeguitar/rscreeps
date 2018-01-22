@@ -7,3 +7,7 @@ git gacp "fixed spawning"
 git gacp "added missing this"
 git gacp "added missing param"
 git gacp "changed energyCapacityAvailable to just energyCapacity"
+cd /c/p/screeps/code
+git gacp "added max population for creeps"
+git gacp "got rid of roles property on data"
+git gacp "updated worker recipe"
