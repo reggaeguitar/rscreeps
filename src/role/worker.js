@@ -19,7 +19,7 @@ module.exports = {
             doWork(creep);
         } else if (!creep.memory.harvesting) {
             // doing work
-            if (creepUtil.creepIsNextToSource(creep)) {
+            if (creepUtil.creepIsNextToSource(creep)) {                
                 creepUtil.moveAwayFromSource(creep);
             } else {
                 doWork(creep);
