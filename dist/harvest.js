@@ -21,7 +21,9 @@ module.exports = {
         var ret = {};
         for (var creep in Game.creeps) {
             var sourceToMine = creep.memory.sourceToHarvest;
-            ret[sourceToMine] = ret[sourceToMine] + 1;
+            if (sourceToMine != undefined) {
+                ret[sourceToMine] = ret[sourceToMine] + 1;
+            }
         }
         return ret;
     },
