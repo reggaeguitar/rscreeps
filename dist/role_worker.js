@@ -18,7 +18,11 @@ module.exports = {
             doWork(creep);
         } else if (!creep.memory.harvesting) {
             // doing work
-            doWork(creep);
+            if (util.creepIsNextToSource(creep)) {
+                util.moveAwayFromSource(creep);
+            } else {
+                doWork(creep);
+            }
         }       
     }    
 };

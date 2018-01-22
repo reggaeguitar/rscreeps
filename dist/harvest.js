@@ -2,7 +2,7 @@ var _ = require('lodash');
 
 module.exports = {    
     doHarvest: function (creep) {
-        var sources = this.getSources(creep);
+        var sources = util.getSources(creep);
         if (creep.harvest(sources[creep.memory.sourceToHarvest]) == ERR_NOT_IN_RANGE) {
             creep.moveTo(sources[creep.memory.sourceToHarvest], 
                 { visualizePathStyle: {stroke: '#ffaa00' } });
@@ -26,8 +26,5 @@ module.exports = {
             }            
         }
         return ret;
-    },
-    getSources: function(creep) {
-        return creep.room.find(FIND_SOURCES);
-    }
+    },    
 };

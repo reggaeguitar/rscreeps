@@ -14,10 +14,8 @@ module.exports = {
                 var creep = Game.creeps[name];
                 if (creep.memory.role == 'harvester') {
                     var roles = util.getRoles();
-                    var newRole = roles[_.random(roles.length - 1)];
-                    while (newRole == 'harvester') {
-                        newRole = roles[_.random(roles.length - 1)];
-                    }
+                    var rolesOtherThanHarvester = _.pull(roles, 'harvester');
+                    var newRole = rolesOtherThanHarvester[_.random(roles.length - 1)];
                     creep.memory.role = newRole;
                 }
             }
