@@ -26,7 +26,7 @@ module.exports = {
         for (let i = 0; i < this.directions.length; i++) {
             const element = this.directions[i];
             var newPos = element.mutatorFunc(creep.pos);
-            if (isPassable(creep.pos)) {
+            if (this.isPassable(creep.pos)) {
                 creep.moveTo(pos);
             }
         }
