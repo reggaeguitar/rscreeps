@@ -10,7 +10,7 @@ module.exports = {
         return _.findIndex(sources, src => src.pos.isNearTo(creep.pos));
     },
     moveAwayFromSource: function(creep) {
-        var sourceCreepIsNear = mapUtil.getSources()[this.sourceCreepIsNear(creep)];
+        var sourceCreepIsNear = mapUtil.getSources(creep)[this.sourceCreepIsNear(creep)];
         var sourcePos = sourceCreepIsNear.pos;
         for (let i = 0; i < data.directions.length; i++) {
             const element = data.directions[i];

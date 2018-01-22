@@ -7,34 +7,41 @@ module.exports = {
         worker.run(creep, this.doWork);
     },
     doWork: function(creep) {
-        if (creep.carry.energy == creep.carryCapacity) {
-            // just started working after procuring energy
-            // todo this will get hit every tick until the creep actually spends
-            // some energy, add more data to fix
-            var rand = _.random(1);
-            if (rand == 0) {
-                creep.memory.repairing = true;
-                creep.memory.building = false;
-                repair();
-            } else if (rand == 1) {
-                creep.memory.repairing = false;
-                creep.memory.building = true;
-                build();
-            }
-        } else if (creep.memory.repairing) {
-            repair();
-        } else if (creep.memory.building) {
-            build();
-        } // if creep.carry.energy == 0 it will switch to harvest mode
+        // if (creep.carry.energy == creep.carryCapacity) {
+        //     // just started working after procuring energy
+        //     // todo this will get hit every tick until the creep actually spends
+        //     // some energy, add more data to fix
+        //     var rand = _.random(1);
+        //     if (rand == 0) {
+        //         creep.memory.repairing = true;
+        //         creep.memory.building = false;
+        //         repair();
+        //     } else if (rand == 1) {
+        //         creep.memory.repairing = false;
+        //         creep.memory.building = true;
+        //         build();
+        //     }
+        // } else if (creep.memory.repairing) {
+        //     repair();
+        // } else if (creep.memory.building) {
+        //     build();
+        // } // if creep.carry.energy == 0 it will switch to harvest mode
         
+        if (!build()) {
+            repair();
+        }
+
         function repair() {
             var closestDamagedStructure = creep.pos.findClosestByRange(FIND_STRUCTURES, {
                 filter: struc => struc.hits < struc.hitsMax
             });
-            if (creep.repair(closestDamagedStructure) == ERR_NOT_IN_RANGE) {
+            if (closestDamagedStructure != undefined && 
+                creep.repair(closestDamagedStructure) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(closestDamagedStructure, 
-                    { visualizePathStyle: {stroke: '#ffbb00' } });                
+                    { visualizePathStyle: {stroke: '#ffbb00' } });
+                return true;           
             }
+            return false;
         };
         function build() {
             var targets = creep.room.find(FIND_CONSTRUCTION_SITES);
@@ -43,8 +50,9 @@ module.exports = {
                     creep.moveTo(targets[0], 
                         { visualizePathStyle: { stroke: '#ffffff' } });
                 }
+                return true;
             }
-        };
-               
+            return false;
+        };               
     }
 };
