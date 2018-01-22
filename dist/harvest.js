@@ -13,7 +13,7 @@ module.exports = {
         var min = _.minBy(sourcesAssigned, s => s);
         // todo pick the math.min of sources assigned to mine
         var sources = this.getSources(creep);
-        var sourceToHarvest = min;//_.random(0, sources.length - 1);
+        var sourceToHarvest = _.random(0, sources.length - 1); // min
         creep.memory.sourceToHarvest = sourceToHarvest;
         this.doHarvest(creep);
     },
