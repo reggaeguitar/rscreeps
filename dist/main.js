@@ -2,6 +2,7 @@ var _ = require('lodash');
 var util = require('util');
 var creepSpawn = require('creepSpawn');
 var data = require('data');
+var rebalancer = require('rebalancer');
 
 var spawn1 = Game.spawns['Spawn1'];
 var firstRoom = Game.rooms['W47N46'];
@@ -9,6 +10,8 @@ var firstRoom = Game.rooms['W47N46'];
 module.exports.loop = function () {
     
     function main() {
+        //util.printCreepRoleCounts(data.creepData);
+        rebalancer.run(firstRoom);
         //util.printCreepRoleCounts(data.creepData);
         util.clearDeadCreepsFromMemory();
         creepSpawn.run(firstRoom, spawn1);

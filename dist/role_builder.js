@@ -9,6 +9,8 @@ module.exports = {
     doWork: function(creep) {
         if (creep.carry.energy == creep.carryCapacity) {
             // just started working after procuring energy
+            // todo this will get hit every tick until the creep actually spends
+            // some energy, add more data to fix
             var rand = _.random(1);
             if (rand == 0) {
                 creep.memory.repairing = true;

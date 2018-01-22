@@ -18,5 +18,11 @@ module.exports = {
                 delete Memory.creeps[name];                
             }
         }
+    },
+    getCreepCount: function() {
+        return Object.keys(Game.creeps).length;
+    },
+    getRoles: function() {
+        return Object.keys(data.creepData);
     }
 };
