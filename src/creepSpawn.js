@@ -3,7 +3,7 @@ var data = require('data');
 
 module.exports = {    
     run: function(room, spawn) {
-        if (util.creepCount() < data.maxCreepCount) {
+        if (util.getCreepCount() < data.maxCreepCount) {
             var creepRoleCounts = util.getCreepRoleCounts();        
             if (creepRoleCounts['harvester'] > 0) {
                 this.spawnCreepIfPossible(room, spawn);
