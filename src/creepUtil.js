@@ -23,8 +23,8 @@ module.exports = {
     moveAwayFromSource: function(creep) {
         var sourceCreepIsNear = mapUtil.getSources(creep)[this.sourceCreepIsNear(creep)];
         var sourcePos = sourceCreepIsNear.pos;
-        for (let i = 0; i < directions.length; i++) {
-            const element = directions[i];
+        for (let i = 0; i < this.directions.length; i++) {
+            const element = this.directions[i];
             var newPos = element.mutatorFunc(creep.pos);
             if (isPassable(creep.pos)) {
                 creep.moveTo(pos);
