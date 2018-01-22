@@ -1,5 +1,5 @@
 var harvest = require('harvest');
-var util = require('util');
+var creepUtil = require('creepUtil');
 
 module.exports = {
 
@@ -19,8 +19,8 @@ module.exports = {
             doWork(creep);
         } else if (!creep.memory.harvesting) {
             // doing work
-            if (util.creepIsNextToSource(creep)) {
-                util.moveAwayFromSource(creep);
+            if (creepUtil.creepIsNextToSource(creep)) {
+                creepUtil.moveAwayFromSource(creep);
             } else {
                 doWork(creep);
             }
