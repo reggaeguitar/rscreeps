@@ -7,12 +7,6 @@ module.exports = {
         worker.run(creep, this.doWork);
     },
     doWork: function(creep) {
-        var rand = _.random(1);
-        if (rand == 0) {
-            repair();
-        } else if (rand == 1) {
-            build();
-        }
         var repair = function() {
             var closestDamagedStructure = creep.pos.findClosestByRange(FIND_STRUCTURES, {
                 filter: struc => struc.hits < struc.hitsMax
@@ -30,5 +24,11 @@ module.exports = {
                 }
             }
         };
+        var rand = _.random(1);
+        if (rand == 0) {
+            repair();
+        } else if (rand == 1) {
+            build();
+        }       
     }
 };
