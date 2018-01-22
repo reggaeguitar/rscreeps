@@ -3,12 +3,16 @@ var data = require('data');
 
 module.exports = {    
     run: function(room, spawn) {
-        var creepRoleCounts = util.getCreepRoleCounts();
-        if (creepRoleCounts['harvester'] > 0) {
-            this.spawnCreepIfPossible(room, spawn);
-        } else {
-            var cheapestHarvester = [WORK, MOVE, CARRY];
-            this.spawnCreepImpl(cheapestHarvester, 'harvester', spawn);
+        var maxCreepCount = 4; // sourceCount * 2
+        var creepCount = Object.keys(Game.creeps).length;
+        if (creepCount < maxCreepCount) {
+            var creepRoleCounts = util.getCreepRoleCounts();        
+            if (creepRoleCounts['harvester'] > 0) {
+                this.spawnCreepIfPossible(room, spawn);
+            } else {
+                var cheapestHarvester = [WORK, MOVE, CARRY];
+                this.spawnCreepImpl(cheapestHarvester, 'harvester', spawn);
+            }
         }
     },
     spawnCreepIfPossible: function(room, spawn) {
