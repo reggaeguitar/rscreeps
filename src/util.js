@@ -11,15 +11,7 @@ module.exports = {
             ret[role] = count;
         }
         return ret;
-    },
-    getCreepSourcesToMine: function() {
-        var ret = {};
-        for (var creep in Game.creeps) {
-            var sourceToMine = creep.memory.sourceToHarvest;
-            ret[sourceToMine] = ret[sourceToMine] + 1;
-        }
-        return ret;
-    },
+    },   
     clearDeadCreepsFromMemory: function() {
         for (var name in Memory.creeps) {
             if (!Game.creeps[name]) {
