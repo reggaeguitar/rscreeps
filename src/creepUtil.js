@@ -1,4 +1,5 @@
 var mapUtil = require('mapUtil');
+var data = require('data');
 
 module.exports = {
     creepIsNextToSource: function(creep) {
