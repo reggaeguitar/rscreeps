@@ -1,5 +1,6 @@
 var _ = require('lodash');
 var util = require('util');
+var mapUtil = require('mapUtil');
 
 module.exports = {    
     doHarvest: function (creep) {
@@ -10,11 +11,8 @@ module.exports = {
         }
     },
     startHarvest: function(creep) {
-        var sourcesAssigned = this.getCreepSourcesToMine();
-        //var min = _.minBy(sourcesAssigned, s => s);
-        // todo pick the math.min of sources assigned to mine
-        var sources = this.getSources(creep);
-        var sourceToHarvest = _.random(0, sources.length - 1); // min
+        var sources = mapUtil.getSources(creep);
+        var sourceToHarvest = _.random(0, sources.length - 1);
         creep.memory.sourceToHarvest = sourceToHarvest;
         this.doHarvest(creep);
     },

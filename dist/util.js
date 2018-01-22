@@ -1,4 +1,5 @@
 var data = require('data');
+var mapUtil = require('mapUtil');
 
 module.exports = {
     printCreepRoleCounts: function() {
@@ -18,10 +19,7 @@ module.exports = {
                 delete Memory.creeps[name];                
             }
         }
-    },
-    getSources: function(creep) {
-        return creep.room.find(FIND_SOURCES);
-    },
+    },    
     getCreepCount: function() {
         return Object.keys(Game.creeps).length;
     },
@@ -33,7 +31,7 @@ module.exports = {
         return isNearSource;
     },
     sourceCreepIsNear: function(creep) {
-        var sources = this.getSources(creep);
+        var sources = mapUtil.getSources(creep);
         return _.findIndex(sources, src => src.pos.isNearTo(creep.pos));
     },
     moveAwayFromSource: function(creep) {
