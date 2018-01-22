@@ -21,6 +21,7 @@ module.exports.loop = function () {
     function runCreepRoles() {
         for(var name in Game.creeps) {
             var creep = Game.creeps[name];
+            creep.say(creep.memory.role);
             data.creepData[creep.memory.role].roleObj.run(creep);
         }
     }
