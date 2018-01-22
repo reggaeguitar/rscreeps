@@ -1,7 +1,17 @@
 var mapUtil = require('mapUtil');
-var data = require('data');
 
 module.exports = {
+    directions: [
+        { TOP: 1, mutatorFunc: (pos, roomName) => { return new RoomPosition(pos.x, pos.y + 1, roomName); } },
+        { TOP_RIGHT: 2, mutatorFunc: (pos, roomName) => { return new RoomPosition(pos.x + 1, pos.y + 1, roomName); } },
+        { RIGHT: 3, mutatorFunc: (pos, roomName) => { return new RoomPosition(pos.x + 1, pos.y, roomName); } },
+        { BOTTOM_RIGHT: 4, mutatorFunc: (pos, roomName) => { return new RoomPosition(pos.x + 1, pos.y - 1, roomName); } },
+        { BOTTOM: 5, mutatorFunc: (pos, roomName) => { return new RoomPosition(pos.x, pos.y -1, roomName); } },
+        { BOTTOM_LEFT: 6, mutatorFunc: (pos, roomName) => { return new RoomPosition(pos.x - 1, pos.y - 1, roomName); } },
+        { LEFT: 7, mutatorFunc: (pos, roomName) => { return new RoomPosition(pos.x - 1, pos.y, roomName); } },
+        { TOP_LEFT: 8, mutatorFunc: (pos, roomName) => { return new RoomPosition(pos.x - 1, pos.y + 1, roomName); } },
+    ],
+    //
     creepIsNextToSource: function(creep) {
         var isNearSource = this.sourceCreepIsNear(creep) != -1;
         return isNearSource;
@@ -13,8 +23,8 @@ module.exports = {
     moveAwayFromSource: function(creep) {
         var sourceCreepIsNear = mapUtil.getSources(creep)[this.sourceCreepIsNear(creep)];
         var sourcePos = sourceCreepIsNear.pos;
-        for (let i = 0; i < data.directions.length; i++) {
-            const element = data.directions[i];
+        for (let i = 0; i < directions.length; i++) {
+            const element = directions[i];
             var newPos = element.mutatorFunc(creep.pos);
             if (isPassable(creep.pos)) {
                 creep.moveTo(pos);
