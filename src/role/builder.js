@@ -7,6 +7,24 @@ module.exports = {
         worker.run(creep, this.doWork);
     },
     doWork: function(creep) {
+        if (creep.carry.energy == creep.carryCapacity) {
+            // just started working after procuring energy
+            var rand = _.random(1);
+            if (rand == 0) {
+                creep.memory.repairing = true;
+                creep.memory.building = false;
+                repair();
+            } else if (rand == 1) {
+                creep.memory.repairing = false;
+                creep.memory.building = true;
+                build();
+            }
+        } else if (creep.memory.repairing) {
+            repair();
+        } else if (creep.memory.building) {
+            build();
+        } // if creep.carry.energy == 0 it will switch to harvest mode
+        
         function repair() {
             var closestDamagedStructure = creep.pos.findClosestByRange(FIND_STRUCTURES, {
                 filter: struc => struc.hits < struc.hitsMax
@@ -24,11 +42,6 @@ module.exports = {
                 }
             }
         };
-        var rand = _.random(1);
-        if (rand == 0) {
-            repair();
-        } else if (rand == 1) {
-            build();
-        }       
+               
     }
 };
