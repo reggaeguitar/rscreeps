@@ -1,5 +1,6 @@
 var _ = require('lodash');
 var util = require('util');
+var data = require('data');
 
 module.exports = {
     run: function(room) {
