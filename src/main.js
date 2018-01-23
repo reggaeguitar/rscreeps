@@ -11,7 +11,7 @@ module.exports.loop = function () {
     
     function main() {
         //util.printCreepRoleCounts(data.creepData);
-        rebalancer.run(firstRoom);
+        rebalancer.run(firstRoom, spawn1);
         //util.printCreepRoleCounts(data.creepData);
         util.clearDeadCreepsFromMemory();
         creepSpawn.run(firstRoom, spawn1);
