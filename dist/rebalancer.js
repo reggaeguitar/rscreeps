@@ -61,10 +61,8 @@ module.exports = {
                     // no creeps assinged to harvest this source
                     var creepToReassign = _.filter(creepsHarvestingInRoom, 
                         c => c.memory.sourceToHarvest != source)[0];
-                    var sourcesWithMinExcluded = _.pull(room.find(FIND_SOURCES), 
-                        room.find(FIND_SOURCES)[source]);
-                    creepToReassign.memory.sourceToHarvest = 
-                        sourcesWithMinExcluded[_.random[sourcesWithMinExcluded.length - 1]];
+                    var curAssignedSource = creepToReassign.memory.sourceToHarvest;
+                    creepToReassign.memory.sourceToHarvest = curAssignedSource == 0 ? 1 : 0;  
                     reassigned = true;
                     break;
                 }
