@@ -8,16 +8,17 @@ module.exports = {
         }
     },
     bodies: [
+        [WORK, WORK, WORK, CARRY, MOVE, MOVE, MOVE, MOVE],
         [WORK, WORK, CARRY, MOVE, MOVE, MOVE],
-        [WORK, CARRY, CARRY, MOVE, MOVE, MOVE],
-        [WORK, CARRY, CARRY, MOVE, MOVE],
-        [WORK, CARRY, MOVE, MOVE],
-        [WORK, CARRY, MOVE]
+        // [WORK, CARRY, CARRY, MOVE, MOVE, MOVE],
+        // [WORK, CARRY, CARRY, MOVE, MOVE],
+        // [WORK, CARRY, MOVE, MOVE],
+        // [WORK, CARRY, MOVE]
     ],
     spawnCreepIfPossible: function(room, spawn) {
         if (spawn.spawning) {
             return;
-        }
+        }        
         for (let i = 0; i < this.bodies.length; i++) {
             var bodyParts = this.bodies[i];
             var costForCreep = this.creepCost(bodyParts);
