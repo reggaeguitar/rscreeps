@@ -4,13 +4,7 @@ var data = require('data');
 module.exports = {    
     run: function(room, spawn) {
         if (util.getCreepCount() < data.maxCreepCount) {
-            var creepRoleCounts = util.getCreepRoleCounts();        
-            if (creepRoleCounts['harvester'] > 0) {
-                this.spawnCreepIfPossible(room, spawn);
-            } else {
-                var cheapestHarvester = [WORK, MOVE, CARRY];
-                this.spawnCreepImpl(cheapestHarvester, 'harvester', spawn);
-            }
+            this.spawnCreepIfPossible(room, spawn);
         }
     },
     spawnCreepIfPossible: function(room, spawn) {
@@ -19,19 +13,12 @@ module.exports = {
         }
         var bodyParts = [WORK, WORK, CARRY, MOVE, MOVE];
         var costForCreep = this.creepCost(bodyParts);
-        //console.log('costForCreep: ' + costForCreep);
         if (costForCreep > room.energyCapacityAvailable) {
             console.log('Error: body parts cost too much for spawner and extensions.');
         }
-        //console.log(creepData.keys.length);
-        //console.log(costForCreep);
         if (room.energyAvailable >= costForCreep) {
             var roles = util.getRoles();
-            var role = roles[_.random(roles.length - 1)];
-            var harvesterCount = _.filter(Game.creeps, cr => cr.memory.role == 'harvester').length;
-            if (harvesterCount <= 1) {
-                role = 'harvester';
-            }
+            var role = roles[_.random(roles.length - 1)];            
             this.spawnCreepImpl(bodyParts, role, spawn);
         }
     },
