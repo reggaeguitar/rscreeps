@@ -8,6 +8,6 @@ module.exports = {
         'upgrader': { roleObj: roleUpgrader },
         'builder': { roleObj: roleBuilder },
     },
-    maxCreepCount: 4,
+    maxCreepCount: 5,
     roleSayInterval : 10,   
 };

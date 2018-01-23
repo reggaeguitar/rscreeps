@@ -7,11 +7,7 @@ module.exports = {
     run: function(room, spawn) {
         this.transitionNeededHarvesters(spawn);
         this.transitionIdleHarvesters(room);
-        ++Memory.ticksSinceSourceRebalance;
-        if (Memory.ticksSinceSourceRebalance > 10) {
-            this.rebalanceSourcesToMine(room);
-            Memory.ticksSinceSourceRebalance = 0;
-        }
+        this.rebalanceSourcesToMine(room);
     },
     transitionNeededHarvesters: function(spawn) {
         // if there are no harvesters and
@@ -49,23 +45,31 @@ module.exports = {
     },
     rebalanceSourcesToMine: function(room) {
         // count how many creeps are currently harvesting
-        // if more than number of sources
+        // if more than or equal to the number of sources
         // if a source does not have any assigned
         // then transition one (preferably the furtherst away from it)
-        // var creepsHarvestingInRoom = _.filter(Game.creeps, c => 
-        //     c.room.name == room.name && c.memory.harvesting);
-        // var sources = room.find(FIND_SOURCES);
-        // if (creepsHarvestingInRoom.length > sources.length) {
-        //     var res = {};
-        //     var sourcesBeingHarvested = 
-        //         _.countBy(_.filter(Game.creeps, c => c.memory.harvesting), 
-        //         cr => cr.memory.sourceToHarvest);
-        //     var leastAssignedSource = -1;
-        //     for (let i = 0; i < array.length; i++) {
-        //         const sourcesBei = array[i];
-                
-        //     }
-        // }
+        var creepsHarvestingInRoom = _.filter(Game.creeps, c => 
+            c.room.name == room.name && c.memory.harvesting);
+        var sources = room.find(FIND_SOURCES);
+        if (creepsHarvestingInRoom.length >= sources.length) {
+            var sourcesBeingHarvested = 
+                _.countBy(_.filter(Game.creeps, c => c.memory.harvesting), 
+                    cr => cr.memory.sourceToHarvest);
+            var reassigned = false;
+            for (var source in Object.keys(sourcesBeingHarvested)) {                
+                if (!reassigned && sourcesBeingHarvested[source] == 0) { 
+                    // no creeps assinged to harvest this source
+                    var creepToReassign = _.filter(creepsHarvestingInRoom, 
+                        c => c.memory.sourceToHarvest != source)[0];
+                    var sourcesWithMinExcluded = _.pull(room.find(FIND_SOURCES), 
+                        room.find(FIND_SOURCES)[source]);
+                    creepToReassign.memory.sourceToHarvest = 
+                        sourcesWithMinExcluded[_.random[sourcesWithMinExcluded.length - 1]];
+                    reassigned = true;
+                    break;
+                }
+            }           
+        }
     },
 
 }
