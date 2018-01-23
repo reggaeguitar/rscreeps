@@ -5,7 +5,7 @@ var data = require('data');
 module.exports = {
     run: function(room, spawn) {
         this.transitionNeededHarvesters(spawn);
-        this.transitionIdleHarvesters();
+        this.transitionIdleHarvesters(room);
     },
     transitionNeededHarvesters: function(spawn) {
         // if there are no harvesters and
@@ -23,7 +23,7 @@ module.exports = {
             }
         }        
     },
-    transitionIdleHarvesters: function() {
+    transitionIdleHarvesters: function(room) {
         // if creep count = maxCreepCount  and  
         // spawner and extensions are full change role
         // to a random role other than harvester     
