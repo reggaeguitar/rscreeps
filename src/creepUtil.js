@@ -38,5 +38,5 @@ module.exports = {
         var posHasCreep = _.findIndex(creepsOtherThanThisOne,
             c => Game.creeps[c].pos.isEqualTo(newPos)) != -1;
         return terrain != 'wall' && !posHasCreep;
-    },
+    },    
 }

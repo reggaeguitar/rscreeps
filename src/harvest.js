@@ -14,15 +14,5 @@ module.exports = {
         var sourceToHarvest = _.random(0, sources.length - 1);
         creep.memory.sourceToHarvest = sourceToHarvest;
         this.doHarvest(creep);
-    },
-    getCreepSourcesToMine: function() {
-        var ret = {};
-        for (var creep in Game.creeps) {
-            if (creep.hasOwnProperty('sourceToHarvest')) {
-                var sourceToMine = creep.memory.sourceToHarvest;
-                ret[sourceToMine] = ret[sourceToMine] + 1;
-            }            
-        }
-        return ret;
-    },    
+    }
 };
