@@ -30,7 +30,8 @@ module.exports.loop = function () {
     }
 
     function runTowers(room) {
-        for (var tower in room.find(FIND_TOWERS)) {
+        for (var tower in room.find(FIND_MY_STRUCTURES, { filter: 
+                s => s.structureType == STRUCTURE_TOWER })) {
             roleTower.run(tower);
         }
     }
