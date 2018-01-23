@@ -6,29 +6,11 @@ module.exports = {
     run: function(creep) {
         worker.run(creep, this.doWork);
     },
-    doWork: function(creep) {
-        // if (creep.carry.energy == creep.carryCapacity) {
-        //     // just started working after procuring energy
-        //     // todo this will get hit every tick until the creep actually spends
-        //     // some energy, add more data to fix
-        //     var rand = _.random(1);
-        //     if (rand == 0) {
-        //         creep.memory.repairing = true;
-        //         creep.memory.building = false;
-        //         repair();
-        //     } else if (rand == 1) {
-        //         creep.memory.repairing = false;
-        //         creep.memory.building = true;
-        //         build();
-        //     }
-        // } else if (creep.memory.repairing) {
-        //     repair();
-        // } else if (creep.memory.building) {
-        //     build();
-        // } // if creep.carry.energy == 0 it will switch to harvest mode
-        
+    doWork: function(creep) {      
         if (!build()) {
-            repair();
+            if (!repair()) {
+                creep.memory.role = 'upgrader';
+            }
         }
 
         function repair() {
