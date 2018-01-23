@@ -9,9 +9,11 @@ module.exports = {
     doWork: function(creep) {
         var targets = creep.room.find(FIND_STRUCTURES, {
             filter: (structure) => {
-                return (structure.structureType == STRUCTURE_EXTENSION ||
-                    structure.structureType == STRUCTURE_SPAWN ||
-                    structure.structureType == STRUCTURE_TOWER) && structure.energy < structure.energyCapacity;
+                // fill spawns, then towers, then extensions
+                return (structure.structureType == STRUCTURE_SPAWN ||
+                    structure.structureType == STRUCTURE_TOWER ||
+                    structure.structureType == STRUCTURE_EXTENSION)
+                        && structure.energy < structure.energyCapacity;
             }
         });
         if (targets.length > 0) {
