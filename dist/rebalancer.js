@@ -56,8 +56,8 @@ module.exports = {
                 _.countBy(_.filter(Game.creeps, c => c.memory.harvesting), 
                     cr => cr.memory.sourceToHarvest);
             var reassigned = false;
-            for (var source in Object.keys(sourcesBeingHarvested)) {                
-                if (!reassigned && sourcesBeingHarvested[source] == 0) { 
+            for (var source in sources) {                
+                if (!reassigned && !sourcesBeingHarvested.hasOwnProperty(source)) { 
                     // no creeps assinged to harvest this source
                     var creepToReassign = _.filter(creepsHarvestingInRoom, 
                         c => c.memory.sourceToHarvest != source)[0];
