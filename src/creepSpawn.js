@@ -6,34 +6,42 @@ module.exports = {
         if (util.getCreepCount() < data.maxCreepCount) {
             this.spawnCreepIfPossible(room, spawn);
         }
-    },
-    bodies: [
-        //[WORK, WORK, WORK, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE],
-        [WORK, WORK, WORK, WORK, WORK, WORK, WORK, CARRY, MOVE],
-        [WORK, WORK, WORK, WORK, WORK, WORK, CARRY, MOVE],
-        [WORK, WORK, WORK, WORK, WORK, CARRY, MOVE],
-        [WORK, WORK, WORK, WORK, CARRY, MOVE],
-        [WORK, WORK, WORK, CARRY, CARRY, MOVE, MOVE, MOVE],
-        [WORK, WORK, WORK, CARRY, CARRY, MOVE, MOVE, MOVE],
-        [WORK, WORK, CARRY, CARRY, MOVE, MOVE],
-        // [WORK, CARRY, CARRY, MOVE, MOVE, MOVE],
-        // [WORK, CARRY, CARRY, MOVE, MOVE],
-        // [WORK, CARRY, MOVE, MOVE],
-        // [WORK, CARRY, MOVE]
-    ],
+    },    
     spawnCreepIfPossible: function(room, spawn) {
         if (spawn.spawning) {
             return;
         }        
-        for (let i = 0; i < this.bodies.length; i++) {
-            var bodyParts = this.bodies[i];
-            var costForCreep = this.creepCost(bodyParts);
-            if (room.energyAvailable >= costForCreep) {
-                var roles = util.getRoles();
-                var role = roles[_.random(roles.length - 1)];            
-                this.spawnCreepImpl(bodyParts, role, spawn);
-            }
+        if (this.canAffordGoodCreep(room)) {
+            var bodyParts = this.getBodyParts(room);
+            var roles = util.getRoles();
+            var role = roles[_.random(roles.length - 1)];            
+            this.spawnCreepImpl(bodyParts, role, spawn);
         }
+    },
+    canAffordGoodCreep: function(room) {
+        var curEnergy = room.energyAvailable;
+        var maxEnergy = room.energyCapacityAvailable;
+        if (maxEnergy - curEnergy <= 100) {
+            return true;
+        }
+        return false;
+    },
+    getBodyParts: function(room) {
+        const priceForCarryAndMove = 100;
+        const priceForWork = 100;
+        var maxPrice = room.energyAvailable;
+        var carryAndMoveCount = room.controller.level;
+        var energyForWorkParts = (maxPrice - (priceForCarryAndMove * carryAndMoveCount));
+        var workCount = energyForWorkParts / priceForWork;
+        var ret = [];
+        for (let i = 0; i < workCount; i++) {
+            ret.push[WORK];
+        }
+        for (let j = 0; j < carryAndMoveCount; j++) {
+            ret.push[CARRY];
+            ret.push[MOVE];
+        }
+        return ret;
     },
     spawnCreepImpl: function(bodyParts, role, spawn) {
         var ret = spawn.spawnCreep(bodyParts, role + Game.time, { memory: { role: role } });

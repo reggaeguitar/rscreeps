@@ -58,7 +58,7 @@ module.exports = {
             var reassigned = false;
             for (var source in sources) {                
                 if (!reassigned && !sourcesBeingHarvested.hasOwnProperty(source)) { 
-                    // no creeps assinged to harvest this source
+                    // no creeps assigned to harvest this source
                     var creepToReassign = _.filter(creepsHarvestingInRoom, 
                         c => c.memory.sourceToHarvest != source)[0];
                     var curAssignedSource = creepToReassign.memory.sourceToHarvest;
