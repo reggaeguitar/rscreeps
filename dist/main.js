@@ -30,10 +30,12 @@ module.exports.loop = function () {
     }
 
     function runTowers(room) {
-        for (var tower in room.find(FIND_MY_STRUCTURES, { filter: 
-                s => s.structureType == STRUCTURE_TOWER })) {
-            roleTower.run(tower);
-        }
+        var tower = Game.getObjectById('5a6760476bcd94176062af15');
+        roleTower.run(tower);
+        // for (var tower in room.find(FIND_MY_STRUCTURES, { filter: 
+        //         s => s.structureType == STRUCTURE_TOWER })) {
+        //     roleTower.run(tower);
+        // }
     }
     
     main();
