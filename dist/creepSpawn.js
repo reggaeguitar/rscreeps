@@ -27,7 +27,7 @@ module.exports = {
             console.log('MOVE and CARRY no longer the same cost, update creepSpawn.js');
         }
         var carryAndMoveCount = half / BODYPART_COST[MOVE];
-        var bodyParts = getBodyPartsFromCounts(
+        var bodyParts = this.getBodyPartsFromCounts(
             workCount, carryAndMoveCount, carryAndMoveCount);
         this.spawnCreepImpl(bodyParts, 'harvester', spawn);
     },
