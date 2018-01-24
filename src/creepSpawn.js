@@ -67,12 +67,7 @@ module.exports = {
         var carryAndMoveCount = room.controller.level;
         var energyForWorkParts = (maxPrice - (priceForCarryAndMove * carryAndMoveCount));
         var workCount = energyForWorkParts / priceForWork;
-        // need to pass an object to work on bodyParts by reference
-        var arg = { bodyParts: [] };
-        this.addBodyParts(arg, WORK, workCount);
-        this.addBodyParts(arg, CARRY, carryAndMoveCount);
-        this.addBodyParts(arg, MOVE, carryAndMoveCount);       
-        return arg.bodyParts;
+        return getBodyPartsFromCounts(workCount, carryAndMoveCount, carryAndMoveCount);
     },
     spawnCreepImpl: function(bodyParts, role, spawn) {
         var ret = spawn.spawnCreep(bodyParts, role + Game.time, { memory: { role: role } });
