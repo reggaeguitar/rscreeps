@@ -41,7 +41,7 @@ module.exports = {
     },
     getBodyPartsFromCounts: function(workCount, carryCount, moveCount) {
         var ret = [];
-        for (let i = 0; i < workCount; i++) {
+        for (let i = 0; i < Math.floor(workCount); i++) {
             ret.push(WORK);
         }
         for (let i = 0; i < carryCount; i++) {
@@ -67,7 +67,7 @@ module.exports = {
         var carryAndMoveCount = room.controller.level;
         var energyForWorkParts = (maxPrice - (priceForCarryAndMove * carryAndMoveCount));
         var workCount = energyForWorkParts / priceForWork;
-        return getBodyPartsFromCounts(workCount, carryAndMoveCount, carryAndMoveCount);
+        return this.getBodyPartsFromCounts(workCount, carryAndMoveCount, carryAndMoveCount);
     },
     spawnCreepImpl: function(bodyParts, role, spawn) {
         var ret = spawn.spawnCreep(bodyParts, role + Game.time, { memory: { role: role } });
