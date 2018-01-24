@@ -7,18 +7,25 @@ module.exports = {
         worker.run(creep, this.doWork);
     },
     doWork: function(creep) {
-        var targets = creep.room.find(FIND_STRUCTURES, {
-            filter: (structure) => {
-                // fill spawns, then extensions then towers
-                return (structure.structureType == STRUCTURE_SPAWN ||
-                    structure.structureType == STRUCTURE_EXTENSION ||
-                    structure.structureType == STRUCTURE_TOWER)
-                        && structure.energy < structure.energyCapacity;
+        // fill spawns and extensions first, then towers
+        var nonFullSpawnsAndExtensions = creep.room.find(FIND_STRUCTURES, {
+            filter: s => {
+                return ((s.structureType == STRUCTURE_SPAWN ||
+                        s.structureType == STRUCTURE_EXTENSION)
+                        && s.energy < s.energyCapacity);
             }
         });
-        if (targets.length > 0) {
-            if (creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(targets[0], { visualizePathStyle: { stroke: '#ffffff' } });
+        var nonFullTowers = creep.room.find(FIND_STRUCTURES, {
+            filter: s => s.structureType == STRUCTURE_TOWER && 
+                         s.energy < s.energyCapacity
+        });
+        if (nonFullSpawnsAndExtensions.length > 0) {
+            if (creep.transfer(nonFullSpawnsAndExtensions[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(nonFullSpawnsAndExtensions[0], { visualizePathStyle: { stroke: '#ffffff' } });
+            }
+        } else if (nonFullTowers.length > 0) {
+            if (creep.transfer(nonFullTowers[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(nonFullTowers[0], { visualizePathStyle: { stroke: '#ffffff' } });
             }
         }
     }
