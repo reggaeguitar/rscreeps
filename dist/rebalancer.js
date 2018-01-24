@@ -34,7 +34,10 @@ module.exports = {
         // to a random role other than harvester     
         var roomHasMaxCreeps = util.getCreepCount() == data.maxCreepCount;
         var roomHasFullEnergy = room.energyAvailable == room.energyCapacityAvailable;
-        if (roomHasMaxCreeps && roomHasFullEnergy) {
+        var towersHaveFullEnergy = room.find(FIND_STRUCTURES, { filter: 
+            s => s.structureType == STRUCTURE_TOWER && s.energy < s.energyCapacity })
+            .length == 0;
+        if (roomHasMaxCreeps && roomHasFullEnergy && towersHaveFullEnergy) {
             for(var name in Game.creeps) {
                 var creep = Game.creeps[name];
                 if (creep.memory.role == 'harvester') {
