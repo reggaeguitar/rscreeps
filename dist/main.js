@@ -28,7 +28,7 @@ module.exports.loop = function () {
             data.creepData[creep.memory.role].roleObj.run(creep);
         }
     }
-
+ 
     function runTowers(room) {
         var tower = Game.getObjectById('5a6760476bcd94176062af15');
         roleTower.run(tower);
