@@ -5,12 +5,16 @@ var creepUtil = require('creepUtil');
 
 module.exports = {
     run: function(room, spawn) {
-        // todo room - count only creeps in the current room
         if (Object.keys(Game.creeps).length > 0) {
             this.transitionNeededHarvesters(spawn);
             this.transitionIdleHarvesters(room);
             this.rebalanceSourcesToMine(room);
+            this.ensureAtLeastOneOfEachRole(room);
         }
+    },
+    ensureAtLeastOneOfEachRole: function(room) {
+        var creepRoleCounts = util.getCreepRoleCounts();
+        // todo finish
     },
     transitionNeededHarvesters: function(spawn) {
         // if there are no harvesters and

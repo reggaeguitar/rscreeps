@@ -1,3 +1,4 @@
+var _ = require('lodash');
 var data = require('data');
 var mapUtil = require('mapUtil');
 
@@ -6,12 +7,7 @@ module.exports = {
         console.log(JSON.stringify(this.getCreepRoleCounts()));
     },
     getCreepRoleCounts: function() {
-        var ret = {};
-        for (var role in data.creepData) {
-            var count = _.filter(Game.creeps, c => c.memory.role == role).length;
-            ret[role] = count;
-        }
-        return ret;
+        return _.countBy(Game.creeps, c => c.memory.role);
     },   
     clearDeadCreepsFromMemory: function() {
         for (var name in Memory.creeps) {

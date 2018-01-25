@@ -29,6 +29,10 @@ module.exports = {
         var carryAndMoveCount = (half / BODYPART_COST[MOVE]) / 2;
         var bodyParts = this.getBodyPartsFromCounts(
             workCount, carryAndMoveCount, carryAndMoveCount);
+        if (this.creepCost(bodyParts) > energyAvailable) {
+            console.log('error in creepSpawn, bodyParts: ' + JSON.stringify(bodyParts) 
+                + ' cost more than energyAvailable: ' + energyAvailable);
+        }
         this.spawnCreepImpl(bodyParts, 'harvester', spawn);
     },
     spawnGoodCreep: function(room, spawn) {              
