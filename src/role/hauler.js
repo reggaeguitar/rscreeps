@@ -1,3 +1,4 @@
+var _ = require('lodash');
 var worker = require('role_worker');
 
 module.exports = {
@@ -19,7 +20,7 @@ module.exports = {
         });
         var nonFullStorage = creep.room.find(FIND_STRUCTURES, {
             filter: s => s.structureType == STRUCTURE_STORAGE && 
-                         s.energy < s.energyCapacity
+                         _.sum(s.store) < s.storeCapacity
         });
         if (nonFullSpawnsAndExtensions.length > 0) {
             if (creep.transfer(nonFullSpawnsAndExtensions[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
