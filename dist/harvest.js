@@ -3,12 +3,17 @@ var mapUtil = require('mapUtil');
 
 module.exports = {    
     doHarvest: function (creep) {
-        var sources = mapUtil.getSources(creep);
-        if (creep.harvest(sources[creep.memory.sourceToHarvest]) == ERR_NOT_IN_RANGE) {
-            creep.moveTo(sources[creep.memory.sourceToHarvest], 
-                { visualizePathStyle: {stroke: '#ffaa00' } });
+        var closestNonEmptyStorageOrContainer = creep.pos.findClosestByRange(
+            FIND_STRUCTURES, { filter : s => 
+                (s.structureType == STRUCTURE_STORAGE || 
+                s.structureType == STRUCTURE_CONTAINER) &&
+                _.sum(s.store) > 0 });
+        if (closestNonEmptyStorageOrContainer.length > 0) {
+            // todo get energy
         }
     },
+    
+    
     startHarvest: function(creep) {
         var sources = mapUtil.getSources(creep);
         var sourceToHarvest = _.random(0, sources.length - 1);
