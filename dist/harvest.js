@@ -1,7 +1,7 @@
 var _ = require('lodash');
 var mapUtil = require('mapUtil');
 
-module.exports = {    
+module.exports = {        
     doHarvest: function (creep) {
         var closestNonEmptyStorageOrContainer = creep.pos.findClosestByRange(
             FIND_STRUCTURES, { filter : s => 

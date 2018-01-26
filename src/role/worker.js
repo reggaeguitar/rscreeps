@@ -9,7 +9,7 @@ module.exports = {
         if (creep.carry.energy == 0 && !creep.memory.harvesting) {
             // done working, need to harvest again
             creep.memory.harvesting = true;
-            harvest.startHarvest(creep);
+            harvest.doHarvest(creep);
         } else if (creep.memory.harvesting && creep.carry.energy != creep.carryCapacity) {
             // harvesting, not full yet
             harvest.doHarvest(creep);
