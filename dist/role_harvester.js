@@ -1,32 +1,19 @@
 var worker = require('role_worker');
 
 module.exports = {
-
-    /** @param {Creep} creep **/
     run: function(creep) {
-        worker.run(creep, this.doWork);
+        worker.run(creep, this.mineSources);
     },
-    doWork: function(creep) {
-        // fill spawns and extensions first, then towers
-        var nonFullSpawnsAndExtensions = creep.room.find(FIND_STRUCTURES, {
-            filter: s => {
-                return ((s.structureType == STRUCTURE_SPAWN ||
-                        s.structureType == STRUCTURE_EXTENSION)
-                        && s.energy < s.energyCapacity);
-            }
-        });
-        var nonFullTowers = creep.room.find(FIND_STRUCTURES, {
-            filter: s => s.structureType == STRUCTURE_TOWER && 
-                         s.energy < s.energyCapacity
-        });
-        if (nonFullSpawnsAndExtensions.length > 0) {
-            if (creep.transfer(nonFullSpawnsAndExtensions[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(nonFullSpawnsAndExtensions[0], { visualizePathStyle: { stroke: '#ffffff' } });
-            }
-        } else if (nonFullTowers.length > 0) {
-            if (creep.transfer(nonFullTowers[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(nonFullTowers[0], { visualizePathStyle: { stroke: '#ffffff' } });
-            }
+    mineSources: function(creep) {
+        if (creep.harvest(sources[creep.memory.sourceToHarvest]) == ERR_NOT_IN_RANGE) {
+            creep.moveTo(sources[creep.memory.sourceToHarvest], 
+                { visualizePathStyle: {stroke: '#ffaa00' } });
         }
+    },    
+    startHarvest: function(creep) {
+        var sources = mapUtil.getSources(creep);
+        var sourceToHarvest = _.random(0, sources.length - 1);
+        creep.memory.sourceToHarvest = sourceToHarvest;
+        this.doHarvest(creep);
     }
 };

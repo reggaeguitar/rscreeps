@@ -5,22 +5,32 @@ module.exports = {
     run: function(room, spawn) {
         if (spawn.spawning) {
             return;
-        }  
-        var curCreepCount = util.getCreepCount();
-        var maxCount = data.maxCreepCount;
-        var missing = maxCount - curCreepCount;
-        if (missing > 1) {
-            this.spawnBestHarvesterPossible(room, spawn);
-        } else if (util.getCreepCount() < data.maxCreepCount) {
-            this.spawnGoodCreep(room, spawn);
         }
-    },    
-    spawnBestHarvesterPossible: function(room, spawn) {
         var energyAvailable = room.energyAvailable;
         if (energyAvailable < 200) {
-            console.log('spawn has less than 200 energy, can\'t spawn creep');
+            console.log('room has less than 200 energy, can\'t spawn creep');
             return;
         }
+        var creepCountsByRole = util.getCreepRoleCounts();
+        var maxHarvesterCount = data.maxHarvesterCount;
+        if (creepCountsByRole['harvester'] < maxHarvesterCount) {
+            this.spawnBestHarvesterPossible(room, spawn);
+        } else {
+            var maxWorkerCount = data.maxWorkerCount;
+            if (creepCountsByRole['worker'] < maxWorkerCount) {
+                this.spawnBestWorkerPossible(room, spawn, 'hauler');
+            }
+        }        
+    }, 
+    spawnBestHarvesterPossible: function(room, spawn) {
+        var moveCount = room.controller.level;
+        var movePartsCost = BODYPART_COST[MOVE] * moveCount;
+        var energyLeftForWorkParts = room.energyAvailable - movePartsCost;
+        var workCount = energyLeftForWorkParts / BODYPART_COST[WORK];
+        var bodyParts = this.getBodyPartsFromCounts(workCount, 0, moveCount);
+        this.spawnCreepImpl(bodyParts, 'harvester', spawn);
+    },
+    spawnBestWorkerPossible: function(room, spawn, role) {
         var half = energyAvailable / 2;
         var workCount = half / BODYPART_COST[WORK];
         if (BODYPART_COST[MOVE] != BODYPART_COST[CARRY]) {
@@ -33,46 +43,21 @@ module.exports = {
             console.log('error in creepSpawn, bodyParts: ' + JSON.stringify(bodyParts) 
                 + ' cost more than energyAvailable: ' + energyAvailable);
         }
-        this.spawnCreepImpl(bodyParts, 'harvester', spawn);
-    },
-    spawnGoodCreep: function(room, spawn) {              
-        if (this.canAffordGoodCreep(room)) {
-            var bodyParts = this.getBodyParts(room);
-            var roles = util.getRoles();
-            var role = roles[_.random(roles.length - 1)];            
-            this.spawnCreepImpl(bodyParts, role, spawn);
-        }
+        this.spawnCreepImpl(bodyParts, role, spawn);
     },
     getBodyPartsFromCounts: function(workCount, carryCount, moveCount) {
         var ret = [];
         for (let i = 0; i < Math.floor(workCount); i++) {
             ret.push(WORK);
         }
-        for (let i = 0; i < carryCount; i++) {
+        for (let i = 0; i < Math.floor(carryCount); i++) {
             ret.push(CARRY);
         }
-        for (let i = 0; i < moveCount; i++) {
+        for (let i = 0; i < Math.floor(moveCount); i++) {
             ret.push(MOVE);
         }
         return ret;
-    },
-    canAffordGoodCreep: function(room) {
-        var curEnergy = room.energyAvailable;
-        var maxEnergy = room.energyCapacityAvailable;
-        if (maxEnergy - curEnergy <= 100) {
-            return true;
-        }
-        return false;
-    },
-    getBodyParts: function(room) {
-        const priceForCarryAndMove = 100;
-        const priceForWork = 100;
-        var maxPrice = room.energyAvailable;
-        var carryAndMoveCount = room.controller.level;
-        var energyForWorkParts = (maxPrice - (priceForCarryAndMove * carryAndMoveCount));
-        var workCount = energyForWorkParts / priceForWork;
-        return this.getBodyPartsFromCounts(workCount, carryAndMoveCount, carryAndMoveCount);
-    },
+    },   
     spawnCreepImpl: function(bodyParts, role, spawn) {
         var ret = spawn.spawnCreep(bodyParts, role + Game.time, { memory: { role: role } });
         if (ret != OK) {

@@ -9,15 +9,9 @@ module.exports = {
                 s.structureType == STRUCTURE_CONTAINER) &&
                 _.sum(s.store) > 0 });
         if (closestNonEmptyStorageOrContainer.length > 0) {
-            // todo get energy
+            if (creep.transfer(closestNonEmptyStorageOrContainer, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(storage);
+            }           
         }
     },
-    
-    
-    startHarvest: function(creep) {
-        var sources = mapUtil.getSources(creep);
-        var sourceToHarvest = _.random(0, sources.length - 1);
-        creep.memory.sourceToHarvest = sourceToHarvest;
-        this.doHarvest(creep);
-    }
 };
