@@ -9,7 +9,7 @@ module.exports = {
                 s.structureType == STRUCTURE_CONTAINER) &&
                 _.sum(s.store) > 0 });
         if (closestNonEmptyStorageOrContainer != undefined) {
-            if (creep.transfer(closestNonEmptyStorageOrContainer, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+            if (creep.withdraw(closestNonEmptyStorageOrContainer, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(closestNonEmptyStorageOrContainer);
             }           
         }
