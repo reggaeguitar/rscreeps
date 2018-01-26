@@ -18,6 +18,5 @@ module.exports = {
     startHarvest: function(creep, sources) {
         var sourceToHarvest = _.random(0, sources.length - 1);
         creep.memory.sourceToHarvest = sourceToHarvest;
-        this.doHarvest(creep);
     }
 };
