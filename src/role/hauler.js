@@ -1,4 +1,4 @@
-var worker = require('worker');
+var worker = require('role_worker');
 
 module.exports = {
     run: function(creep) {
