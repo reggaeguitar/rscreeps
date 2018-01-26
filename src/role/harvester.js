@@ -2,7 +2,10 @@ var worker = require('role_worker');
 
 module.exports = {
     run: function(creep) {
-        worker.run(creep, this.mineSources);
+        if (creep.memory.sourceToHarvest == undefined) {
+            this.startHarvest(creep);
+        }
+        this.mineSources(creep);
     },
     mineSources: function(creep) {
         if (creep.harvest(sources[creep.memory.sourceToHarvest]) == ERR_NOT_IN_RANGE) {
