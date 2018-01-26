@@ -3,14 +3,14 @@ var mapUtil = require('mapUtil');
 
 module.exports = {        
     doHarvest: function (creep) {
-        var closestNonEmptyStorageOrContainer = creep.pos.findClosestByRange(
+        var closestStorageOrContainer = creep.pos.findClosestByRange(
             FIND_STRUCTURES, { filter : s => 
                 (s.structureType == STRUCTURE_STORAGE || 
                 s.structureType == STRUCTURE_CONTAINER) &&
-                _.sum(s.store) > 0 });
-        if (closestNonEmptyStorageOrContainer != undefined) {
-            if (creep.withdraw(closestNonEmptyStorageOrContainer, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(closestNonEmptyStorageOrContainer);
+                _.sum(s.store) > 200 });
+        if (closestStorageOrContainer != undefined) {
+            if (creep.withdraw(closestStorageOrContainer, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(closestStorageOrContainer);
             }           
         }
     },
