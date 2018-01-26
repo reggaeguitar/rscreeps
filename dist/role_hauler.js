@@ -17,6 +17,10 @@ module.exports = {
             filter: s => s.structureType == STRUCTURE_TOWER && 
                          s.energy < s.energyCapacity
         });
+        var nonFullStorage = creep.room.find(FIND_STRUCTURES, {
+            filter: s => s.structureType == STRUCTURE_STORAGE && 
+                         s.energy < s.energyCapacity
+        });
         if (nonFullSpawnsAndExtensions.length > 0) {
             if (creep.transfer(nonFullSpawnsAndExtensions[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(nonFullSpawnsAndExtensions[0], { visualizePathStyle: { stroke: '#ffffff' } });
@@ -24,6 +28,10 @@ module.exports = {
         } else if (nonFullTowers.length > 0) {
             if (creep.transfer(nonFullTowers[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(nonFullTowers[0], { visualizePathStyle: { stroke: '#ffffff' } });
+            }
+        } else if (nonFullStorage.length > 0) {
+            if (creep.transfer(nonFullStorage[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(nonFullStorage[0], { visualizePathStyle: { stroke: '#ffffff' } });
             }
         }
     }
