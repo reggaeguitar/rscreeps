@@ -17,7 +17,11 @@ module.exports = {
             this.spawnBestHarvesterPossible(room, spawn);
         } else {
             var maxWorkerCount = data.maxWorkerCount;
-            if (creepCountsByRole['worker'] < maxWorkerCount) {
+            // todo loop over roles
+            var workerCount = creepCountsByRole['hauler'] +
+                              creepCountsByRole['builder'] +  
+                              creepCountsByRole['upgrader'];
+            if (workerCount < maxWorkerCount) {
                 this.spawnBestWorkerPossible(room, spawn, 'hauler');
             }
         }        
