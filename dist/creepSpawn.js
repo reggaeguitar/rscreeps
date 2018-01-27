@@ -16,8 +16,14 @@ module.exports = {
         var creepCountsByRole = util.getCreepRoleCounts();
         var maxHarvesterCount = data.maxHarvesterCount;
         console.log(JSON.stringify(creepCountsByRole));
-        if (!creepCountsByRole.hasOwnProperty('harvester') || creepCountsByRole['harvester'] < maxHarvesterCount) {
-            this.spawnBestHarvesterPossible(room, spawn);
+        if (!creepCountsByRole.hasOwnProperty('harvester') || creepCountsByRole['harvester'] < maxHarvesterCount) {            
+            var canWaitToSpawnGoodHarvester = creepCountsByRole.hasOwnProperty('hauler') &&
+                                              creepCountsByRole.hasOwnProperty('harvester');
+            if (canWaitToSpawnGoodHarvester) {
+                this.trySpawnGoodHarvester(room, spawn);
+            } else {
+                this.spawnBestHarvesterPossible(room, spawn);
+            }
         } else {
             var maxWorkerCount = data.maxWorkerCount;
             // todo loop over roles
@@ -30,10 +36,20 @@ module.exports = {
                 }
             }
         }
-    }, 
+    },
+    trySpawnGoodHarvester: function(room, spawn) {
+        var moveCount = this.getHarvesterMoveCount(room);
+        var movePartsCost = BODYPART_COST[MOVE] * moveCount;
+        var energyLeftForWorkParts = room.energyAvailable - movePartsCost;
+        var workCount = energyLeftForWorkParts / BODYPART_COST[WORK];
+        if (workCount >= data.goodHarvesterWorkCount) {
+            var bodyParts = this.getBodyPartsFromCounts(data.goodHarvesterWorkCount, 0, moveCount);
+            this.spawnCreepImpl(bodyParts, 'harvester', spawn);
+        }
+    },
     spawnBestHarvesterPossible: function(room, spawn) {
         console.log('spawnBestHarvesterPossible called');
-        var moveCount = room.controller.level;
+        var moveCount = this.getHarvesterMoveCount(room);
         var movePartsCost = BODYPART_COST[MOVE] * moveCount;
         var energyLeftForWorkParts = room.energyAvailable - movePartsCost;
         var workCount = energyLeftForWorkParts / BODYPART_COST[WORK];
@@ -41,6 +57,9 @@ module.exports = {
         var bodyParts = this.getBodyPartsFromCounts(workCount, 0, moveCount);
         this.spawnCreepImpl(bodyParts, 'harvester', spawn);
     },
+    getHarvesterMoveCount: function(room) {
+        return room.controller.level;
+    }
     spawnBestWorkerPossible: function(room, spawn, role) {
         var half = room.energyAvailable / 2;
         var workCount = half / BODYPART_COST[WORK];
