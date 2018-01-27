@@ -12,8 +12,7 @@ module.exports = {
         } else {
             closestEnergyLocation = creep.pos.findClosestByRange(
                 FIND_STRUCTURES, { filter : s => 
-                    (s.structureType == STRUCTURE_STORAGE || 
-                    s.structureType == STRUCTURE_CONTAINER) &&
+                    s.structureType == STRUCTURE_STORAGE &&
                     _.sum(s.store) > 200 });
         }
         if (closestEnergyLocation != undefined) {
