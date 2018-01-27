@@ -16,9 +16,9 @@ module.exports = {
                     s.structureType == STRUCTURE_CONTAINER) &&
                     _.sum(s.store) > 200 });
         }
-        if (closestStorageOrContainer != undefined) {
-            if (creep.withdraw(closestStorageOrContainer, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(closestStorageOrContainer);
+        if (closestEnergyLocation != undefined) {
+            if (creep.withdraw(closestEnergyLocation, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(closestEnergyLocation);
             }           
         }
     },
