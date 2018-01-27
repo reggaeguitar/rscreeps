@@ -59,7 +59,7 @@ module.exports = {
     },
     getHarvesterMoveCount: function(room) {
         return room.controller.level;
-    }
+    },
     spawnBestWorkerPossible: function(room, spawn, role) {
         var half = room.energyAvailable / 2;
         var workCount = half / BODYPART_COST[WORK];
