@@ -61,7 +61,7 @@ module.exports = {
         this.spawnCreepImpl(bodyParts, 'harvester', spawn);
     },
     getHarvesterMoveCount: function(room) {
-        return room.controller.level;
+        return data.harvesterMoveCount;
     },
     spawnBestWorkerPossible: function(room, spawn, role) {
         var half = room.energyAvailable / 2;
