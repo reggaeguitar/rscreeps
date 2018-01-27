@@ -1,5 +1,6 @@
 var worker = require('role_worker');
 var mapUtil = require('mapUtil');
+var util = require('util');
 
 module.exports = {
     run: function(creep) {
@@ -16,7 +17,16 @@ module.exports = {
         }
     },    
     startHarvest: function(creep, sources) {
-        var sourceToHarvest = _.random(0, sources.length - 1);
+        var creepRoleCounts = util.getCreepRoleCounts();
+        var sourceToHarvest = 0;
+        if (creepRoleCounts.hasOwnProperty('harvester')) {
+            var otherHarvesterSource = _.filter(Game.creeps, 
+                c => c.memory.role == 'harvester')[0]
+                    .memory.sourceToHarvest;
+            sourceToHarvest = otherHarvesterSource == 0 ? 1 : 0;
+        } else {
+            sourceToHarvest = _.random(0, sources.length - 1);
+        }        
         creep.memory.sourceToHarvest = sourceToHarvest;
     }
 };
