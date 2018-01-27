@@ -13,5 +13,4 @@ module.exports = {
     maxHarvesterCount: 2,
     maxWorkerCount: 5,
     roleSayInterval : 5,
-    towerFillBuffer: 0.90,  
 };
