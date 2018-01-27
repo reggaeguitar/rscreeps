@@ -1,6 +1,6 @@
+var _ = require('lodash');
 var util = require('util');
 var data = require('data');
-var _ = require('lodash');
 
 module.exports = {    
     run: function(room, spawn) {

@@ -1,6 +1,5 @@
 var worker = require('role_worker');
 var mapUtil = require('mapUtil');
-var util = require('util');
 
 module.exports = {
     run: function(creep) {
@@ -17,7 +16,7 @@ module.exports = {
         }
     },    
     startHarvest: function(creep, sources) {
-        var creepRoleCounts = util.getCreepRoleCounts();
+        var creepRoleCounts = _.countBy(Game.creeps, c => c.memory.role);
         var sourceToHarvest = 0;
         if (creepRoleCounts.hasOwnProperty('harvester')) {
             var otherHarvesterSource = _.filter(Game.creeps, 
