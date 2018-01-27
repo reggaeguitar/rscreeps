@@ -1,5 +1,6 @@
 var _ = require('lodash');
 var worker = require('role_worker');
+var data = require('data');
 
 module.exports = {
     run: function(creep) {
@@ -8,20 +9,15 @@ module.exports = {
     doWork: function(creep) {
         // fill spawns and extensions first, then towers
         var nonFullSpawnsAndExtensions = creep.room.find(FIND_STRUCTURES, {
-            filter: s => {
-                return ((s.structureType == STRUCTURE_SPAWN ||
-                        s.structureType == STRUCTURE_EXTENSION)
-                        && s.energy < s.energyCapacity);
-            }
-        });
+            filter: s => ((s.structureType == STRUCTURE_SPAWN ||
+                           s.structureType == STRUCTURE_EXTENSION)
+                           && s.energy < s.energyCapacity)});
         var nonFullTowers = creep.room.find(FIND_STRUCTURES, {
             filter: s => s.structureType == STRUCTURE_TOWER && 
-                         s.energy < s.energyCapacity
-        });
+                         s.energy < s.energyCapacity * data.towerFillBuffer });
         var nonFullStorage = creep.room.find(FIND_STRUCTURES, {
             filter: s => s.structureType == STRUCTURE_STORAGE && 
-                         _.sum(s.store) < s.storeCapacity
-        });
+                         _.sum(s.store) < s.storeCapacity });
         if (nonFullSpawnsAndExtensions.length > 0) {
             if (creep.transfer(nonFullSpawnsAndExtensions[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(nonFullSpawnsAndExtensions[0], { visualizePathStyle: { stroke: '#ffffff' } });
