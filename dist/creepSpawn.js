@@ -7,15 +7,21 @@ module.exports = {
         if (spawn.spawning) {
             return;
         }
+        //  - there should always be at least one hauler and upgrader,
+        //  - only have a builder when there are construction sites
+        //  - transition builders to haulers or upgraders depending on need
+        //  	- need more than one hauler if
+        //  		- there is a container with more than 500 energy in it
+        //  	- need more than one upgrader if
+        //  		- storage has more than 500 energy in it
         var energyAvailable = room.energyAvailable;
-        //console.log(energyAvailable);
-        if (energyAvailable < 200) {
-            console.log('room has less than 200 energy, can\'t spawn creep');
+        const cheapestCreepCost = 200;
+        if (energyAvailable < cheapestCreepCost) {
+            console.log('room has less than ' + cheapestCreepCost + ' energy, can\'t spawn creep');
             return;
         }
         var creepCountsByRole = util.getCreepRoleCounts();
         var maxHarvesterCount = data.maxHarvesterCount;
-        console.log(JSON.stringify(creepCountsByRole));
         if (!creepCountsByRole.hasOwnProperty('harvester') || creepCountsByRole['harvester'] < maxHarvesterCount) {            
             var canWaitToSpawnGoodHarvester = creepCountsByRole.hasOwnProperty('hauler') &&
                                               creepCountsByRole.hasOwnProperty('harvester');

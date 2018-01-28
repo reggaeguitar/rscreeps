@@ -11,8 +11,9 @@ module.exports = {
         'hauler': { roleObj: roleHauler },
     },
     maxHarvesterCount: 2,
-    maxWorkerCount: 5,
+    maxWorkerCount: 3,
     roleSayInterval : 5,
     goodHarvesterWorkCount: 6,
     harvesterMoveCount: 4,
+    energyBuffer: 100,
 };
