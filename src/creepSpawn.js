@@ -37,10 +37,17 @@ module.exports = {
                 var workerCount = Object.keys(Game.creeps).length - creepCountsByRole['harvester'];
                 console.log(workerCount);
                 if (workerCount < maxWorkerCount) {
-                    var rand = _.random(1);
-                    this.spawnBestWorkerPossible(room, spawn, rand == 1 ? 'hauler' : 'upgrader');
+                    var role = this.getWorkerRole(room, creepCountsByRole);
+                    this.spawnBestWorkerPossible(room, spawn, role);
                 }
             }
+        }
+    },
+    getWorkerRole: function(room, creepCountsByRole) {
+        if (creepCountsByRole['hauler'] <= 1) {
+            return 'hauler';
+        } else {
+            return 'upgrader';
         }
     },
     trySpawnGoodHarvester: function(room, spawn) {
