@@ -7,13 +7,7 @@ module.exports = {
         if (spawn.spawning) {
             return;
         }
-        //  - there should always be at least one hauler and upgrader,
-        //  - only have a builder when there are construction sites
-        //  - transition builders to haulers or upgraders depending on need
-        //  	- need more than one hauler if
-        //  		- there is a container with more than 500 energy in it
-        //  	- need more than one upgrader if
-        //  		- storage has more than 500 energy in it
+       
         var energyAvailable = room.energyAvailable;
         const cheapestCreepCost = 200;
         if (energyAvailable < cheapestCreepCost) {
@@ -44,7 +38,7 @@ module.exports = {
         }
     },
     getWorkerRole: function(room, creepCountsByRole) {
-        if (creepCountsByRole['hauler'] <= 1) {
+        if (!creepCountsByRole.hasOwnProperty('hauler') || creepCountsByRole['hauler'] <= 1) {
             return 'hauler';
         } else {
             return 'upgrader';
