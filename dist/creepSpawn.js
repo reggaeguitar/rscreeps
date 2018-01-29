@@ -60,6 +60,9 @@ module.exports = {
         var movePartsCost = BODYPART_COST[MOVE] * moveCount;
         var energyLeftForWorkParts = room.energyAvailable - movePartsCost;
         var workCount = energyLeftForWorkParts / BODYPART_COST[WORK];
+        if (workCount > data.goodHarvesterWorkCount) {
+            workCount = data.goodHarvesterWorkCount;
+        }
         if (workCount == 0) {
             return;
         }
