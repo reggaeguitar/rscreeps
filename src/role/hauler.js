@@ -6,7 +6,7 @@ module.exports = {
         worker.run(creep, this.doWork);
     },
     doWork: function(creep) {
-        const towerFillFactor = 0.90;
+        const towerFillFactor = 0.90;        
         // fill spawns and extensions first, then towers
         var nonFullSpawnOrExtension = creep.pos.findClosestByRange(FIND_STRUCTURES, {
             filter: s => ((s.structureType == STRUCTURE_SPAWN ||
