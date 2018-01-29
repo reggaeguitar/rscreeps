@@ -6,12 +6,12 @@ module.exports = {
         var closestEnergyLocation;        
         if (creep.memory.role == 'hauler') {
             const almostFullFactor = 0.75;
-            var almostFullContainers = creep.pos.findClosestByRange(
+            var almostFullContainer = creep.pos.findClosestByRange(
                 FIND_STRUCTURES, { filter: s => 
                     s.structureType == STRUCTURE_CONTAINER &&
                     _.sum(s.store) > s.storeCapacity * almostFullFactor });
-            if (almostFullContainers.length > 0) {
-                closestEnergyLocation = almostFullContainers[0];
+            if (almostFullContainers != undefined) {
+                closestEnergyLocation = almostFullContainer;
             } else {            
                 closestEnergyLocation = creep.pos.findClosestByRange(
                     FIND_STRUCTURES, { filter : s => 
