@@ -13,7 +13,7 @@ module.exports = {
         'claimer': { roleObj: roleClaimer }
     },
     maxHarvesterCount: 2,
-    maxWorkerCount: 5,
+    maxWorkerCount: 4,
     roleSayInterval : 5,
     goodHarvesterWorkCount: 6,
     harvesterMoveCount: 4,
