@@ -19,8 +19,8 @@ module.exports = {
         var creepRoleCounts = _.countBy(Game.creeps, c => c.memory.role);
         var sourceToHarvest = 0;
         if (creepRoleCounts.hasOwnProperty('harvester')) {
-            var otherHarvesterSource = _.filter(Game.creeps, 
-                c => c.memory.role == 'harvester')[0]
+            var harvesters = _.filter(Game.creeps, c => c.memory.role == 'harvester');
+            var otherHarvesterSource = _.sortBy(harvesters, h => h.ticksToLive)[0]
                     .memory.sourceToHarvest;
             sourceToHarvest = otherHarvesterSource == 0 ? 1 : 0;
         } else {
