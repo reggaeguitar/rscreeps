@@ -15,7 +15,7 @@ module.exports = {
         var nonFullTower = creep.pos.findClosestByRange(FIND_STRUCTURES, {
             filter: s => s.structureType == STRUCTURE_TOWER && 
                          s.energy < s.energyCapacity * towerFillFactor });
-        var nonFullStorage = creep.room.pos.findClosestByRange(FIND_STRUCTURES, {
+        var nonFullStorage = creep.pos.findClosestByRange(FIND_STRUCTURES, {
             filter: s => s.structureType == STRUCTURE_STORAGE && 
                          _.sum(s.store) < s.storeCapacity });
         if (nonFullSpawnsAndExtension != undefined) {
