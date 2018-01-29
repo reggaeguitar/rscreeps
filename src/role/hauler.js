@@ -8,7 +8,7 @@ module.exports = {
     doWork: function(creep) {
         const towerFillFactor = 0.90;
         // fill spawns and extensions first, then towers
-        var nonFullSpawnsAndExtensions = creep.pos.findClosestByRange(FIND_STRUCTURES, {
+        var nonFullSpawnOrExtension = creep.pos.findClosestByRange(FIND_STRUCTURES, {
             filter: s => ((s.structureType == STRUCTURE_SPAWN ||
                            s.structureType == STRUCTURE_EXTENSION)
                            && s.energy < s.energyCapacity)});
@@ -18,9 +18,9 @@ module.exports = {
         var nonFullStorage = creep.pos.findClosestByRange(FIND_STRUCTURES, {
             filter: s => s.structureType == STRUCTURE_STORAGE && 
                          _.sum(s.store) < s.storeCapacity });
-        if (nonFullSpawnsAndExtension != undefined) {
-            if (creep.transfer(nonFullSpawnsAndExtension, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(nonFullSpawnsAndExtension, { visualizePathStyle: { stroke: '#ffffff' } });
+        if (nonFullSpawnOrExtension != undefined) {
+            if (creep.transfer(nonFullSpawnOrExtension, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(nonFullSpawnOrExtension, { visualizePathStyle: { stroke: '#ffffff' } });
             }
         } else if (nonFullTower != undefined) {
             if (creep.transfer(nonFullTower, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
