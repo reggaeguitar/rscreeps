@@ -10,7 +10,7 @@ module.exports = {
                 FIND_STRUCTURES, { filter: s => 
                     s.structureType == STRUCTURE_CONTAINER &&
                     _.sum(s.store) > s.storeCapacity * almostFullFactor });
-            if (almostFullContainers != undefined) {
+            if (almostFullContainer != undefined) {
                 closestEnergyLocation = almostFullContainer;
             } else {            
                 closestEnergyLocation = creep.pos.findClosestByRange(
