@@ -18,4 +18,5 @@ module.exports = {
     goodHarvesterWorkCount: 6,
     harvesterMoveCount: 4,
     energyBuffer: 100,
+    harvesterTicksToLive: 25,
 };

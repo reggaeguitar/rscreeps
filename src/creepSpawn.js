@@ -16,7 +16,10 @@ module.exports = {
         }
         var creepCountsByRole = util.getCreepRoleCounts();
         var maxHarvesterCount = data.maxHarvesterCount;
-        if (!creepCountsByRole.hasOwnProperty('harvester') || creepCountsByRole['harvester'] < maxHarvesterCount) {            
+        var zeroHarvesters = !creepCountsByRole.hasOwnProperty('harvester');
+        var lessThanMaxHarvesters = creepCountsByRole['harvester'] < maxHarvesterCount;
+        var harvesterAboutToDie = _.filter(Game.creeps, c => c.memory.role == 'harvester' && c.ticksToLive < data.harvesterTicksToLive).length > 0;
+        if (zeroHarvesters || lessThanMaxHarvesters || harvesterAboutToDie) {            
             var canWaitToSpawnGoodHarvester = creepCountsByRole.hasOwnProperty('hauler') &&
                                               creepCountsByRole.hasOwnProperty('harvester');
             if (canWaitToSpawnGoodHarvester) {
