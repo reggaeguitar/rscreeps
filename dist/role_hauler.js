@@ -8,27 +8,27 @@ module.exports = {
     doWork: function(creep) {
         const towerFillFactor = 0.90;
         // fill spawns and extensions first, then towers
-        var nonFullSpawnsAndExtensions = creep.room.find(FIND_STRUCTURES, {
+        var nonFullSpawnsAndExtensions = creep.pos.findClosestByRange(FIND_STRUCTURES, {
             filter: s => ((s.structureType == STRUCTURE_SPAWN ||
                            s.structureType == STRUCTURE_EXTENSION)
                            && s.energy < s.energyCapacity)});
-        var nonFullTowers = creep.room.find(FIND_STRUCTURES, {
+        var nonFullTower = creep.pos.findClosestByRange(FIND_STRUCTURES, {
             filter: s => s.structureType == STRUCTURE_TOWER && 
                          s.energy < s.energyCapacity * towerFillFactor });
-        var nonFullStorage = creep.room.find(FIND_STRUCTURES, {
+        var nonFullStorage = creep.room.pos.findClosestByRange(FIND_STRUCTURES, {
             filter: s => s.structureType == STRUCTURE_STORAGE && 
                          _.sum(s.store) < s.storeCapacity });
-        if (nonFullSpawnsAndExtensions.length > 0) {
-            if (creep.transfer(nonFullSpawnsAndExtensions[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(nonFullSpawnsAndExtensions[0], { visualizePathStyle: { stroke: '#ffffff' } });
+        if (nonFullSpawnsAndExtension != undefined) {
+            if (creep.transfer(nonFullSpawnsAndExtension, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(nonFullSpawnsAndExtension, { visualizePathStyle: { stroke: '#ffffff' } });
             }
-        } else if (nonFullTowers.length > 0) {
-            if (creep.transfer(nonFullTowers[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(nonFullTowers[0], { visualizePathStyle: { stroke: '#ffffff' } });
+        } else if (nonFullTower != undefined) {
+            if (creep.transfer(nonFullTower, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(nonFullTower, { visualizePathStyle: { stroke: '#ffffff' } });
             }
-        } else if (nonFullStorage.length > 0) {
-            if (creep.transfer(nonFullStorage[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(nonFullStorage[0], { visualizePathStyle: { stroke: '#ffffff' } });
+        } else if (nonFullStorage != undefined) {
+            if (creep.transfer(nonFullStorage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(nonFullStorage, { visualizePathStyle: { stroke: '#ffffff' } });
             }
         }
     }
