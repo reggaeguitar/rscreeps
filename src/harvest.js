@@ -3,12 +3,21 @@ var mapUtil = require('mapUtil');
 
 module.exports = {        
     doHarvest: function (creep) {
-        var closestEnergyLocation;
+        var closestEnergyLocation;        
         if (creep.memory.role == 'hauler') {
-            closestEnergyLocation = creep.pos.findClosestByRange(
-                FIND_STRUCTURES, { filter : s => 
+            const almostFullFactor = 0.75;
+            var almostFullContainers = creep.pos.findClosestByRange(
+                FIND_STRUCTURES, { filter: s => 
                     s.structureType == STRUCTURE_CONTAINER &&
-                    _.sum(s.store) > 200 });
+                    _.sum(s.store) > s.storeCapacity * almostFullFactor });
+            if (almostFullContainers.length > 0) {
+                closestEnergyLocation = almostFullContainers[0];
+            } else {            
+                closestEnergyLocation = creep.pos.findClosestByRange(
+                    FIND_STRUCTURES, { filter : s => 
+                        s.structureType == STRUCTURE_CONTAINER &&
+                        _.sum(s.store) > 200 });
+            }
         } else {
             closestEnergyLocation = creep.pos.findClosestByRange(
                 FIND_STRUCTURES, { filter : s => 
