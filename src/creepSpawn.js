@@ -42,8 +42,13 @@ module.exports = {
         }
     },
     getWorkerRole: function(room, creepCountsByRole) {
-        if (!creepCountsByRole.hasOwnProperty('hauler') || creepCountsByRole['hauler'] <= 1) {
+        var needHauler = !creepCountsByRole.hasOwnProperty('hauler') || creepCountsByRole['hauler'] < data.minHaulerCount;
+        var needBuilder = false;
+        _.forOwn(Game.constructionSites, (v, k) => { if (v.room == room) { needBuilder = true; } });
+        if (needHauler) {
             return 'hauler';
+        } else if (needHauler) {
+            return 'builder';            
         } else {
             return 'upgrader';
         }

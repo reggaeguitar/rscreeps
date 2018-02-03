@@ -6,7 +6,7 @@ module.exports = {
         var sources = mapUtil.getSources(creep);
         if (creep.memory.sourceToHarvest == undefined) {
             this.startHarvest(creep, sources);
-        }
+        }        
         this.mineSources(creep, sources);
     },
     mineSources: function(creep, sources) {
