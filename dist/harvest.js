@@ -4,7 +4,7 @@ var mapUtil = require('mapUtil');
 module.exports = {        
     doHarvest: function (creep) {
         var closestEnergyLocation;
-        if (pickedUpDroppedEnergy(creep)) return;
+        if (this.pickedUpDroppedEnergy(creep)) return;
         if (creep.memory.role == 'hauler') {
             const almostFullFactor = 0.75;
             var almostFullContainer = creep.pos.findClosestByRange(
