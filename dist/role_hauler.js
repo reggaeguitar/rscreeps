@@ -1,5 +1,5 @@
-var _ = require('lodash');
-var worker = require('role_worker');
+let _ = require('lodash');
+let worker = require('role_worker');
 
 module.exports = {
     run: function(creep) {
@@ -8,16 +8,16 @@ module.exports = {
     doWork: function(creep) {
         const towerFillFactor = 0.90;        
         // fill spawns and extensions first, then towers
-        var nonFullSpawnOrExtension = creep.pos.findClosestByRange(FIND_STRUCTURES, {
+        let nonFullSpawnOrExtension = creep.pos.findClosestByRange(FIND_STRUCTURES, {
             filter: s => (s.room == creep.room &&
                           (s.structureType == STRUCTURE_SPAWN ||
                            s.structureType == STRUCTURE_EXTENSION)
                            && s.energy < s.energyCapacity)});
-        var nonFullTower = creep.pos.findClosestByRange(FIND_STRUCTURES, {
+        let nonFullTower = creep.pos.findClosestByRange(FIND_STRUCTURES, {
             filter: s => s.room == creep.room &&
                          s.structureType == STRUCTURE_TOWER && 
                          s.energy < s.energyCapacity * towerFillFactor });
-        var nonFullStorage = creep.pos.findClosestByRange(FIND_STRUCTURES, {
+        let nonFullStorage = creep.pos.findClosestByRange(FIND_STRUCTURES, {
             filter: s => s.room == creep.room &&
                          s.structureType == STRUCTURE_STORAGE && 
                          _.sum(s.store) < s.storeCapacity });

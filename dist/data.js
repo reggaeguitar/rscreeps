@@ -1,8 +1,8 @@
-var roleHarvester = require('role_harvester');
-var roleUpgrader = require('role_upgrader');
-var roleBuilder = require('role_builder');
-var roleHauler = require('role_hauler');
-var roleClaimer = require('role_claimer');
+const roleHarvester = require('role_harvester');
+const roleUpgrader = require('role_upgrader');
+const roleBuilder = require('role_builder');
+const roleHauler = require('role_hauler');
+const roleClaimer = require('role_claimer');
 
 module.exports = {
     creepData: {

@@ -1,9 +1,9 @@
-var worker = require('role_worker');
-var mapUtil = require('mapUtil');
+let worker = require('role_worker');
+let mapUtil = require('mapUtil');
 
 module.exports = {
     run: function(creep) {
-        var sources = mapUtil.getSources(creep);
+        let sources = mapUtil.getSources(creep);
         if (creep.memory.sourceToHarvest == undefined) {
             this.startHarvest(creep, sources);
         }        
@@ -16,11 +16,11 @@ module.exports = {
         }
     },    
     startHarvest: function(creep, sources) {
-        var creepRoleCounts = _.countBy(Game.creeps, c => c.memory.role);
-        var sourceToHarvest = 0;
+        let creepRoleCounts = _.countBy(Game.creeps, c => c.memory.role);
+        let sourceToHarvest = 0;
         if (creepRoleCounts.hasOwnProperty('harvester')) {
-            var harvesters = _.filter(Game.creeps, c => c.memory.role == 'harvester');
-            var otherHarvesterSource = _.sortBy(harvesters, h => h.ticksToLive)[0]
+            let harvesters = _.filter(Game.creeps, c => c.memory.role == 'harvester');
+            let otherHarvesterSource = _.sortBy(harvesters, h => h.ticksToLive)[0]
                     .memory.sourceToHarvest;
             sourceToHarvest = otherHarvesterSource == 0 ? 1 : 0;
         } else {

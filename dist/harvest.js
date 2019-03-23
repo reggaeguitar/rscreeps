@@ -1,13 +1,12 @@
-var _ = require('lodash');
-var mapUtil = require('mapUtil');
+const _ = require('lodash');
 
 module.exports = {        
     doHarvest: function (creep) {
-        var closestEnergyLocation;
+        let closestEnergyLocation;
         if (this.pickedUpDroppedEnergy(creep)) return;
         if (creep.memory.role == 'hauler') {
             const almostFullFactor = 0.75;
-            var almostFullContainer = creep.pos.findClosestByRange(
+            let almostFullContainer = creep.pos.findClosestByRange(
                 FIND_STRUCTURES, { filter: s => 
                     s.structureType == STRUCTURE_CONTAINER &&
                     _.sum(s.store) > s.storeCapacity * almostFullFactor });
@@ -32,7 +31,7 @@ module.exports = {
         }
     },
     pickedUpDroppedEnergy(creep) {
-        var droppedEnergy = creep.pos.findClosestByRange(FIND_DROPPED_RESOURCES);
+        let droppedEnergy = creep.pos.findClosestByRange(FIND_DROPPED_RESOURCES);
         if (droppedEnergy != undefined) {
             if (creep.pickup(droppedEnergy) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(droppedEnergy);

@@ -5,7 +5,7 @@ var data = require('data');
 var roleTower = require('role_tower');
 
 var spawn1 = Game.spawns['Spawn1'];
-var firstRoom = Game.rooms['E12N21'];
+var firstRoom = Game.rooms['E24N7'];
 
 module.exports.loop = function () {
     

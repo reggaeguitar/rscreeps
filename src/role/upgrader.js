@@ -1,4 +1,4 @@
-var worker = require('role_worker');
+const worker = require('role_worker');
 
 module.exports = {
 

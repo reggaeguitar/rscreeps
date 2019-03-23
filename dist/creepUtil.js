@@ -1,4 +1,4 @@
-var mapUtil = require('mapUtil');
+const mapUtil = require('mapUtil');
 
 module.exports = {
     directions: [
@@ -13,19 +13,19 @@ module.exports = {
     ],
     //
     creepIsNextToSource: function(creep) {
-        var isNearSource = this.sourceCreepIsNear(creep) != -1;
+        let isNearSource = this.sourceCreepIsNear(creep) != -1;
         return isNearSource;
     },
     sourceCreepIsNear: function(creep) {
-        var sources = mapUtil.getSources(creep);
+        let sources = mapUtil.getSources(creep);
         return _.findIndex(sources, src => src.pos.isNearTo(creep.pos));
     },
     moveAwayFromSource: function(creep) {
-        var sourceCreepIsNear = mapUtil.getSources(creep)[this.sourceCreepIsNear(creep)];
-        var sourcePos = sourceCreepIsNear.pos;
+        let sourceCreepIsNear = mapUtil.getSources(creep)[this.sourceCreepIsNear(creep)];
+        let sourcePos = sourceCreepIsNear.pos;
         for (let i = 0; i < this.directions.length; i++) {
             const element = this.directions[i];
-            var newPos = element.mutatorFunc(creep.pos);
+            let newPos = element.mutatorFunc(creep.pos);
             if (this.isPassable(creep, newPos)) {
                 creep.moveTo(newPos);
             }
@@ -33,9 +33,9 @@ module.exports = {
     },
     isPassable: function(creep, newPos) {
         // is passable if plain and not occupied by a creep
-        var terrain = Game.map.getTerrainAt(newPos);
-        var creepsOtherThanThisOne = _.pull(Object.keys(Game.creeps), creep.name);        
-        var posHasCreep = _.findIndex(creepsOtherThanThisOne,
+        let terrain = Game.map.getTerrainAt(newPos);
+        let creepsOtherThanThisOne = _.pull(Object.keys(Game.creeps), creep.name);        
+        let posHasCreep = _.findIndex(creepsOtherThanThisOne,
             c => Game.creeps[c].pos.isEqualTo(newPos)) != -1;
         return terrain == 'plain' && !posHasCreep;
     },    
