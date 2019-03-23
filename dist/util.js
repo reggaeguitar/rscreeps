@@ -1,6 +1,5 @@
 var _ = require('lodash');
 var data = require('data');
-var mapUtil = require('mapUtil');
 
 module.exports = {
     printCreepRoleCounts: function() {

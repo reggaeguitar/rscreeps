@@ -18,8 +18,10 @@ module.exports = {
         var maxHarvesterCount = data.maxHarvesterCount;
         var zeroHarvesters = !creepCountsByRole.hasOwnProperty('harvester');
         var lessThanMaxHarvesters = creepCountsByRole['harvester'] < maxHarvesterCount;
-        var potentialHarvestersAboutToDie = _.filter(Game.creeps, c => c.memory.role == 'harvester' && c.ticksToLive < data.harvesterTicksToLive);
-        var harvesterAboutToDie = potentialHarvestersAboutToDie != undefined && potentialHarvestersAboutToDie.length > 0;
+        var potentialHarvestersAboutToDie = _.filter(Game.creeps, c => c.memory.role == 'harvester' && 
+            c.ticksToLive < data.harvesterTicksToLive);
+        var harvesterAboutToDie = potentialHarvestersAboutToDie != undefined &&
+            potentialHarvestersAboutToDie.length > 0;
         if (zeroHarvesters || lessThanMaxHarvesters || harvesterAboutToDie) {            
             var canWaitToSpawnGoodHarvester = creepCountsByRole.hasOwnProperty('hauler') &&
                                               creepCountsByRole.hasOwnProperty('harvester');
@@ -33,7 +35,7 @@ module.exports = {
             // todo loop over roles
             if (creepCountsByRole.hasOwnProperty('harvester')) {
                 var workerCount = Object.keys(Game.creeps).length - creepCountsByRole['harvester'];
-                //console.log('workerCount: ' + workerCount + ' maxWorkerCount: ' + maxWorkerCount);
+                console.log('workerCount: ' + workerCount + ' maxWorkerCount: ' + maxWorkerCount);
                 if (workerCount < maxWorkerCount) {
                     var role = this.getWorkerRole(room, creepCountsByRole);
                     this.spawnBestWorkerPossible(room, spawn, role);

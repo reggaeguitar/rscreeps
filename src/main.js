@@ -5,12 +5,12 @@ var data = require('data');
 var roleTower = require('role_tower');
 
 var spawn1 = Game.spawns['Spawn1'];
-var firstRoom = Game.rooms['W47N46'];
+var firstRoom = Game.rooms['E12N21'];
 
 module.exports.loop = function () {
     
     function main() {
-        //util.printCreepRoleCounts(data.creepData);
+        util.printCreepRoleCounts(data.creepData);
         util.clearDeadCreepsFromMemory();
         creepSpawn.run(firstRoom, spawn1);
         runTowers(firstRoom);
