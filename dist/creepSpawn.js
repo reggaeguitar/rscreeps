@@ -16,20 +16,14 @@ module.exports = {
         }
         let creepCountsByRole = util.getCreepRoleCounts();
         let maxHarvesterCount = data.maxHarvesterCount;
-        let zeroHarvesters = !creepCountsByRole.hasOwnProperty('harvester');
+        let haveZeroHarvesters = !creepCountsByRole.hasOwnProperty('harvester');
         let lessThanMaxHarvesters = creepCountsByRole['harvester'] < maxHarvesterCount;
         let potentialHarvestersAboutToDie = _.filter(Game.creeps, c => c.memory.role == 'harvester' && 
             c.ticksToLive < data.harvesterTicksToLive);
         let harvesterAboutToDie = potentialHarvestersAboutToDie != undefined &&
             potentialHarvestersAboutToDie.length > 0;
-        if (zeroHarvesters || lessThanMaxHarvesters || harvesterAboutToDie) {            
-            let canWaitToSpawnGoodHarvester = creepCountsByRole.hasOwnProperty('hauler') &&
-                                              creepCountsByRole.hasOwnProperty('harvester');
-            if (canWaitToSpawnGoodHarvester) {
-                this.trySpawnGoodHarvester(room, spawn);
-            } else {
-                this.spawnBestHarvesterPossible(room, spawn);
-            }
+        if (haveZeroHarvesters || lessThanMaxHarvesters || harvesterAboutToDie) {            
+            this.spawnHarvester(room, spawn, creepCountsByRole);
         } else {
             let maxWorkerCount = data.maxWorkerCount;
             // todo loop over roles
@@ -43,6 +37,15 @@ module.exports = {
             }
         }
     },
+    spawnHarvester: function(room, spawn, creepCountsByRole) {
+        let canWaitToSpawnGoodHarvester = creepCountsByRole.hasOwnProperty('hauler') &&
+                                          creepCountsByRole.hasOwnProperty('harvester');
+        if (canWaitToSpawnGoodHarvester) {
+            this.trySpawnGoodHarvester(room, spawn);
+        } else {
+            this.spawnBestHarvesterPossible(room, spawn);
+        }
+    },
     getWorkerRole: function(room, creepCountsByRole) {
         let needHauler = !creepCountsByRole.hasOwnProperty('hauler') || creepCountsByRole['hauler'] < data.minHaulerCount;
         let needBuilder = false;
@@ -50,8 +53,11 @@ module.exports = {
         if (needHauler) {
             return 'hauler';
         } else if (needHauler) {
-            return 'builder';            
-        } else {
+            return 'builder';                      
+        } else if (needBuilder) {
+            return 'builder';
+        }
+        else {
             return 'upgrader';
         }
     },
