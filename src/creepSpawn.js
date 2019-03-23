@@ -33,7 +33,7 @@ module.exports = {
             // todo loop over roles
             if (creepCountsByRole.hasOwnProperty('harvester')) {
                 var workerCount = Object.keys(Game.creeps).length - creepCountsByRole['harvester'];
-                console.log('workerCount: ' + workerCount + ' maxWorkerCount: ' + maxWorkerCount);
+                //console.log('workerCount: ' + workerCount + ' maxWorkerCount: ' + maxWorkerCount);
                 if (workerCount < maxWorkerCount) {
                     var role = this.getWorkerRole(room, creepCountsByRole);
                     this.spawnBestWorkerPossible(room, spawn, role);
