@@ -13,7 +13,8 @@ module.exports = {
     
         // ctrl level 2+ build extensions and containers
         if (room.controller.level >= 2) {            
-            this.buildExtensions(room, spawn);            
+            this.buildExtensions(room, spawn);
+            this.buildContainers(room, spawn);
         }
     
         // ctrl level 3 build a tower
@@ -55,6 +56,13 @@ module.exports = {
                 let extCountForLevel = (room.controller.level - 2) * 10;
                 return extCount < extCountForLevel;
             }
+        }
+    },
+    buildContainers: function(room, spawn, storagePos) {
+        const containerCount = room.find(STRUCTURE_CONTAINER).length;
+        if (containerCount < 5) {
+            let pos = constructionUtil.nextStoragePos(room, spawn, storagePos);
+            room.createConstructionSite(pos, STRUCTURE_CONTAINER);
         }
     },
 }
