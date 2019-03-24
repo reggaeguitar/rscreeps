@@ -3,8 +3,8 @@ const _ = require('lodash');
 module.exports = {        
     doHarvest: function (creep) {
         let closestEnergyLocation;
-        if (this.pickedUpDroppedEnergy(creep)) return;
         if (creep.memory.role == 'hauler') {
+            if (this.pickedUpDroppedEnergy(creep)) return;
             const almostFullFactor = 0.75;
             let almostFullContainer = creep.pos.findClosestByRange(
                 FIND_STRUCTURES, { filter: s => 
