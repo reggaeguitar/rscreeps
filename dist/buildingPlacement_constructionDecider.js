@@ -1,6 +1,18 @@
 const constructionUtil = require('buildingPlacement_constructionUtil');
 const mapUtil = require('mapUtil');
 
+        // // ctrl level 2+ build extensions and containers
+        // if (room.controller.level >= 2) {            
+        //     this.buildExtensions(room, spawn, storagePos);
+        //     this.buildContainers(room, spawn, storagePos);
+        // }
+    
+        // // ctrl level 3 build a tower
+        // if (room.controller.level >= 3) {
+        //     this.buildTowers(room, spawn, storagePos)
+        // }
+    
+        // // ctrl level 4 build storage    
 module.exports = {
     run: function(room, spawn) {
         // todo make sure to not build on 
@@ -11,15 +23,21 @@ module.exports = {
         let storagePos = Memory[room.name + storagePosStr];
         this.buildRoads(room, spawn);
     
-        // ctrl level 2+ build extensions and containers
-        if (room.controller.level >= 2) {            
-            this.buildExtensions(room, spawn);
-            this.buildContainers(room, spawn);
-        }
-    
-        // ctrl level 3 build a tower
-    
-        // ctrl level 4 build storage    
+        const nonRoads = [[STRUCTURE_EXTENSION, 'extension'], 
+                          [STRUCTURE_CONTAINER, 'container'],
+                          [STRUCTURE_TOWER, 'tower'],
+                          [STRUCTURE_STORAGE, 'storage']];
+        nonRoads.forEach(structureTypeAndPropName => {
+            let structureType = structureTypeAndPropName[0];
+            let propName = structureTypeAndPropName[1];
+            let structureCount = room.find(structureType).length;
+            let amountCanBuild = CONTROLLER_STRUCTURES[propName][room.controller.level];
+            let canBuild = structureCount < amountCanBuild;
+            if (canBuild) {
+                let pos = constructionUtil.nextStoragePos(room, spawn, storagePos);
+                room.createConstructionSite(pos, structureType);
+            }
+        });
     },
     buildRoads: function(room, spawn) {
         // spawn to controller
@@ -35,34 +53,5 @@ module.exports = {
                 { pos: dest, range: 0 }).path
                 .map(pos => room.createConstructionSite(pos, STRUCTURE_ROAD));
         }
-    },
-    buildExtensions: function(room, spawn, storagePos) {
-        if (!canBuildExtension(room)) return;
-        let pos = constructionUtil.nextStoragePos(room, spawn, storagePos);
-        room.createConstructionSite(pos, STRUCTURE_EXTENSION);
-
-        function canBuildExtension(room) {
-            // 2 	5 extensions  (50 capacity)
-            // 3 	10 extensions (50 capacity)
-            // 4 	20 extensions (50 capacity)
-            // 5 	30 extensions (50 capacity)
-            // 6 	40 extensions (50 capacity)
-            // 7 	50 extensions (100 capacity)
-            // 8 	60 extensions (200 capacity)
-            const extCount = room.find(STRUCTURE_EXTENSION).length;
-            if (room.controller.level < 3) {
-                return extCount < 5;
-            } else {
-                let extCountForLevel = (room.controller.level - 2) * 10;
-                return extCount < extCountForLevel;
-            }
-        }
-    },
-    buildContainers: function(room, spawn, storagePos) {
-        const containerCount = room.find(STRUCTURE_CONTAINER).length;
-        if (containerCount < 5) {
-            let pos = constructionUtil.nextStoragePos(room, spawn, storagePos);
-            room.createConstructionSite(pos, STRUCTURE_CONTAINER);
-        }
-    },
+    },    
 }
