@@ -3,12 +3,12 @@ const mapUtil = require('mapUtil');
 
 module.exports = {
     run: function(room, spawn) {
-        // todo make sure to save room for storage
+        // todo make sure to not build on 
         const storagePosStr = 'storagePos';
         if (Memory[room.name + storagePosStr] == undefined) {
             Memory[room.name + storagePosStr] = constructionUtil.nextStoragePos(room, spawn);
         }
-        //switch         
+        let storagePos = Memory[room.name + storagePosStr];
         this.buildRoads(room, spawn);
     
         // ctrl level 2+ build extensions
@@ -21,11 +21,10 @@ module.exports = {
         // spawn to controller
         buildRoadImpl(spawn.pos, room.controller.pos);
         // spawn and controller to sources
-        let sources = mapUtil.getSourcesInRoom(room);
-        for (let source in sources) {
+        mapUtil.getSourcesInRoom(room).forEach(source => {
             buildRoadImpl(spawn.pos, source.pos);
             buildRoadImpl(room.controller.pos, source.pos);
-        }
+        });
 
         function buildRoadImpl(orig, dest) {
             PathFinder.search(orig, 
