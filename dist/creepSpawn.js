@@ -26,7 +26,7 @@ module.exports = {
             this.spawnHarvester(room, spawn, creepCountsByRole);
         } else {
             let maxWorkerCount = data.maxWorkerCount;
-            // todo loop over roles
+            // todo make this room independent
             if (creepCountsByRole.hasOwnProperty('harvester')) {
                 let workerCount = Object.keys(Game.creeps).length - creepCountsByRole['harvester'];
                 if (data.log) console.log('workerCount: ' + workerCount + ' maxWorkerCount: ' + maxWorkerCount);
@@ -50,7 +50,7 @@ module.exports = {
         let needHauler = !creepCountsByRole.hasOwnProperty('hauler') || creepCountsByRole['hauler'] < data.minHaulerCount;
         let needBuilder = false;        
         _.forOwn(Game.constructionSites, (v, k) => { if (v.room == room) { needBuilder = true; } });
-        let haveAtLeastOnHauler = !creepCountsByRole.hasOwnProperty('upgrader');
+        let haveAtLeastOnHauler = creepCountsByRole.hasOwnProperty('upgrader');
         if (needHauler) {
             return 'hauler';
         } else if (needBuilder && haveAtLeastOnHauler) {

@@ -25,8 +25,7 @@ module.exports = {
         let nonFullContainer = creep.pos.findClosestByRange(FIND_STRUCTURES, {
             filter: s => s.room == creep.room &&
                          s.structureType == STRUCTURE_CONTAINER &&
-                         _sum(s.store) < s
-        })
+                         _sum(s.store) < s.storeCapacity });        
         if (nonFullSpawnOrExtension != undefined) {
             if (creep.transfer(nonFullSpawnOrExtension, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(nonFullSpawnOrExtension, { visualizePathStyle: { stroke: '#ffffff' } });
@@ -38,6 +37,11 @@ module.exports = {
         } else if (nonFullStorage != undefined) {
             if (creep.transfer(nonFullStorage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(nonFullStorage, { visualizePathStyle: { stroke: '#ffffff' } });
+            }
+        } else if (nonFullContainer != undefined) {
+            if (creep.transfer(nonFullContainer, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(nonFullStorage, { visualizePathStyle: { stroke: '#ffffff' } });
+
             }
         }
     }
