@@ -21,6 +21,7 @@ module.exports = {
             if (closestEnergyLocation == undefined) {
                 closestEnergyLocation = findBuildingWithMoreThanXEnergy(creep, minEnergy, STRUCTURE_CONTAINER);
             }
+            if (closestEnergyLocation == undefined) this.pickedUpDroppedEnergy(creep);
         }
         if (closestEnergyLocation != undefined) {
             if (creep.withdraw(closestEnergyLocation, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
