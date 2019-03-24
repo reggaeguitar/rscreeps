@@ -32,11 +32,9 @@ module.exports = {
     },
     pickedUpDroppedEnergy(creep) {
         let droppedEnergy = creep.pos.findClosestByRange(FIND_DROPPED_RESOURCES);
-        if (droppedEnergy != undefined) {
-            if (creep.pickup(droppedEnergy) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(droppedEnergy);
-                return true;
-            }
+        if (droppedEnergy != undefined && creep.pickup(droppedEnergy) == ERR_NOT_IN_RANGE) {
+            creep.moveTo(droppedEnergy);
+            return true;
         }
         return false; 
     },
