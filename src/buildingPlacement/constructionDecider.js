@@ -7,10 +7,8 @@ module.exports = {
         if (Memory[room.name + storagePosStr] == undefined) {
             Memory[room.name + storagePosStr] = constructionUtil.nextStoragePos(room, spawn);
         }
-        //switch 
-        // ctrl level 1 build roads between spawn
+        //switch         
         this.buildRoads();
-        // sources and room controller
     
         // ctrl level 2+ build extensions
     
@@ -19,6 +17,10 @@ module.exports = {
         // ctrl level 4 build storage    
     },
     buildRoads: function(room, spawn) {
-
+        // ctrl level 1 build roads between spawn,
+        // sources and room controller
+        let roadPositions = PathFinder.search(spawn.pos, 
+            { pos: new room.controller.pos, range: 0 }).path;
+        roadPositions.map(pos => room.createConstructionSite(pos, STRUCTURE_ROAD));
     }
 }
