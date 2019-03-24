@@ -36,7 +36,8 @@ module.exports.loop = function () {
     }
 
     function runConstruction(room, spawn) {
-        constructionDecider.run(room, spawn);
+        if (Game.time % data.buildInterval == 0) 
+            constructionDecider.run(room, spawn);
     }
     
     main();
