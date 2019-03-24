@@ -1,11 +1,12 @@
-var _ = require('lodash');
-var util = require('util');
-var creepSpawn = require('creepSpawn');
-var data = require('data');
-var roleTower = require('role_tower');
+const _ = require('lodash');
+const util = require('util');
+const creepSpawn = require('creepSpawn');
+const data = require('data');
+const roleTower = require('role_tower');
+const constructionDecider = require('buildingPlacement_constructionDecider');
 
-var spawn1 = Game.spawns['Spawn1'];
-var firstRoom = Game.rooms['E24N7'];
+const spawn1 = Game.spawns['Spawn1'];
+const firstRoom = Game.rooms['E24N7'];
 
 module.exports.loop = function () {
     
@@ -14,6 +15,7 @@ module.exports.loop = function () {
         util.clearDeadCreepsFromMemory();
         creepSpawn.run(firstRoom, spawn1);
         runTowers(firstRoom);
+        runConstruction(firstRoom, spawn1);
         runCreepRoles();
     }
     
@@ -31,6 +33,10 @@ module.exports.loop = function () {
         room.find(FIND_MY_STRUCTURES, { filter: 
             s => s.structureType == STRUCTURE_TOWER }).forEach(
                 tower => roleTower.run(tower));        
+    }
+
+    function runConstruction(room, spawn) {
+        constructionDecider.run(room, spawn);
     }
     
     main();

@@ -3,7 +3,7 @@ const data = require('data');
 
 module.exports = {
     printCreepRoleCounts: function() {
-        console.log(JSON.stringify(this.getCreepRoleCounts()));
+        if (data.log) console.log(JSON.stringify(this.getCreepRoleCounts()));
     },
     getCreepRoleCounts: function() {
         return _.countBy(Game.creeps, c => c.memory.role);
