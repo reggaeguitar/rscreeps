@@ -65,8 +65,9 @@ module.exports = {
         let movePartsCost = BODYPART_COST[MOVE] * moveCount;
         let energyLeftForWorkParts = room.energyAvailable - movePartsCost;
         let workCount = energyLeftForWorkParts / BODYPART_COST[WORK];
-        if (workCount >= data.goodHarvesterWorkCount) {
-            let bodyParts = this.getBodyPartsFromCounts(data.goodHarvesterWorkCount, 0, moveCount);
+        let goodHarvesterWorkCount = data.goodHarvesterWorkCount(room);
+        if (workCount >= goodHarvesterWorkCount) {
+            let bodyParts = this.getBodyPartsFromCounts(goodHarvesterWorkCount, 0, moveCount);
             this.spawnCreepImpl(bodyParts, 'harvester', spawn);
         }
     },
@@ -76,8 +77,8 @@ module.exports = {
         let movePartsCost = BODYPART_COST[MOVE] * moveCount;
         let energyLeftForWorkParts = room.energyAvailable - movePartsCost;
         let workCount = energyLeftForWorkParts / BODYPART_COST[WORK];
-        if (workCount > data.goodHarvesterWorkCount) {
-            workCount = data.goodHarvesterWorkCount;
+        if (workCount > data.goodHarvesterWorkCount(room)) {
+            workCount = data.goodHarvesterWorkCount(room);
         }
         if (workCount == 0) {
             return;
