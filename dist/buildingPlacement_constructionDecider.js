@@ -49,7 +49,7 @@ module.exports = {
             // 7 	50 extensions (100 capacity)
             // 8 	60 extensions (200 capacity)
             const extCount = room.find(STRUCTURE_EXTENSION).length;
-            if (room.level < 3) {
+            if (room.controller.level < 3) {
                 return extCount < 5;
             } else {
                 let extCountForLevel = (room.controller.level - 2) * 10;

@@ -26,7 +26,7 @@ module.exports = {
             let ret = true;
             // look returns an object for each thing on the position
             pos.look().forEach(x => {
-                if (x.type == 'structure') ret = false;                
+                if (x.type == 'structure' || x.type == 'constructionSite') ret = false;                
             });
             return ret;
         }
