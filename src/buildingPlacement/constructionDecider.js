@@ -20,7 +20,7 @@ module.exports = {
         // ctrl level 1 build roads between spawn,
         // sources and room controller
         let roadPositions = PathFinder.search(spawn.pos, 
-            { pos: new room.controller.pos, range: 0 }).path;
+            { pos: room.controller.pos, range: 0 }).path;
         roadPositions.map(pos => room.createConstructionSite(pos, STRUCTURE_ROAD));
     }
 }
