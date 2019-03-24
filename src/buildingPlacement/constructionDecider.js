@@ -35,9 +35,9 @@ module.exports = {
                 .map(pos => room.createConstructionSite(pos, STRUCTURE_ROAD));
         }
     },
-    buildExtensions: function(room, spawn) {
+    buildExtensions: function(room, spawn, storagePos) {
         if (!canBuildExtension(room)) return;
-        let pos = constructionUtil.nextStoragePos(room, spawn);
+        let pos = constructionUtil.nextStoragePos(room, spawn, storagePos);
         room.createConstructionSite(pos, STRUCTURE_EXTENSION);
 
         function canBuildExtension(room) {

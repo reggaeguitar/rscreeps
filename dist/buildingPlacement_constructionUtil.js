@@ -3,16 +3,16 @@ module.exports = {
         const maxDistUnits = 6;
         const distIncrement = 2;
         let dist = 2;
-        const mutatorFuncs = [pos => new RoomPosition(pos.x, pos.y + dist, room.name),
-                              pos => new RoomPosition(pos.x, pos.y - dist, room.name),
-                              pos => new RoomPosition(pos.x + dist, pos.y, room.name),
-                              pos => new RoomPosition(pos.x - dist, pos.y, room.name)];
+        const mutatorFuncs = [(pos, dist) => new RoomPosition(pos.x, pos.y + dist, room.name),
+                              (pos, dist) => new RoomPosition(pos.x, pos.y - dist, room.name),
+                              (pos, dist) => new RoomPosition(pos.x + dist, pos.y, room.name),
+                              (pos, dist) => new RoomPosition(pos.x - dist, pos.y, room.name)];
                               
         const roomTerrain = new Room.Terrain(room.name);
 
         for (let distUnit = 0; distUnit < maxDistUnits; distUnit++) {
             for (let func = 0; func < mutatorFuncs.length; func++) {
-                let newPos = mutatorFuncs[func](spawn.pos);
+                let newPos = mutatorFuncs[func](spawn.pos, dist);
                 if (isValid(newPos, roomTerrain)) return newPos;
             }
             dist += distIncrement;
