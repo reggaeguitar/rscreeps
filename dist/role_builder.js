@@ -22,15 +22,28 @@ module.exports = {
             return false;
         };
         function build() {
-            let targets = creep.room.find(FIND_CONSTRUCTION_SITES);
-            if (targets.length) {
-                if (creep.build(targets[0]) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(targets[0], 
+            // todo dry out this method
+            let nonRoadTargets = creep.room.find(FIND_CONSTRUCTION_SITES)
+                .filter(x => x.structureType != 'road');
+            
+            if (nonRoadTargets.length) {
+                if (creep.build(nonRoadTargets[0]) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(nonRoadTargets[0], 
                         { visualizePathStyle: { stroke: '#ffffff' } });
                 }
                 return true;
             }
-            return false;
+
+            let roadTargets = creep.room.find(FIND_CONSTRUCTION_SITES)
+                .filter(x => x.structureType == 'road');
+            if (roadTargets.length) {
+                if (creep.build(roadTargets[0]) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(roadTargets[0], 
+                        { visualizePathStyle: { stroke: '#ffffff' } });
+                }
+                return true;
+            }
+            return false;            
         };               
     }
 };
