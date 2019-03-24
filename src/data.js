@@ -15,7 +15,7 @@ module.exports = {
     },
     minHaulerCount: 2,
     maxHarvesterCount: 2,
-    maxWorkerCount: 4,
+    maxWorkerCount: 6,
     roleSayInterval : 5,
     goodHarvesterWorkCount: 6,
     harvesterMoveCount: 1,
