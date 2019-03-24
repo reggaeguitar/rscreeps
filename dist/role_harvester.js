@@ -2,7 +2,7 @@ const mapUtil = require('mapUtil');
 
 module.exports = {
     run: function(creep) {
-        let sources = mapUtil.getSources(creep);
+        let sources = mapUtil.getSourcesInRoom(creep.room);
         if (creep.memory.sourceToHarvest == undefined) {
             this.startHarvest(creep, sources);
         }        

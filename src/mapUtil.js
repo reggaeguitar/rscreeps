@@ -1,6 +1,6 @@
 
 module.exports = {
-    getSources: function(creep) {
-        return creep.room.find(FIND_SOURCES);
+    getSourcesInRoom: function(room) {
+        return room.find(FIND_SOURCES);
     },
 }

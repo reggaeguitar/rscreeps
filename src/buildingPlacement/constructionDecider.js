@@ -1,4 +1,5 @@
 const constructionUtil = require('buildingPlacement_constructionUtil');
+const mapUtil = require('mapUtil');
 
 module.exports = {
     run: function(room, spawn) {
@@ -17,10 +18,19 @@ module.exports = {
         // ctrl level 4 build storage    
     },
     buildRoads: function(room, spawn) {
-        // ctrl level 1 build roads between spawn,
-        // sources and room controller
-        let roadPositions = PathFinder.search(spawn.pos, 
-            { pos: room.controller.pos, range: 0 }).path;
-        roadPositions.map(pos => room.createConstructionSite(pos, STRUCTURE_ROAD));
+        // spawn to controller
+        buildRoadImpl(spawn.pos, room.controller.pos);
+        // spawn and controller to sources
+        let sources = mapUtil.getSourcesInRoom(room);
+        for (let source in sources) {
+            buildRoadImpl(spawn.pos, source.pos);
+            buildRoadImpl(room.controller.pos, source.pos);
+        }
+
+        function buildRoadImpl(orig, dest) {
+            PathFinder.search(orig, 
+                { pos: dest, range: 0 }).path
+                .map(pos => room.createConstructionSite(pos, STRUCTURE_ROAD));
+        }
     }
 }

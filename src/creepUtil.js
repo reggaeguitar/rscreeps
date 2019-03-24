@@ -17,12 +17,12 @@ module.exports = {
         return isNearSource;
     },
     sourceCreepIsNear: function(creep) {
-        let sources = mapUtil.getSources(creep);
+        let sources = mapUtil.getSourcesInRoom(creep.room);
         return _.findIndex(sources, src => src.pos.isNearTo(creep.pos));
     },
     moveAwayFromSource: function(creep) {
         // todo figure out what two lines below were doing and if a new implementation is needed
-        // let sourceCreepIsNear = mapUtil.getSources(creep)[this.sourceCreepIsNear(creep)];
+        // let sourceCreepIsNear = mapUtil.getSourcesInRoom(creep.room)[this.sourceCreepIsNear(creep)];
         // let sourcePos = sourceCreepIsNear.pos;
         for (let i = 0; i < this.directions.length; i++) {
             const element = this.directions[i];

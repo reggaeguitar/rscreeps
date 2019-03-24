@@ -20,8 +20,8 @@ module.exports.loop = function () {
     }
     
     function runCreepRoles() {
-        for (var name in Game.creeps) {
-            var creep = Game.creeps[name];
+        for (let name in Game.creeps) {
+            let creep = Game.creeps[name];
             if (Game.time % data.roleSayInterval == 0) {
                 creep.say(creep.memory.role);
             }
