@@ -2,6 +2,7 @@ const _ = require('lodash');
 
 module.exports = {        
     doHarvest: function (creep) {
+        const minEnergy = 200;
         let closestEnergyLocation;
         if (creep.memory.role == 'hauler') {
             if (this.pickedUpDroppedEnergy(creep)) return;
@@ -12,22 +13,26 @@ module.exports = {
                     _.sum(s.store) > s.storeCapacity * almostFullFactor });
             if (almostFullContainer != undefined) {
                 closestEnergyLocation = almostFullContainer;
-            } else {            
-                closestEnergyLocation = creep.pos.findClosestByRange(
-                    FIND_STRUCTURES, { filter : s => 
-                        s.structureType == STRUCTURE_CONTAINER &&
-                        _.sum(s.store) > 200 });
+            } else {        
+                closestEnergyLocation = findBuildingWithMoreThanXEnergy(creep, minEnergy, STRUCTURE_CONTAINER);
             }
         } else {
-            closestEnergyLocation = creep.pos.findClosestByRange(
-                FIND_STRUCTURES, { filter : s => 
-                    s.structureType == STRUCTURE_STORAGE &&
-                    _.sum(s.store) > 200 });
+            closestEnergyLocation = findBuildingWithMoreThanXEnergy(creep, minEnergy, STRUCTURE_STORAGE);            
+            if (closestEnergyLocation == undefined) {
+                closestEnergyLocation = findBuildingWithMoreThanXEnergy(creep, minEnergy, STRUCTURE_CONTAINER);
+            }
         }
         if (closestEnergyLocation != undefined) {
             if (creep.withdraw(closestEnergyLocation, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(closestEnergyLocation);
             }           
+        }
+
+        function findBuildingWithMoreThanXEnergy(creep, x, structureType) {
+            return closestEnergyLocation = creep.pos.findClosestByRange(
+                FIND_STRUCTURES, { filter : s => 
+                    s.structureType == structureType &&
+                    _.sum(s.store) > x });   
         }
     },
     pickedUpDroppedEnergy(creep) {
