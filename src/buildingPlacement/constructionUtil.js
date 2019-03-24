@@ -7,18 +7,18 @@ module.exports = {
                               pos => new RoomPosition(pos.x, pos.y - dist, room.name),
                               pos => new RoomPosition(pos.x + dist, pos.y, room.name),
                               pos => new RoomPosition(pos.x - dist, pos.y, room.name)];
+                              
+        const roomTerrain = new Room.Terrain(room.name);
 
         for (let distUnit = 0; distUnit < maxDistUnits; distUnit++) {
             for (let func = 0; func < mutatorFuncs.length; func++) {
                 let newPos = mutatorFuncs[func](spawn.pos);
-                if (isValid(newPos)) return newPos;
+                if (isValid(newPos, roomTerrain)) return newPos;
             }
             dist += distIncrement;
         }
 
-        const roomTerrain = new Room.Terrain(room.name);
-
-        function isValid(pos) {
+        function isValid(pos, roomTerrain) {
             // todo add logic to avoid squares where harvesters harvest (right next to a source)
             if (storagePos != undefined &&
                 pos.x == storagePos.x && pos.y == storagePos.y) return false;
