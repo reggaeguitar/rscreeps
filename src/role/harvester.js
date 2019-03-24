@@ -1,5 +1,4 @@
-let worker = require('role_worker');
-let mapUtil = require('mapUtil');
+const mapUtil = require('mapUtil');
 
 module.exports = {
     run: function(creep) {
@@ -16,6 +15,8 @@ module.exports = {
         }
     },    
     startHarvest: function(creep, sources) {
+        // todo it seems like this method is hardcoded to having two sources 
+        // and two harvesters in the room
         let creepRoleCounts = _.countBy(Game.creeps, c => c.memory.role);
         let sourceToHarvest = 0;
         if (creepRoleCounts.hasOwnProperty('harvester')) {
@@ -24,6 +25,7 @@ module.exports = {
                     .memory.sourceToHarvest;
             sourceToHarvest = otherHarvesterSource == 0 ? 1 : 0;
         } else {
+            // todo try changin to closest source instead of random
             sourceToHarvest = _.random(0, sources.length - 1);
         }        
         creep.memory.sourceToHarvest = sourceToHarvest;

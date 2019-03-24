@@ -21,8 +21,9 @@ module.exports = {
         return _.findIndex(sources, src => src.pos.isNearTo(creep.pos));
     },
     moveAwayFromSource: function(creep) {
-        let sourceCreepIsNear = mapUtil.getSources(creep)[this.sourceCreepIsNear(creep)];
-        let sourcePos = sourceCreepIsNear.pos;
+        // todo figure out what two lines below were doing and if a new implementation is needed
+        // let sourceCreepIsNear = mapUtil.getSources(creep)[this.sourceCreepIsNear(creep)];
+        // let sourcePos = sourceCreepIsNear.pos;
         for (let i = 0; i < this.directions.length; i++) {
             const element = this.directions[i];
             let newPos = element.mutatorFunc(creep.pos);

@@ -4,14 +4,14 @@ const data = require('data');
 
 module.exports = {    
     run: function(room, spawn) {
-        if (spawn.spawning) {
-            return;
-        }
-       
+        if (spawn.spawning) return;
+        // todo figure out why the spawn seems to get "stuck" sometimes with 300 energy
+        // and won't spawn a creep
         let energyAvailable = room.energyAvailable;
         const cheapestCreepCost = 200;
         if (energyAvailable < cheapestCreepCost) {
-            console.log('room has less than ' + cheapestCreepCost + ' energy, can\'t spawn creep');
+            console.log('room has less than ' + cheapestCreepCost + ' energy ' + 
+                room.energyAvailable + ', can\'t spawn creep');
             return;
         }
         let creepCountsByRole = util.getCreepRoleCounts();
@@ -96,9 +96,8 @@ module.exports = {
         if (BODYPART_COST[MOVE] != BODYPART_COST[CARRY]) {
             console.log('MOVE and CARRY no longer the same cost, update creepSpawn.js');
         }
-        if (workCount == 0) {
-            return;
-        }
+        if (workCount == 0) return;
+
         let carryAndMoveCount = (half / BODYPART_COST[MOVE]) / 2;
         let bodyParts = this.getBodyPartsFromCounts(
             workCount, carryAndMoveCount, carryAndMoveCount);

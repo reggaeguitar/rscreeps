@@ -5,10 +5,8 @@ module.exports = {
         worker.run(creep, this.doWork);
     },
     doWork: function(creep) {      
-        if (!build()) {
-            if (!repair()) {
-                creep.memory.role = 'upgrader';
-            }
+        if (!build() && !repair()) {
+            creep.memory.role = 'upgrader';
         }
 
         function repair() {

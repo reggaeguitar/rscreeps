@@ -1,8 +1,6 @@
 const worker = require('role_worker');
 
 module.exports = {
-
-    /** @param {Creep} creep **/
     run: function(creep) {
         worker.run(creep, this.doWork);        
     },

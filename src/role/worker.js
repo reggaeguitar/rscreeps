@@ -2,8 +2,6 @@ const harvest = require('harvest');
 const creepUtil = require('creepUtil');
 
 module.exports = {
-
-    /** @param {Creep} creep **/
     run: function(creep, doWork) {
         // 4 possible states
         if (creep.carry.energy == 0 && !creep.memory.harvesting) {

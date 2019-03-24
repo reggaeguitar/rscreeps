@@ -1,11 +1,12 @@
-let _ = require('lodash');
-let worker = require('role_worker');
+const _ = require('lodash');
+const worker = require('role_worker');
 
 module.exports = {
     run: function(creep) {
         worker.run(creep, this.doWork);
     },
     doWork: function(creep) {
+        // todo dry out this function        
         const towerFillFactor = 0.90;        
         // fill spawns and extensions first, then towers
         let nonFullSpawnOrExtension = creep.pos.findClosestByRange(FIND_STRUCTURES, {
