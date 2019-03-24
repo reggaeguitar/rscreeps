@@ -22,4 +22,5 @@ module.exports = {
     energyBuffer: 100,
     harvesterTicksToLive: 50,
     buildInterval: 10,
+    containerCapacity: 2000,
 };
