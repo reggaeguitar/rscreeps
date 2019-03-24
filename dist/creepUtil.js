@@ -21,9 +21,6 @@ module.exports = {
         return _.findIndex(sources, src => src.pos.isNearTo(creep.pos));
     },
     moveAwayFromSource: function(creep) {
-        // todo figure out what two lines below were doing and if a new implementation is needed
-        // let sourceCreepIsNear = mapUtil.getSourcesInRoom(creep.room)[this.sourceCreepIsNear(creep)];
-        // let sourcePos = sourceCreepIsNear.pos;
         for (let i = 0; i < this.directions.length; i++) {
             const element = this.directions[i];
             let newPos = element.mutatorFunc(creep.pos);
@@ -34,7 +31,7 @@ module.exports = {
     },
     isPassable: function(creep, newPos) {
         // is passable if plain and not occupied by a creep
-        let terrain = Game.map.getTerrainAt(newPos);
+        let terrain = Game.map.getRoomTerrain(creep.room.name).get(newPos.x, newPos.y);
         let creepsOtherThanThisOne = _.pull(Object.keys(Game.creeps), creep.name);        
         let posHasCreep = _.findIndex(creepsOtherThanThisOne,
             c => Game.creeps[c].pos.isEqualTo(newPos)) != -1;

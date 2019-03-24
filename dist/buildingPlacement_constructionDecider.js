@@ -1,21 +1,8 @@
 const constructionUtil = require('buildingPlacement_constructionUtil');
 const mapUtil = require('mapUtil');
-
-        // // ctrl level 2+ build extensions and containers
-        // if (room.controller.level >= 2) {            
-        //     this.buildExtensions(room, spawn, storagePos);
-        //     this.buildContainers(room, spawn, storagePos);
-        // }
-    
-        // // ctrl level 3 build a tower
-        // if (room.controller.level >= 3) {
-        //     this.buildTowers(room, spawn, storagePos)
-        // }
-    
-        // // ctrl level 4 build storage    
+          
 module.exports = {
     run: function(room, spawn) {
-        // todo make sure to not build on 
         const storagePosStr = 'storagePos';
         if (Memory[room.name + storagePosStr] == undefined) {
             Memory[room.name + storagePosStr] = constructionUtil.nextStoragePos(room, spawn);

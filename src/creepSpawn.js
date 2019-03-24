@@ -5,8 +5,6 @@ const data = require('data');
 module.exports = {    
     run: function(room, spawn) {
         if (spawn.spawning) return;
-        // todo figure out why the spawn seems to get "stuck" sometimes with 300 energy
-        // and won't spawn a creep
         let energyAvailable = room.energyAvailable;
         const cheapestCreepCost = 200;
         if (energyAvailable < cheapestCreepCost) {
