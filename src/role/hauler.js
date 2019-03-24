@@ -41,8 +41,7 @@ module.exports = {
             }
         } else if (nonFullContainer != undefined) {
             if (creep.transfer(nonFullContainer, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(nonFullStorage, { visualizePathStyle: { stroke: '#ffffff' } });
-
+                creep.moveTo(nonFullContainer, { visualizePathStyle: { stroke: '#ffffff' } });
             }
         }
     }
