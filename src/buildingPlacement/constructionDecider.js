@@ -8,7 +8,7 @@ module.exports = {
             Memory[room.name + storagePosStr] = constructionUtil.nextStoragePos(room, spawn);
         }
         //switch         
-        this.buildRoads();
+        this.buildRoads(room, spawn);
     
         // ctrl level 2+ build extensions
     
