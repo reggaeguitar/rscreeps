@@ -2,4 +2,4 @@ Add these lines to the bottom of the .git/config file in the project.
 Be aware this will push to master, it doesn't support multiple branches.
 
 [alias]
-	gacp = "!f(){ grunt && git add . && git commit -m \"$1\"; git push origin master; grunt runCleans; };f"
+	gacp = "!f(){ grunt && git add . && git commit -m \"$1\"; git push origin master; grunt runClean; };f"
