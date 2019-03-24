@@ -1,8 +1,8 @@
 const _ = require('lodash');
 
-module.exports = {        
+module.exports = {
+    minEnergy: 200,   
     doHarvest: function (creep) {
-        const minEnergy = 200;
         let closestEnergyLocation;
         if (creep.memory.role == 'hauler') {
             if (this.pickedUpDroppedEnergy(creep)) return;
@@ -14,12 +14,15 @@ module.exports = {
             if (almostFullContainer != undefined) {
                 closestEnergyLocation = almostFullContainer;
             } else {        
-                closestEnergyLocation = findBuildingWithMoreThanXEnergy(creep, minEnergy, STRUCTURE_CONTAINER);
+                closestEnergyLocation = findBuildingWithMoreThanXEnergy(
+                    creep, this.minEnergy, STRUCTURE_CONTAINER);
             }
         } else {
-            closestEnergyLocation = findBuildingWithMoreThanXEnergy(creep, minEnergy, STRUCTURE_STORAGE);            
+            closestEnergyLocation = findBuildingWithMoreThanXEnergy(
+                creep, this.minEnergy, STRUCTURE_STORAGE);            
             if (closestEnergyLocation == undefined) {
-                closestEnergyLocation = findBuildingWithMoreThanXEnergy(creep, minEnergy, STRUCTURE_CONTAINER);
+                closestEnergyLocation = findBuildingWithMoreThanXEnergy(
+                    creep, this.minEnergy, STRUCTURE_CONTAINER);
             }
             if (closestEnergyLocation == undefined) this.pickedUpDroppedEnergy(creep);
         }
@@ -38,7 +41,9 @@ module.exports = {
     },
     pickedUpDroppedEnergy(creep) {
         let droppedEnergy = creep.pos.findClosestByRange(FIND_DROPPED_RESOURCES);
-        if (droppedEnergy != undefined && creep.pickup(droppedEnergy) == ERR_NOT_IN_RANGE) {
+        if (droppedEnergy != undefined && 
+            droppedEnergy.amount > this.minEnergy &&
+            creep.pickup(droppedEnergy) == ERR_NOT_IN_RANGE) {
             creep.moveTo(droppedEnergy);
             return true;
         }
