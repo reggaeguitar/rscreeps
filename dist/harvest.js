@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const mapUtil = require('mapUtil');
 
 module.exports = {
     minEnergy: 200,   
@@ -41,10 +42,23 @@ module.exports = {
     },
     pickedUpDroppedEnergy(creep) {
         let droppedEnergy = creep.pos.findClosestByRange(FIND_DROPPED_RESOURCES);
-        if (droppedEnergy != undefined && 
-            droppedEnergy.amount > this.minEnergy &&
-            creep.pickup(droppedEnergy) == ERR_NOT_IN_RANGE) {
-            creep.moveTo(droppedEnergy);
+        let closestValid = droppedEnergy != undefined && droppedEnergy.amount > this.minEnergy;
+        
+        if (closestValid) {
+            return pickup(creep, droppedEnergy);
+        } else {
+            let droppedEnergies = creep.room.find(FIND_DROPPED_RESOURCES);;
+            droppedEnergies.forEach(e => {
+                if (e.amount > this.minEnergy) {
+                    return pickup(creep, e);
+                }
+            });
+        }
+
+        function pickup(creep, droppedEnergy) {
+            if (creep.pickup(droppedEnergy) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(droppedEnergy);
+            }
             return true;
         }
         return false; 
