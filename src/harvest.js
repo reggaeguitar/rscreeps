@@ -7,7 +7,7 @@ module.exports = {
         let priorities;
         if (creep.memory.role == 'hauler') {
             //priorities = 
-            closestEnergyLocation = runHauler();
+            closestEnergyLocation = this.runHauler(creep);
         } else {
             closestEnergyLocation = findBuildingWithMoreThanXEnergy(
                 creep, this.minEnergy, STRUCTURE_STORAGE);            
