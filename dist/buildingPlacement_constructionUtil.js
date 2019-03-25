@@ -1,3 +1,5 @@
+const mapUtil = require('mapUtil');
+
 module.exports = {
     nextStoragePos: function(room, spawn, storagePos) {
         const maxDistUnits = 6;

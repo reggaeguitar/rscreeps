@@ -21,8 +21,12 @@ module.exports = {
             let amountCanBuild = CONTROLLER_STRUCTURES[propName][room.controller.level];
             let canBuild = structureCount < amountCanBuild;
             if (canBuild) {
-                let pos = constructionUtil.nextStoragePos(room, spawn, storagePos);
-                room.createConstructionSite(pos, structureType);
+                if (structureType == STRUCTURE_STORAGE) {
+                    room.createConstructionSite(storagePos, structureType)
+                } else {
+                    let pos = constructionUtil.nextStoragePos(room, spawn, storagePos);
+                    room.createConstructionSite(pos, structureType);
+                }
             }
         });
     },

@@ -1,17 +1,6 @@
 const mapUtil = require('mapUtil');
 
-module.exports = {
-    directions: [
-        { TOP: 1, mutatorFunc: (pos) => { return new RoomPosition(pos.x, pos.y - 1, pos.roomName); } },
-        { TOP_RIGHT: 2, mutatorFunc: (pos) => { return new RoomPosition(pos.x + 1, pos.y - 1, pos.roomName); } },
-        { RIGHT: 3, mutatorFunc: (pos) => { return new RoomPosition(pos.x + 1, pos.y, pos.roomName); } },
-        { BOTTOM_RIGHT: 4, mutatorFunc: (pos) => { return new RoomPosition(pos.x + 1, pos.y + 1, pos.roomName); } },
-        { BOTTOM: 5, mutatorFunc: (pos) => { return new RoomPosition(pos.x, pos.y + 1, pos.roomName); } },
-        { BOTTOM_LEFT: 6, mutatorFunc: (pos) => { return new RoomPosition(pos.x - 1, pos.y + 1, pos.roomName); } },
-        { LEFT: 7, mutatorFunc: (pos) => { return new RoomPosition(pos.x - 1, pos.y, pos.roomName); } },
-        { TOP_LEFT: 8, mutatorFunc: (pos) => { return new RoomPosition(pos.x - 1, pos.y - 1, pos.roomName); } },
-    ],
-    //
+module.exports = {   
     creepIsNextToSource: function(creep) {
         let isNearSource = this.sourceCreepIsNear(creep) != -1;
         return isNearSource;
@@ -21,8 +10,8 @@ module.exports = {
         return _.findIndex(sources, src => src.pos.isNearTo(creep.pos));
     },
     moveAwayFromSource: function(creep) {
-        for (let i = 0; i < this.directions.length; i++) {
-            const element = this.directions[i];
+        for (let i = 0; i < mapUtil.directions.length; i++) {
+            const element = mapUtil.directions[i];
             let newPos = element.mutatorFunc(creep.pos);
             if (this.isPassable(creep, newPos)) {
                 creep.moveTo(newPos);

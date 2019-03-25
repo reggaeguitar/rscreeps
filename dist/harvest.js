@@ -1,23 +1,13 @@
 const _ = require('lodash');
-const mapUtil = require('mapUtil');
 
 module.exports = {
     minEnergy: 200,   
     doHarvest: function (creep) {
         let closestEnergyLocation;
+        let priorities;
         if (creep.memory.role == 'hauler') {
-            if (this.pickedUpDroppedEnergy(creep)) return;
-            const almostFullFactor = 0.75;
-            let almostFullContainer = creep.pos.findClosestByRange(
-                FIND_STRUCTURES, { filter: s => 
-                    s.structureType == STRUCTURE_CONTAINER &&
-                    _.sum(s.store) > s.storeCapacity * almostFullFactor });
-            if (almostFullContainer != undefined) {
-                closestEnergyLocation = almostFullContainer;
-            } else {        
-                closestEnergyLocation = findBuildingWithMoreThanXEnergy(
-                    creep, this.minEnergy, STRUCTURE_CONTAINER);
-            }
+            //priorities = 
+            closestEnergyLocation = runHauler();
         } else {
             closestEnergyLocation = findBuildingWithMoreThanXEnergy(
                 creep, this.minEnergy, STRUCTURE_STORAGE);            
@@ -40,7 +30,21 @@ module.exports = {
                     _.sum(s.store) > x });   
         }
     },
-    pickedUpDroppedEnergy(creep) {
+    runHauler: function(creep) {
+        if (this.pickedUpDroppedEnergy(creep)) return;
+        const almostFullFactor = 0.75;
+        let almostFullContainer = creep.pos.findClosestByRange(
+            FIND_STRUCTURES, { filter: s => 
+                s.structureType == STRUCTURE_CONTAINER &&
+                _.sum(s.store) > s.storeCapacity * almostFullFactor });
+        if (almostFullContainer != undefined) {
+            return almostFullContainer;
+        } else {        
+            return findBuildingWithMoreThanXEnergy(
+                creep, this.minEnergy, STRUCTURE_CONTAINER);
+        }  
+    },
+    pickedUpDroppedEnergy: function(creep) {
         let droppedEnergy = creep.pos.findClosestByRange(FIND_DROPPED_RESOURCES);
         let closestValid = droppedEnergy != undefined && droppedEnergy.amount > this.minEnergy;
         
