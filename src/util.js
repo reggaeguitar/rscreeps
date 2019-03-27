@@ -9,16 +9,14 @@ const roleClaimer = require('role_claimer');
 
 module.exports = {
     creepData: () => {
-        if (Memory.creepData == undefined) {
-            let creepData = {};
-            creepData[constants.RoleHarvester] = { roleObj: roleHarvester };
-            creepData[constants.RoleUpgrader] = { roleObj: roleUpgrader },
-            creepData[constants.RoleBuilder] = { roleObj: roleBuilder },
-            creepData[constants.RoleHauler] = { roleObj: roleHauler },
-            creepData[constants.RoleClaimer] = { roleObj: roleClaimer }
-            Memory.creepData = creepData;
-        }        
-        return Memory.creepData;
+        let creepData = {};
+        creepData[constants.RoleHarvester] = { roleObj: roleHarvester };
+        creepData[constants.RoleUpgrader] = { roleObj: roleUpgrader },
+        creepData[constants.RoleBuilder] = { roleObj: roleBuilder },
+        creepData[constants.RoleHauler] = { roleObj: roleHauler },
+        creepData[constants.RoleClaimer] = { roleObj: roleClaimer }
+        Memory.creepData = creepData;
+        return creepData;
     },
     
     printCreepRoleCounts: function() {
