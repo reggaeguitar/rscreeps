@@ -1,6 +1,6 @@
 module.exports = {
     run: function(creep) {
-        let sources = room.find(FIND_SOURCES)
+        let sources = creep.room.find(FIND_SOURCES)
         if (creep.memory.sourceToHarvest == undefined) {
             this.startHarvest(creep, sources);
         }        

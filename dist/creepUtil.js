@@ -1,12 +1,9 @@
 const mapUtil = require('mapUtil');
 
 module.exports = {   
-    creepIsNextToSource: function(creep) {
-        let isNearSource = this.sourceCreepIsNear(creep) != -1;
-        return isNearSource;
-    },
-    sourceCreepIsNear: function(creep) {
-        let sources = room.find(FIND_SOURCES)
+    creepIsNextToSource: (creep) => this.sourceCreepIsNear(creep) != -1,
+    sourceCreepIsNear: (creep) => {
+        let sources = creep.room.find(FIND_SOURCES)
         return _.findIndex(sources, src => src.pos.isNearTo(creep.pos));
     },
     moveAwayFromSource: function(creep) {
