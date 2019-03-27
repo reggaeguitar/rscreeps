@@ -6,7 +6,7 @@ module.exports = {
         return isNearSource;
     },
     sourceCreepIsNear: function(creep) {
-        let sources = mapUtil.getSourcesInRoom(creep.room);
+        let sources = room.find(FIND_SOURCES)
         return _.findIndex(sources, src => src.pos.isNearTo(creep.pos));
     },
     moveAwayFromSource: function(creep) {

@@ -9,8 +9,5 @@ module.exports = {
         { BOTTOM_LEFT: 6, mutatorFunc: (pos) => { return new RoomPosition(pos.x - 1, pos.y + 1, pos.roomName); } },
         { LEFT: 7, mutatorFunc: (pos) => { return new RoomPosition(pos.x - 1, pos.y, pos.roomName); } },
         { TOP_LEFT: 8, mutatorFunc: (pos) => { return new RoomPosition(pos.x - 1, pos.y - 1, pos.roomName); } },
-    ],
-    getSourcesInRoom: function(room) {
-        return room.find(FIND_SOURCES);
-    },
+    ]
 }

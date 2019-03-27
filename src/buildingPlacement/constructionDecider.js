@@ -1,5 +1,4 @@
 const constructionUtil = require('buildingPlacement_constructionUtil');
-const mapUtil = require('mapUtil');
           
 module.exports = {
     run: function(room, spawn) {
@@ -33,7 +32,7 @@ module.exports = {
         // spawn to controller
         buildRoadImpl(spawn.pos, room.controller.pos);
         // spawn and controller to sources
-        mapUtil.getSourcesInRoom(room).forEach(source => {
+        room.find(FIND_SOURCES).forEach(source => {
             buildRoadImpl(spawn.pos, source.pos);
             buildRoadImpl(room.controller.pos, source.pos);
         });

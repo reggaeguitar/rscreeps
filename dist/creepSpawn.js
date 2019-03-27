@@ -18,13 +18,13 @@ module.exports = {
         let haveZeroHarvesters = !creepCountsByRole.hasOwnProperty('harvester');
         let lessThanMaxHarvesters = creepCountsByRole['harvester'] < maxHarvesterCount;
         let potentialHarvestersAboutToDie = _.filter(Game.creeps, c => c.memory.role == 'harvester' && 
-            c.ticksToLive < data.harvesterTicksToLive);
+            c.ticksToLive < data.harvesterTicksToLive(room));
         let harvesterAboutToDie = potentialHarvestersAboutToDie != undefined &&
             potentialHarvestersAboutToDie.length > 0;
         if (haveZeroHarvesters || lessThanMaxHarvesters || harvesterAboutToDie) {            
             this.spawnHarvester(room, spawn, creepCountsByRole);
         } else {
-            let maxWorkerCount = data.maxWorkerCount;
+            let maxWorkerCount = data.maxWorkerCount(room);
             let hasALotOfEnergy = room.energyAvailable >= (room.energyCapacityAvailable * 0.9);
             // todo make this room independent
             if (creepCountsByRole.hasOwnProperty('harvester')) {
@@ -49,7 +49,7 @@ module.exports = {
     getWorkerRole: function(room, creepCountsByRole) {
         let hauler = constants.RoleHauler;
         let needHauler = !creepCountsByRole.hasOwnProperty(hauler) || 
-            creepCountsByRole[hauler] < data.minHaulerCount;
+            creepCountsByRole[hauler] < data.minHaulerCount(room);
         let needBuilder = false;        
         _.forOwn(Game.constructionSites, (v, k) => { if (v.room == room) { needBuilder = true; } });
         let haveAtLeastOnHauler = creepCountsByRole.hasOwnProperty(constants.RoleUpgrader);
@@ -88,9 +88,7 @@ module.exports = {
         let bodyParts = this.getBodyPartsFromCounts(workCount, 0, moveCount);
         this.spawnCreepImpl(bodyParts, constants.RoleHarvester, spawn);
     },
-    getHarvesterMoveCount: function(room) {
-        return data.harvesterMoveCount;
-    },
+    getHarvesterMoveCount: room => data.harvesterMoveCount(room),
     spawnBestWorkerPossible: function(room, spawn, role) {
         let half = room.energyAvailable / 2;
         let workCount = half / BODYPART_COST[WORK];

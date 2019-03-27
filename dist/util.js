@@ -15,10 +15,8 @@ module.exports = {
         creepData[constants.RoleBuilder] = { roleObj: roleBuilder },
         creepData[constants.RoleHauler] = { roleObj: roleHauler },
         creepData[constants.RoleClaimer] = { roleObj: roleClaimer }
-        Memory.creepData = creepData;
         return creepData;
-    },
-    
+    },    
     printCreepRoleCounts: function() {
         if (data.log) console.log(JSON.stringify(this.getCreepRoleCounts()));
     },
