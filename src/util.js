@@ -11,11 +11,11 @@ module.exports = {
     creepData: () => {
         if (Memory.creepData == undefined) {
             let creepData = {};
-            creepData[constants.roleHarvester] = { roleObj: roleHarvester };
-            creepData[constants.roleUpgrader] = { roleObj: roleUpgrader },
-            creepData[constants.roleBuilder] = { roleObj: roleBuilder },
-            creepData[constants.roleHauler] = { roleObj: roleHauler },
-            creepData[constants.roleClaimer] = { roleObj: roleClaimer }
+            creepData[constants.RoleHarvester] = { roleObj: roleHarvester };
+            creepData[constants.RoleUpgrader] = { roleObj: roleUpgrader },
+            creepData[constants.RoleBuilder] = { roleObj: roleBuilder },
+            creepData[constants.RoleHauler] = { roleObj: roleHauler },
+            creepData[constants.RoleClaimer] = { roleObj: roleClaimer }
             Memory.creepData = creepData;
         }        
         return Memory.creepData;
