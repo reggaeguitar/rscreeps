@@ -14,7 +14,7 @@ module.exports = {
             return;
         }
         let creepCountsByRole = util.getCreepRoleCounts();
-        let maxHarvesterCount = data.maxHarvesterCount;
+        let maxHarvesterCount = data.maxHarvesterCount(room);
         let haveZeroHarvesters = !creepCountsByRole.hasOwnProperty('harvester');
         let lessThanMaxHarvesters = creepCountsByRole['harvester'] < maxHarvesterCount;
         let potentialHarvestersAboutToDie = _.filter(Game.creeps, c => c.memory.role == 'harvester' && 
