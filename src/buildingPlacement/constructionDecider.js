@@ -14,6 +14,7 @@ module.exports = {
         this.buildRoads(room, spawn);
     
         const nonRoads = [[STRUCTURE_EXTENSION, 'extension'], 
+                          // containers aren't even worth building really
                           //[STRUCTURE_CONTAINER, 'container'],
                           [STRUCTURE_TOWER, 'tower']];
         nonRoads.forEach(structureTypeAndPropName => {

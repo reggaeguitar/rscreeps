@@ -1,3 +1,5 @@
+const constants = require('constants');
+
 module.exports = {
     run: function(creep) {
         let sources = creep.room.find(FIND_SOURCES)
@@ -13,15 +15,18 @@ module.exports = {
         }
     },    
     startHarvest: function(creep, sources) {
-        // todo it seems like this method is hardcoded to having two sources 
-        // and two harvesters in the room
-        let creepRoleCounts = _.countBy(Game.creeps, c => c.memory.role);
+        if (sources.length == 1) return 0;
+        let creepsInSameRoom = _filter(Game.creeps, c => c.room.name == creep.room.name);
+        let creepRoleCounts = _.countBy(creepsInSameRoom, c => c.memory.role == constants.RoleHarvester);
         let sourceToHarvest = 0;
-        if (creepRoleCounts.hasOwnProperty('harvester')) {
-            let harvesters = _.filter(Game.creeps, c => c.memory.role == 'harvester');
-            let otherHarvesterSource = _.sortBy(harvesters, h => h.ticksToLive)[0]
-                    .memory.sourceToHarvest;
-            sourceToHarvest = otherHarvesterSource == 0 ? 1 : 0;
+        if (creepRoleCounts.hasOwnProperty(constants.RoleHarvester)) {
+            let harvesters = _.filter(creepsInSameRoom, c => c.memory.role == constants.RoleHarvester);
+            let harvestersSources = harvesters.map(h => h.memory.sourceToHarvest);
+            let sourceCounts = _.countBy(harvestersSources, x => x);
+            // assign the harvester to the source with the least amount of harvesters
+            // (a, b) => a - b makes the sort ascending
+            let sortedCounts = Object.keys(sourceCounts).sort((a, b) => a - b);            
+            sourceToHarvest = sortedCounts[0];
         } else {
             // todo try changin to closest source instead of random
             sourceToHarvest = _.random(0, sources.length - 1);
