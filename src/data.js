@@ -6,7 +6,7 @@ module.exports = {
     maxHarvesterCount: 2,
     maxWorkerCount: 6,
     roleSayInterval: 5,
-    goodHarvesterWorkCount: function(room) { return room.controller.level > 2 ? 6 : 3 },
+    goodHarvesterWorkCount: room => room.controller.level > 2 ? 6 : 3,
     harvesterMoveCount: 2,
     energyBuffer: 100,
     harvesterTicksToLive: 50,
