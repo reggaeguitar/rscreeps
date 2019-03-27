@@ -11,7 +11,7 @@ const firstRoom = Game.rooms['E24N7'];
 module.exports.loop = function () {
     
     function main() {
-        util.printCreepRoleCounts(util.creepData);
+        util.printCreepRoleCounts(util.creepData());
         util.clearDeadCreepsFromMemory();
         creepSpawn.run(firstRoom, spawn1);
         runTowers(firstRoom);
@@ -25,7 +25,7 @@ module.exports.loop = function () {
             if (Game.time % data.roleSayInterval == 0) {
                 creep.say(creep.memory.role);
             }
-            util.creepData[creep.memory.role].roleObj.run(creep);
+            util.creepData()[creep.memory.role].roleObj.run(creep);
         }
     }
  

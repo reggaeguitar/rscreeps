@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const constants = require('constants');
 const data = require('data');
 const roleHarvester = require('role_harvester');
 const roleUpgrader = require('role_upgrader');
@@ -7,13 +8,17 @@ const roleHauler = require('role_hauler');
 const roleClaimer = require('role_claimer');
 
 module.exports = {
-    // todo dry this out with constants
-    creepData: {
-        'harvester': { roleObj: roleHarvester },
-        'upgrader': { roleObj: roleUpgrader },
-        'builder': { roleObj: roleBuilder },
-        'hauler': { roleObj: roleHauler },
-        'claimer': { roleObj: roleClaimer }
+    creepData: () => {
+        if (Memory.creepData == undefined) {
+            let creepData = {};
+            creepData[constants.roleHarvester] = { roleObj: roleHarvester };
+            creepData[constants.roleUpgrader] = { roleObj: roleUpgrader },
+            creepData[constants.roleBuilder] = { roleObj: roleBuilder },
+            creepData[constants.roleHauler] = { roleObj: roleHauler },
+            creepData[constants.roleClaimer] = { roleObj: roleClaimer }
+            Memory.creepData = creepData;
+        }        
+        return Memory.creepData;
     },
     
     printCreepRoleCounts: function() {
