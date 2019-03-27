@@ -3,17 +3,20 @@ const mapUtil = require('mapUtil');
           
 module.exports = {
     run: function(room, spawn) {
+        const ctrlLevelForStorage = 4;
         const storagePosStr = 'storagePos';
         if (Memory[room.name + storagePosStr] == undefined) {
             Memory[room.name + storagePosStr] = constructionUtil.nextStoragePos(room, spawn);
         }
         let storagePos = Memory[room.name + storagePosStr];
+        if (room.controller.level >= ctrlLevelForStorage &&
+            room.find(STRUCTURE_STORAGE).length == 0) {
+        }
         this.buildRoads(room, spawn);
     
         const nonRoads = [[STRUCTURE_EXTENSION, 'extension'], 
-                          [STRUCTURE_CONTAINER, 'container'],
-                          [STRUCTURE_TOWER, 'tower'],
-                          [STRUCTURE_STORAGE, 'storage']];
+                          //[STRUCTURE_CONTAINER, 'container'],
+                          [STRUCTURE_TOWER, 'tower']];
         nonRoads.forEach(structureTypeAndPropName => {
             let structureType = structureTypeAndPropName[0];
             let propName = structureTypeAndPropName[1];
@@ -21,12 +24,8 @@ module.exports = {
             let amountCanBuild = CONTROLLER_STRUCTURES[propName][room.controller.level];
             let canBuild = structureCount < amountCanBuild;
             if (canBuild) {
-                if (structureType == STRUCTURE_STORAGE) {
-                    room.createConstructionSite(storagePos, structureType)
-                } else {
-                    let pos = constructionUtil.nextStoragePos(room, spawn, storagePos);
-                    room.createConstructionSite(pos, structureType);
-                }
+                let pos = constructionUtil.nextStoragePos(room, spawn, storagePos);
+                room.createConstructionSite(pos, structureType);
             }
         });
     },

@@ -5,9 +5,10 @@ module.exports = {
         if (closestHostile) {
             tower.attack(closestHostile);
         } else {
+            let hasEnoughEnergyInReserve = tower.energy > tower.energyCapacity * 0.5;
             let closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, 
                 { filter: (structure) => structure.hits < structure.hitsMax });
-            if (closestDamagedStructure) {
+            if (hasEnoughEnergyInReserve && closestDamagedStructure) {
                 tower.repair(closestDamagedStructure);
             }
         }

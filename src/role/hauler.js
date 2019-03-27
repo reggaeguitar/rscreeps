@@ -27,13 +27,13 @@ module.exports = {
             filter: s => s.room == creep.room &&
                          s.structureType == STRUCTURE_CONTAINER &&
                          _.sum(s.store) < data.containerCapacity });        
-        if (nonFullSpawnOrExtension != undefined) {
-            if (creep.transfer(nonFullSpawnOrExtension, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(nonFullSpawnOrExtension, { visualizePathStyle: { stroke: '#ffffff' } });
-            }
-        } else if (nonFullTower != undefined) {
+         if (nonFullTower != undefined) {
             if (creep.transfer(nonFullTower, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(nonFullTower, { visualizePathStyle: { stroke: '#ffffff' } });
+            }
+        } else if (nonFullSpawnOrExtension != undefined) {
+            if (creep.transfer(nonFullSpawnOrExtension, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(nonFullSpawnOrExtension, { visualizePathStyle: { stroke: '#ffffff' } });
             }
         } else if (nonFullStorage != undefined) {
             if (creep.transfer(nonFullStorage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {

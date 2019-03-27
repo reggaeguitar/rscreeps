@@ -1,7 +1,7 @@
 const _ = require('lodash');
 
 module.exports = {
-    minEnergy: 200,   
+    minEnergy: 400,   
     doHarvest: function (creep) {
         let closestEnergyLocation;
         let priorities;
@@ -9,10 +9,10 @@ module.exports = {
             //priorities = 
             closestEnergyLocation = this.runHauler(creep);
         } else {
-            closestEnergyLocation = findBuildingWithMoreThanXEnergy(
+            closestEnergyLocation = this.findBuildingWithMoreThanXEnergy(
                 creep, this.minEnergy, STRUCTURE_STORAGE);            
             if (closestEnergyLocation == undefined) {
-                closestEnergyLocation = findBuildingWithMoreThanXEnergy(
+                closestEnergyLocation = this.findBuildingWithMoreThanXEnergy(
                     creep, this.minEnergy, STRUCTURE_CONTAINER);
             }
             if (closestEnergyLocation == undefined) this.pickedUpDroppedEnergy(creep);
@@ -22,13 +22,13 @@ module.exports = {
                 creep.moveTo(closestEnergyLocation);
             }           
         }
-
-        function findBuildingWithMoreThanXEnergy(creep, x, structureType) {
-            return closestEnergyLocation = creep.pos.findClosestByRange(
-                FIND_STRUCTURES, { filter : s => 
-                    s.structureType == structureType &&
-                    _.sum(s.store) > x });   
-        }
+        
+    },
+    findBuildingWithMoreThanXEnergy: function (creep, x, structureType) {
+        return closestEnergyLocation = creep.pos.findClosestByRange(
+            FIND_STRUCTURES, { filter : s => 
+                s.structureType == structureType &&
+                _.sum(s.store) > x });   
     },
     runHauler: function(creep) {
         if (this.pickedUpDroppedEnergy(creep)) return;
@@ -40,7 +40,7 @@ module.exports = {
         if (almostFullContainer != undefined) {
             return almostFullContainer;
         } else {        
-            return findBuildingWithMoreThanXEnergy(
+            return this.findBuildingWithMoreThanXEnergy(
                 creep, this.minEnergy, STRUCTURE_CONTAINER);
         }  
     },
