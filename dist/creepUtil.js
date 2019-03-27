@@ -20,7 +20,8 @@ module.exports = {
     isPassable: function(creep, newPos) {
         // is passable if plain and not occupied by a creep
         let terrain = Game.map.getRoomTerrain(creep.room.name).get(newPos.x, newPos.y);
-        let creepsOtherThanThisOne = _.pull(Object.keys(Game.creeps), creep.name);        
+        let creepsInSameRoom = _.filter(Game.creeps, c => c.room.name == creep.room.name);
+        let creepsOtherThanThisOne = _.pull(Object.keys(creepsInSameRoom), creep.name);        
         let posHasCreep = _.findIndex(creepsOtherThanThisOne,
             c => Game.creeps[c].pos.isEqualTo(newPos)) != -1;
         return terrain == 'plain' && !posHasCreep;

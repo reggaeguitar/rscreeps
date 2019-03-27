@@ -1,21 +1,20 @@
 const _ = require('lodash');
+const data = require('data');
 
-module.exports = {
-    minEnergy: 400,   
+module.exports = {     
     doHarvest: function (creep) {
+        let minEnergy = data.minEnergy(creep.room);
         let closestEnergyLocation;
-        let priorities;
         if (creep.memory.role == 'hauler') {
-            //priorities = 
-            closestEnergyLocation = this.runHauler(creep);
+            closestEnergyLocation = this.runHauler(creep, minEnergy);
         } else {
             closestEnergyLocation = this.findBuildingWithMoreThanXEnergy(
-                creep, this.minEnergy, STRUCTURE_STORAGE);            
+                creep, minEnergy, STRUCTURE_STORAGE);            
             if (closestEnergyLocation == undefined) {
                 closestEnergyLocation = this.findBuildingWithMoreThanXEnergy(
-                    creep, this.minEnergy, STRUCTURE_CONTAINER);
+                    creep, minEnergy, STRUCTURE_CONTAINER);
             }
-            if (closestEnergyLocation == undefined) this.pickedUpDroppedEnergy(creep);
+            if (closestEnergyLocation == undefined) this.pickedUpDroppedEnergy(creep, minEnergy);
         }
         if (closestEnergyLocation != undefined) {
             if (creep.withdraw(closestEnergyLocation, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
@@ -30,8 +29,8 @@ module.exports = {
                 s.structureType == structureType &&
                 _.sum(s.store) > x });   
     },
-    runHauler: function(creep) {
-        if (this.pickedUpDroppedEnergy(creep)) return;
+    runHauler: function(creep, minEnergy) {
+        if (this.pickedUpDroppedEnergy(creep, minEnergy)) return;
         const almostFullFactor = 0.75;
         let almostFullContainer = creep.pos.findClosestByRange(
             FIND_STRUCTURES, { filter: s => 
@@ -41,19 +40,19 @@ module.exports = {
             return almostFullContainer;
         } else {        
             return this.findBuildingWithMoreThanXEnergy(
-                creep, this.minEnergy, STRUCTURE_CONTAINER);
+                creep, minEnergy, STRUCTURE_CONTAINER);
         }  
     },
-    pickedUpDroppedEnergy: function(creep) {
+    pickedUpDroppedEnergy: function(creep, minEnergy) {
         let droppedEnergy = creep.pos.findClosestByRange(FIND_DROPPED_RESOURCES);
-        let closestValid = droppedEnergy != undefined && droppedEnergy.amount > this.minEnergy;
+        let closestValid = droppedEnergy != undefined && droppedEnergy.amount > minEnergy;
         
         if (closestValid) {
             return pickup(creep, droppedEnergy);
         } else {
-            let droppedEnergies = creep.room.find(FIND_DROPPED_RESOURCES);;
+            let droppedEnergies = creep.room.find(FIND_DROPPED_RESOURCES);
             droppedEnergies.forEach(e => {
-                if (e.amount > this.minEnergy) {
+                if (e.amount > minEnergy) {
                     return pickup(creep, e);
                 }
             });

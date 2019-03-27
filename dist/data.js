@@ -16,4 +16,5 @@ module.exports = {
     goodHarvesterWorkCount: room => room.controller.level > 2 ? 6 : 3,
     harvesterMoveCount: room => Math.round(room.controller.level / 2),
     harvesterTicksToLive: room => 50,
+    minEnergy: room => room.controller.level * 100,
 };

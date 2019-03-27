@@ -30,6 +30,7 @@ module.exports.loop = function () {
     }
  
     function runTowers(room) {
+        // perf cache tower id
         room.find(FIND_MY_STRUCTURES, { filter: 
             s => s.structureType == STRUCTURE_TOWER }).forEach(
                 tower => roleTower.run(tower));        

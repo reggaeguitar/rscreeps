@@ -25,7 +25,7 @@ module.exports = {
             let sourceCounts = _.countBy(harvestersSources, x => x);
             // assign the harvester to the source with no harvesters
             // or the least amount of harvesters
-            // (a, b) => a - b makes the sort ascending
+            // (a, b) => a - b makes the sort ascending            
             let sortedCounts = Object.keys(sourceCounts).sort((a, b) => a - b);
             for (let i = 0; i < sources.length; ++i) {
                 if (sortedCounts.find(x => x == i) == undefined) {
