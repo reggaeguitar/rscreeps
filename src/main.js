@@ -4,8 +4,8 @@ const creepSpawn = require('creepSpawn');
 const data = require('data');
 const roleTower = require('role_tower');
 const constructionDecider = require('buildingPlacement_constructionDecider');
+const mapUtil = require('mapUtil');
 
-const spawn1 = Game.spawns['Spawn1'];
 const firstRoom = Game.rooms['E24N7'];
 
 module.exports.loop = function () {
@@ -13,9 +13,15 @@ module.exports.loop = function () {
     function main() {
         util.printCreepRoleCounts(util.creepData());
         util.clearDeadCreepsFromMemory();
-        creepSpawn.run(firstRoom, spawn1);
-        runTowers(firstRoom);
-        runConstruction(firstRoom, spawn1);
+        let rooms = _.uniqBy(Game.creeps, c => c.room.name);
+        if (rooms.length == 0) 
+            rooms = [firstRoom];
+        rooms.map(room => {
+            let spawn = mapUtil.getSpawnInRoom(room);
+            creepSpawn.run(room, spawn);
+            runTowers(room);
+            runConstruction(room, spawn);    
+        })
         runCreepRoles();
     }
     

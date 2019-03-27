@@ -1,3 +1,4 @@
+const _ = require('lodash');
 
 module.exports = {
     directions: [
@@ -9,5 +10,6 @@ module.exports = {
         { BOTTOM_LEFT: 6, mutatorFunc: (pos) => { return new RoomPosition(pos.x - 1, pos.y + 1, pos.roomName); } },
         { LEFT: 7, mutatorFunc: (pos) => { return new RoomPosition(pos.x - 1, pos.y, pos.roomName); } },
         { TOP_LEFT: 8, mutatorFunc: (pos) => { return new RoomPosition(pos.x - 1, pos.y - 1, pos.roomName); } },
-    ]
+    ],
+    getSpawnInRoom: room => _.filter(room.find(FIND_STRUCTURES), r => r.structureType == 'spawn')[0],
 }
