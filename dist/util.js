@@ -7,6 +7,7 @@ const roleHauler = require('role_hauler');
 const roleClaimer = require('role_claimer');
 
 module.exports = {
+    // todo dry this out with constants
     creepData: {
         'harvester': { roleObj: roleHarvester },
         'upgrader': { roleObj: roleUpgrader },

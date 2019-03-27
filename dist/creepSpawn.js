@@ -1,6 +1,7 @@
 const _ = require('lodash');
 const util = require('util');
 const data = require('data');
+const constants = require('constants');
 
 module.exports = {    
     run: function(room, spawn) {
@@ -46,16 +47,18 @@ module.exports = {
         }
     },
     getWorkerRole: function(room, creepCountsByRole) {
-        let needHauler = !creepCountsByRole.hasOwnProperty('hauler') || creepCountsByRole['hauler'] < data.minHaulerCount;
+        let hauler = constants.RoleHauler;
+        let needHauler = !creepCountsByRole.hasOwnProperty(hauler) || 
+            creepCountsByRole[hauler] < data.minHaulerCount;
         let needBuilder = false;        
         _.forOwn(Game.constructionSites, (v, k) => { if (v.room == room) { needBuilder = true; } });
-        let haveAtLeastOnHauler = creepCountsByRole.hasOwnProperty('upgrader');
+        let haveAtLeastOnHauler = creepCountsByRole.hasOwnProperty(constants.RoleUpgrader);
         if (needHauler) {
-            return 'hauler';
+            return constants.RoleHauler;
         } else if (needBuilder && haveAtLeastOnHauler) {
-            return 'builder';
+            return constants.RoleBuilder;
         } else {
-            return 'upgrader';
+            return constants.RoleUpgrader;
         }
     },
     trySpawnGoodHarvester: function(room, spawn) {
@@ -66,7 +69,7 @@ module.exports = {
         let goodHarvesterWorkCount = data.goodHarvesterWorkCount(room);
         if (workCount >= goodHarvesterWorkCount) {
             let bodyParts = this.getBodyPartsFromCounts(goodHarvesterWorkCount, 0, moveCount);
-            this.spawnCreepImpl(bodyParts, 'harvester', spawn);
+            this.spawnCreepImpl(bodyParts, constants.RoleHarvester, spawn);
         }
     },
     spawnBestHarvesterPossible: function(room, spawn) {
@@ -83,7 +86,7 @@ module.exports = {
         }
         if (data.log) console.log('workCount: ' + workCount);
         let bodyParts = this.getBodyPartsFromCounts(workCount, 0, moveCount);
-        this.spawnCreepImpl(bodyParts, 'harvester', spawn);
+        this.spawnCreepImpl(bodyParts, constants.RoleHarvester, spawn);
     },
     getHarvesterMoveCount: function(room) {
         return data.harvesterMoveCount;
@@ -92,15 +95,16 @@ module.exports = {
         let half = room.energyAvailable / 2;
         let workCount = half / BODYPART_COST[WORK];
         if (BODYPART_COST[MOVE] != BODYPART_COST[CARRY]) {
-            if (data.log) console.log('MOVE and CARRY no longer the same cost, update creepSpawn.js');
+            console.log('MOVE and CARRY no longer the same cost, update creepSpawn.js');
         }
         if (workCount == 0) return;
 
         let carryAndMoveCount = (half / BODYPART_COST[MOVE]) / 2;
+        workCount = role != constants.RoleHauler ? workCount : 0;
         let bodyParts = this.getBodyPartsFromCounts(
             workCount, carryAndMoveCount, carryAndMoveCount);
         if (this.creepCost(bodyParts) > room.energyAvailable) {
-            if (data.log) console.log('error in creepSpawn, bodyParts: ' + JSON.stringify(bodyParts) 
+            console.log('error in creepSpawn, bodyParts: ' + JSON.stringify(bodyParts) 
                 + ' cost more than energyAvailable: ' + room.energyAvailable);
         }
         this.spawnCreepImpl(bodyParts, role, spawn);
