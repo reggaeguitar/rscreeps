@@ -12,10 +12,11 @@ module.exports.loop = function () {
     function main() {
         util.printCreepRoleCounts(util.creepData());
         util.clearDeadCreepsFromMemory();
-        let rooms = util.getRooms();
+        let rooms = util.getRoomNames();
         if (rooms.length == 0) // will happen when respawning
             rooms = [firstRoom];
-        rooms.map(room => {
+        rooms.map(roomName => {
+            let room = Game.rooms[roomName];
             let spawn = mapUtil.getSpawnInRoom(room);
             creepSpawn.run(room, spawn);
             runTowers(room);
