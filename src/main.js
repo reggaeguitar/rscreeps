@@ -6,15 +6,14 @@ const roleTower = require('role_tower');
 const constructionDecider = require('buildingPlacement_constructionDecider');
 const mapUtil = require('mapUtil');
 
-const firstRoom = Game.rooms['E24N7'];
+const firstRoom = Game.rooms['E24N7']; // todo when respawning change this to new room name
 
 module.exports.loop = function () {    
     function main() {
         util.printCreepRoleCounts(util.creepData());
         util.clearDeadCreepsFromMemory();
-        // todo use uniqBy when able to
-        let rooms = [] // _.uniqBy(Game.creeps, c => c.room.name);
-        if (rooms.length == 0) 
+        let rooms = util.getRooms();
+        if (rooms.length == 0) // will happen when respawning
             rooms = [firstRoom];
         rooms.map(room => {
             let spawn = mapUtil.getSpawnInRoom(room);

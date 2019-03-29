@@ -36,4 +36,16 @@ module.exports = {
     getRoles: function() {
         return Object.keys(this.creepData);
     },    
+    getRooms: function() {
+        // todo use uniqBy when able to
+        // _.uniqBy(Game.creeps, c => c.room.name);
+        let rooms = [];
+        for (let name in Game.creeps) {
+            let roomName = Game.creeps[name].room.name;
+            if (rooms.find(roomName) == undefined) {
+                rooms.push(roomName)
+            }
+        }
+        return rooms;
+    }
 };
