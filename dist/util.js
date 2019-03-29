@@ -42,7 +42,7 @@ module.exports = {
         let rooms = [];
         for (let name in Game.creeps) {
             let roomName = Game.creeps[name].room.name;
-            if (rooms.find(roomName) == undefined) {
+            if (rooms.find(r => r == roomName) == undefined) {
                 rooms.push(roomName)
             }
         }
