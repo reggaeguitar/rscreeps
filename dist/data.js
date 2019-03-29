@@ -7,8 +7,10 @@ module.exports = {
     // room specifics
     // todo perf cache source count in Memory
     minHaulerCount: room => {
+        // todo hauler count depends on hauling distance,
+        // might not need many with links too
         let sourceCount = room.find(FIND_SOURCES).length;
-        let extraHaulerCount = room.controller.level - 3;
+        let extraHaulerCount = room.controller.level - 5;
         return sourceCount + (extraHaulerCount > 0 ? extraHaulerCount : 0);
     },
     maxHarvesterCount: room => room.find(FIND_SOURCES).length,
