@@ -8,12 +8,12 @@ const mapUtil = require('mapUtil');
 
 const firstRoom = Game.rooms['E24N7'];
 
-module.exports.loop = function () {
-    
+module.exports.loop = function () {    
     function main() {
         util.printCreepRoleCounts(util.creepData());
         util.clearDeadCreepsFromMemory();
-        let rooms = _.uniqBy(Game.creeps, c => c.room.name);
+        // todo use uniqBy when able to
+        let rooms = [] // _.uniqBy(Game.creeps, c => c.room.name);
         if (rooms.length == 0) 
             rooms = [firstRoom];
         rooms.map(room => {

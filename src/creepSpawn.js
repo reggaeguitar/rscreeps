@@ -28,10 +28,16 @@ module.exports = {
             let maxWorkerCount = data.maxWorkerCount(room);
             let hasALotOfEnergy = room.energyAvailable >= (room.energyCapacityAvailable * 0.9);
             // todo make this room independent
-            if (creepCountsByRole.hasOwnProperty('harvester')) {
-                let workerCount = Object.keys(Game.creeps).length - creepCountsByRole['harvester'];
+            if (creepCountsByRole.hasOwnProperty(constants.RoleHarvester)) {
+                let creepsInRoom = _.filter(Game.creeps, c => c.room.name == room.name);
+                let workerCount = Object.keys(creepsInRoom).length - creepCountsByRole[constants.RoleHarvester];
                 if (data.log) console.log('workerCount: ' + workerCount + ' maxWorkerCount: ' + maxWorkerCount);
-                if (hasALotOfEnergy || workerCount < maxWorkerCount) {
+                let potentialStorage = room.find(STRUCTURE_STORAGE);
+                let hasStoredEnergy = potentialStorage.length > 0 && 
+                    potentialStorage[0].store > (room.controller.level * 200);
+                let shouldSpawnCreep = (hasALotOfEnergy && hasStoredEnergy)
+                    || workerCount < maxWorkerCount;
+                if (shouldSpawnCreep) {
                     let role = this.getWorkerRole(room, creepCountsByRole);
                     this.spawnBestWorkerPossible(room, spawn, role);
                 }
@@ -125,7 +131,7 @@ module.exports = {
     spawnCreepImpl: function(bodyParts, role, spawn) {
         let ret = spawn.spawnCreep(bodyParts, role + Game.time, { memory: { role: role } });
         if (ret != OK) {
-            if (data.log) console.log('could not spawn creep: ' + JSON.stringify(ret));
+            console.log('could not spawn creep: ' + JSON.stringify(ret));
         }
     },
     creepCost: function(bodyParts) {
