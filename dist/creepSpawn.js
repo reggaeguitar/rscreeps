@@ -7,7 +7,7 @@ const roomPicker = require('roomExpansion_roomPicker');
 module.exports = {    
     run: function(room, spawn) {
         if (spawn.spawning) return;
-        if (this.spawnedClaimer(room, spawn)) return;
+        //if (this.spawnedClaimer(room, spawn)) return;
         let energyAvailable = room.energyAvailable;
         const cheapestCreepCost = 200;
         if (energyAvailable < cheapestCreepCost) {
