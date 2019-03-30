@@ -8,13 +8,14 @@ const roleHauler = require('role_hauler');
 const roleClaimer = require('role_claimer');
 
 module.exports = {
+    // perf cache results from these methods
     creepData: () => {
         let creepData = {};
         creepData[roles.RoleHarvester] = { roleObj: roleHarvester };
-        creepData[roles.RoleUpgrader] = { roleObj: roleUpgrader },
-        creepData[roles.RoleBuilder] = { roleObj: roleBuilder },
-        creepData[roles.RoleHauler] = { roleObj: roleHauler },
-        creepData[roles.RoleClaimer] = { roleObj: roleClaimer }
+        creepData[roles.RoleUpgrader] = { roleObj: roleUpgrader };
+        creepData[roles.RoleBuilder] = { roleObj: roleBuilder };
+        creepData[roles.RoleHauler] = { roleObj: roleHauler };
+        creepData[roles.RoleClaimer] = { roleObj: roleClaimer };
         return creepData;
     },    
     printCreepRoleCounts: function() {
@@ -39,13 +40,19 @@ module.exports = {
     getRoomNames: function() {
         // todo use uniqBy when able to
         // _.uniqBy(Game.creeps, c => c.room.name);
-        let rooms = [];
-        for (let name in Game.creeps) {
-            let roomName = Game.creeps[name].room.name;
-            if (rooms.find(r => r == roomName) == undefined) {
-                rooms.push(roomName)
+        let _roomCache;
+        if (_roomCache != undefined) {
+            return _roomCache;
+        } else {
+            let rooms = [];
+            for (let name in Game.creeps) {
+                let roomName = Game.creeps[name].room.name;
+                if (rooms.find(r => r == roomName) == undefined) {
+                    rooms.push(roomName)
+                }
             }
+            _roomCache = rooms;
+            return rooms;
         }
-        return rooms;
     }
 };

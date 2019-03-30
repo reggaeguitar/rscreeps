@@ -2,6 +2,7 @@ const _ = require('lodash');
 const util = require('util');
 const data = require('data');
 const roles = require('role_roles');
+const roomPicker = require('roomExpansion_roomPicker');
 
 module.exports = {    
     run: function(room, spawn) {
@@ -129,8 +130,12 @@ module.exports = {
         }
         return ret;
     },   
-    spawnCreepImpl: function(bodyParts, role, spawn) {
-        let ret = spawn.spawnCreep(bodyParts, role + Game.time, { memory: { role: role } });
+    spawnCreepImpl: function(bodyParts, role, spawn, roomToClaim) {
+        let memoryObj = { memory: { role: role } };
+        if (roomToClaim != undefined) {
+            memoryObj.memory.roomToClaim = roomToClaim;
+        }
+        let ret = spawn.spawnCreep(bodyParts, role + Game.time, memoryObj);
         if (ret != OK) {
             console.log('could not spawn creep: ' + JSON.stringify(ret));
         }
@@ -160,7 +165,8 @@ module.exports = {
             for (let i = 0; i < movePartCount; ++i) {
                 bodyParts.push(MOVE);
             }
-            this.spawnCreepImpl(bodyParts, roles.RoleClaimer, spawn);
+            let roomToClaim = roomPicker.bestRoomNameNearExistingRooms();
+            this.spawnCreepImpl(bodyParts, roles.RoleClaimer, spawn, roomToClaim);
             return true;
         }
         return false;

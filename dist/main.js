@@ -17,29 +17,34 @@ module.exports.loop = function () {
             rooms = [firstRoom];
         rooms.map(roomName => {
             let room = Game.rooms[roomName];
-            let spawn = mapUtil.getSpawnInRoom(room);
-            creepSpawn.run(room, spawn);
             runTowers(room);
-            runConstruction(room, spawn);    
+            let spawn = mapUtil.getSpawnInRoom(room);
+            if (spawn != undefined) {
+                creepSpawn.run(room, spawn);
+                runConstruction(room, spawn);
+            }
         })
         runCreepRoles();
     }
     
     function runCreepRoles() {
+        let creepData = util.creepData();
         for (let name in Game.creeps) {
             let creep = Game.creeps[name];
             if (Game.time % data.roleSayInterval == 0) {
                 creep.say(creep.memory.role);
             }
-            util.creepData()[creep.memory.role].roleObj.run(creep);
+            creepData[creep.memory.role].roleObj.run(creep);
         }
     }
  
     function runTowers(room) {
         // perf cache tower id
-        room.find(FIND_MY_STRUCTURES, { filter: 
-            s => s.structureType == STRUCTURE_TOWER }).forEach(
-                tower => roleTower.run(tower));        
+        let potentialTowers = room.find(FIND_MY_STRUCTURES, { filter: 
+            s => s.structureType == STRUCTURE_TOWER });
+        if (potentialTowers != undefined) {
+            potentialTowers.forEach(tower => roleTower.run(tower));        
+        }
     }
 
     function runConstruction(room, spawn) {

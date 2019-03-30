@@ -11,5 +11,12 @@ module.exports = {
         { LEFT: 7, mutatorFunc: (pos) => { return new RoomPosition(pos.x - 1, pos.y, pos.roomName); } },
         { TOP_LEFT: 8, mutatorFunc: (pos) => { return new RoomPosition(pos.x - 1, pos.y - 1, pos.roomName); } },
     ],
-    getSpawnInRoom: room => _.filter(room.find(FIND_STRUCTURES), r => r.structureType == 'spawn')[0],
+    // todo make code work for multiple spawns
+    // todo see if room even has a spawn
+    // todo add logic to build spawn if able
+    getSpawnInRoom: room => {
+        let potentialSpawns = _.filter(room.find(FIND_STRUCTURES), 
+            r => r.structureType == 'spawn');
+        if (potentialSpawns.length > 0) return potentialSpawns[0];
+    }
 }

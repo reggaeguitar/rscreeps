@@ -12,7 +12,7 @@ module.exports = {
             room.find(STRUCTURE_STORAGE).length == 0) {
         }
         this.buildRoads(room, spawn);
-    
+        // todo add spawn building logic in
         const nonRoads = [[STRUCTURE_EXTENSION, 'extension'], 
                           // containers aren't even worth building really
                           //[STRUCTURE_CONTAINER, 'container'],
