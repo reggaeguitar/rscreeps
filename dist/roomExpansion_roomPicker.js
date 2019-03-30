@@ -1,5 +1,3 @@
-const util = require('util');
-
 module.export = {
     bestRoomNameNearExistingRooms: function(rooms) {
         let bestScore = 0;
