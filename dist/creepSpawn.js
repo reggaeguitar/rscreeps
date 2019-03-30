@@ -165,7 +165,8 @@ module.exports = {
             for (let i = 0; i < movePartCount; ++i) {
                 bodyParts.push(MOVE);
             }
-            let roomToClaim = roomPicker.bestRoomNameNearExistingRooms();
+            let rooms = util.getRoomNames();
+            let roomToClaim = roomPicker.bestRoomNameNearExistingRooms(rooms);
             this.spawnCreepImpl(bodyParts, roles.RoleClaimer, spawn, roomToClaim);
             return true;
         }

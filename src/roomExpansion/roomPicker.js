@@ -1,9 +1,7 @@
 const util = require('util');
-const data = require('data');
 
 module.export = {
-    bestRoomNameNearExistingRooms: function() {
-        let rooms = util.getRoomNames();
+    bestRoomNameNearExistingRooms: function(rooms) {
         let bestScore = 0;
         let bestRoom;
         rooms.forEach(roomOwned => {
