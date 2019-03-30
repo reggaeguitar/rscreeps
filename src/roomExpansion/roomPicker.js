@@ -1,4 +1,4 @@
-module.export = {
+module.exports = {
     bestRoomNameNearExistingRooms: function(rooms) {
         let bestScore = 0;
         let bestRoom;
