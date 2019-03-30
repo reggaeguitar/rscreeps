@@ -5,12 +5,13 @@ const data = require('data');
 const roleTower = require('role_tower');
 const constructionDecider = require('buildingPlacement_constructionDecider');
 const mapUtil = require('mapUtil');
+const creepData = require('creepData');
 
 const firstRoom = Game.rooms['E24N7']; // todo when respawning change this to new room name
 
 module.exports.loop = function () {    
     function main() {
-        util.printCreepRoleCounts(util.creepData());
+        util.printCreepRoleCounts(creepData.creepData());
         util.clearDeadCreepsFromMemory();
         let rooms = util.getRoomNames();
         if (rooms.length == 0) // will happen when respawning
@@ -28,13 +29,13 @@ module.exports.loop = function () {
     }
     
     function runCreepRoles() {
-        let creepData = util.creepData();
+        let cd = creepData.creepData();
         for (let name in Game.creeps) {
             let creep = Game.creeps[name];
             if (Game.time % data.roleSayInterval == 0) {
                 creep.say(creep.memory.role);
             }
-            creepData[creep.memory.role].roleObj.run(creep);
+            creepDatcda[creep.memory.role].roleObj.run(creep);
         }
     }
  
