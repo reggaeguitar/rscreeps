@@ -1,4 +1,5 @@
 const util = require('util');
+const data = require('data');
 
 module.export = {
     bestRoomNameNearExistingRooms: function() {
@@ -33,8 +34,17 @@ module.export = {
 
         function evaluate(roomName) {
             let room = Game.rooms[roomName];
-            let score = 0;
-            
+            let controllerPos = room.find(STRUCTURE_CONTROLLER)[0].pos;
+            let sources = room.find(FIND_SOURCES);
+            let totalSourcePathCost = 0;            
+            // count sources and path cost from sources to controller
+            sources.forEach(s => {
+                totalSourcePathCost += PathFinder.search(s.pos, controllerPos).cost;
+            });
+            let avePathCostToSource = totalSourcePathCost / sources.length;
+            let pathScore = data.pathScoreFactor / avePathCostToSource;
+            let score = pathScore + (source.length * data.sourceScore);
+            return score;
         }
     }
 }

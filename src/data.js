@@ -4,6 +4,8 @@ module.exports = {
     roleSayInterval: 5,
     buildInterval: 100,
     containerCapacity: 2000,
+    sourceScore: 10,
+    pathScoreFactor: 10,
     // room specifics
     // todo perf cache source count in Memory
     minHaulerCount: room => {

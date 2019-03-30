@@ -1,3 +1,4 @@
+const roles = require('role_roles');
 const worker = require('role_worker');
 
 module.exports = {
@@ -6,7 +7,7 @@ module.exports = {
     },
     doWork: function(creep) {      
         if (!build() && !repair()) {
-            creep.memory.role = 'upgrader';
+            creep.memory.role = roles.RoleUpgrader;
         }
 
         function repair() {

@@ -1,4 +1,4 @@
-const constants = require('constants');
+const roles = require('role_roles');
 
 module.exports = {
     run: function(creep) {
@@ -17,10 +17,10 @@ module.exports = {
     startHarvest: function(creep, sources) {
         if (sources.length == 1) return 0;
         let creepsInSameRoom = _.filter(Game.creeps, c => c.room.name == creep.room.name);
-        let creepRoleCounts = _.countBy(creepsInSameRoom, c => c.memory.role == constants.RoleHarvester);
+        let creepRoleCounts = _.countBy(creepsInSameRoom, c => c.memory.role == roles.RoleHarvester);
         let sourceToHarvest = 0;
-        if (creepRoleCounts.hasOwnProperty(constants.RoleHarvester)) {
-            let harvesters = _.filter(creepsInSameRoom, c => c.memory.role == constants.RoleHarvester);
+        if (creepRoleCounts.hasOwnProperty(roles.RoleHarvester)) {
+            let harvesters = _.filter(creepsInSameRoom, c => c.memory.role == roles.RoleHarvester);
             let harvestersSources = harvesters.map(h => h.memory.sourceToHarvest);
             let sourceCounts = _.countBy(harvestersSources, x => x);
             // assign the harvester to the source with no harvesters

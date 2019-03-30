@@ -1,11 +1,12 @@
 const _ = require('lodash');
 const util = require('util');
 const data = require('data');
-const constants = require('constants');
+const roles = require('role_roles');
 
 module.exports = {    
     run: function(room, spawn) {
         if (spawn.spawning) return;
+        if (this.spawnedClaimer(room, spawn)) return;
         let energyAvailable = room.energyAvailable;
         const cheapestCreepCost = 200;
         if (energyAvailable < cheapestCreepCost) {
@@ -15,10 +16,10 @@ module.exports = {
         }
         let creepCountsByRole = util.getCreepRoleCounts();
         let maxHarvesterCount = data.maxHarvesterCount(room);
-        let haveZeroHarvesters = !creepCountsByRole.hasOwnProperty(constants.RoleHarvester);
-        let lessThanMaxHarvesters = creepCountsByRole[constants.RoleHarvester] < maxHarvesterCount;
+        let haveZeroHarvesters = !creepCountsByRole.hasOwnProperty(roles.RoleHarvester);
+        let lessThanMaxHarvesters = creepCountsByRole[roles.RoleHarvester] < maxHarvesterCount;
         let potentialHarvestersAboutToDie = _.filter(Game.creeps, 
-            c => c.memory.role == constants.RoleHarvester && 
+            c => c.memory.role == roles.RoleHarvester && 
                  c.ticksToLive < data.harvesterTicksToLive(room));
         let harvesterAboutToDie = potentialHarvestersAboutToDie != undefined &&
             potentialHarvestersAboutToDie.length > 0;
@@ -28,9 +29,9 @@ module.exports = {
             let maxWorkerCount = data.maxWorkerCount(room);
             let hasALotOfEnergy = room.energyAvailable >= (room.energyCapacityAvailable * 0.9);
             // todo make this room independent
-            if (creepCountsByRole.hasOwnProperty(constants.RoleHarvester)) {
+            if (creepCountsByRole.hasOwnProperty(roles.RoleHarvester)) {
                 let creepsInRoom = _.filter(Game.creeps, c => c.room.name == room.name);
-                let workerCount = Object.keys(creepsInRoom).length - creepCountsByRole[constants.RoleHarvester];
+                let workerCount = Object.keys(creepsInRoom).length - creepCountsByRole[roles.RoleHarvester];
                 if (data.log) console.log('workerCount: ' + workerCount + ' maxWorkerCount: ' + maxWorkerCount);
                 let potentialStorage = room.find(STRUCTURE_STORAGE);
                 let hasStoredEnergy = potentialStorage.length > 0 && 
@@ -46,8 +47,8 @@ module.exports = {
     },
     spawnHarvester: function(room, spawn, creepCountsByRole) {
         let canWaitToSpawnGoodHarvester = 
-            creepCountsByRole.hasOwnProperty(constants.RoleHauler) &&
-            creepCountsByRole.hasOwnProperty(constants.RoleHarvester);
+            creepCountsByRole.hasOwnProperty(roles.RoleHauler) &&
+            creepCountsByRole.hasOwnProperty(roles.RoleHarvester);
         if (canWaitToSpawnGoodHarvester) {
             this.trySpawnGoodHarvester(room, spawn);
         } else {
@@ -55,18 +56,18 @@ module.exports = {
         }
     },
     getWorkerRole: function(room, creepCountsByRole) {
-        let hauler = constants.RoleHauler;
+        let hauler = roles.RoleHauler;
         let needHauler = !creepCountsByRole.hasOwnProperty(hauler) || 
             creepCountsByRole[hauler] < data.minHaulerCount(room);
         let needBuilder = false;        
         _.forOwn(Game.constructionSites, (v, k) => { if (v.room == room) { needBuilder = true; } });
-        let haveAtLeastOnHauler = creepCountsByRole.hasOwnProperty(constants.RoleUpgrader);
+        let haveAtLeastOnHauler = creepCountsByRole.hasOwnProperty(roles.RoleUpgrader);
         if (needHauler) {
-            return constants.RoleHauler;
+            return roles.RoleHauler;
         } else if (needBuilder && haveAtLeastOnHauler) {
-            return constants.RoleBuilder;
+            return roles.RoleBuilder;
         } else {
-            return constants.RoleUpgrader;
+            return roles.RoleUpgrader;
         }
     },
     trySpawnGoodHarvester: function(room, spawn) {
@@ -77,7 +78,7 @@ module.exports = {
         let goodHarvesterWorkCount = data.goodHarvesterWorkCount(room);
         if (workCount >= goodHarvesterWorkCount) {
             let bodyParts = this.getBodyPartsFromCounts(goodHarvesterWorkCount, 0, moveCount);
-            this.spawnCreepImpl(bodyParts, constants.RoleHarvester, spawn);
+            this.spawnCreepImpl(bodyParts, roles.RoleHarvester, spawn);
         }
     },
     spawnBestHarvesterPossible: function(room, spawn) {
@@ -94,7 +95,7 @@ module.exports = {
         }
         if (data.log) console.log('workCount: ' + workCount);
         let bodyParts = this.getBodyPartsFromCounts(workCount, 0, moveCount);
-        this.spawnCreepImpl(bodyParts, constants.RoleHarvester, spawn);
+        this.spawnCreepImpl(bodyParts, roles.RoleHarvester, spawn);
     },
     getHarvesterMoveCount: room => data.harvesterMoveCount(room),
     spawnBestWorkerPossible: function(room, spawn, role) {
@@ -106,7 +107,7 @@ module.exports = {
         if (workCount == 0) return;
 
         let carryAndMoveCount = (half / BODYPART_COST[MOVE]) / 2;
-        workCount = role != constants.RoleHauler ? workCount : 0;
+        workCount = role != roles.RoleHauler ? workCount : 0;
         let bodyParts = this.getBodyPartsFromCounts(
             workCount, carryAndMoveCount, carryAndMoveCount);
         if (this.creepCost(bodyParts) > room.energyAvailable) {
@@ -141,5 +142,27 @@ module.exports = {
             totalCost += priceForPart;
         }
         return totalCost;
-    },    
+    },
+    spawnedClaimer: function(room, spawn) {
+        // todo add logic so that only the closest room
+        // next to the room to claim will spawn the claimer
+        const claimCost = 600;
+        if (util.getRoomNames().length < Game.gcl.level) {
+            if (BODYPART_COST[CLAIM] != claimCost) {
+                console.log('Claim bodypart no longer costs 600 energy, update creepSpawn.js');
+            }
+            let bodyParts = [CLAIM];
+            let movePartCount = ((room.energyAvailable - claimCost) / BODYPART_COST[MOVE]) - 1;
+            if (movePartCount == 0) {
+                if (data.log) console.log('Not enough energy to spawn claimer');
+                return true;
+            }
+            for (let i = 0; i < movePartCount; ++i) {
+                bodyParts.push(MOVE);
+            }
+            this.spawnCreepImpl(bodyParts, roles.RoleClaimer, spawn);
+            return true;
+        }
+        return false;
+    },
 };
