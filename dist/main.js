@@ -5,7 +5,7 @@ const data = require('data');
 const roleTower = require('role_tower');
 const constructionDecider = require('buildingPlacement_constructionDecider');
 const mapUtil = require('mapUtil');
-const creepData = require('creepData');
+const creepData = require('role_creepData');
 
 const firstRoom = Game.rooms['E24N7']; // todo when respawning change this to new room name
 
