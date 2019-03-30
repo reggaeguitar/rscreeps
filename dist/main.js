@@ -35,7 +35,7 @@ module.exports.loop = function () {
             if (Game.time % data.roleSayInterval == 0) {
                 creep.say(creep.memory.role);
             }
-            creepDatcda[creep.memory.role].roleObj.run(creep);
+            cd[creep.memory.role].roleObj.run(creep);
         }
     }
  
