@@ -24,7 +24,10 @@ module.exports = {
                  c.ticksToLive < data.harvesterTicksToLive(room));
         let harvesterAboutToDie = potentialHarvestersAboutToDie != undefined &&
             potentialHarvestersAboutToDie.length > 0;
-        if (haveZeroHarvesters || lessThanMaxHarvesters || harvesterAboutToDie) {            
+        let harvesterCountLessThanSourceCount = room.find(FIND_SOURCES).length <=
+            creepCountsByRole[roles.RoleHarvester];
+        if (haveZeroHarvesters || lessThanMaxHarvesters || 
+            (harvesterAboutToDie && harvesterCountLessThanSourceCount)) {
             this.spawnHarvester(room, spawn, creepCountsByRole);
         } else {
             let maxWorkerCount = data.maxWorkerCount(room);
