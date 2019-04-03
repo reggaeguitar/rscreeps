@@ -11,6 +11,7 @@ module.exports = {
     // todo perf cache source count in Memory
     minHaulerCount: room => {
         // todo hauler count depends on hauling distance,
+        // and amount of energy in dropped piles
         // might not need many with links too
         let sourceCount = room.find(FIND_SOURCES).length;
         let extraHaulerCount = room.controller.level - 3;

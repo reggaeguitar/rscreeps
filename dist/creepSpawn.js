@@ -19,7 +19,7 @@ module.exports = {
                 let creepsInRoom = _.filter(Game.creeps, c => c.room.name == room.name);
                 let workerCount = Object.keys(creepsInRoom).length - creepCountsByRole[roles.RoleHarvester];
                 if (data.log) console.log('workerCount: ' + workerCount + ' maxWorkerCount: ' + maxWorkerCount);
-                let potentialStorage = room.find(STRUCTURE_STORAGE);
+                let potentialStorage = _.filter(room.find(FIND_MY_STRUCTURES), s => s.structureType == STRUCTURE_STORAGE);
                 let hasStoredEnergy = potentialStorage.length > 0 && 
                     potentialStorage[0].store[RESOURCE_ENERGY] > (room.controller.level * 400);
                 let shouldSpawnCreep = (hasALotOfEnergyInSpawnAndExtensions && hasStoredEnergy)
