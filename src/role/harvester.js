@@ -29,7 +29,7 @@ module.exports = {
             // assign the harvester to the source with no harvesters
             // or the least amount of harvesters
             // (a, b) => a - b makes the sort ascending            
-            let sortedCounts = Object.keys(sourceCounts).sort((a, b) => b - a);
+            let sortedCounts = Object.keys(sourceCounts).sort((a, b) => a - b);
             message += ' harvestersSources: ' + JSON.stringify(harvestersSources) +
                        ' sourceCounts: ' + JSON.stringify(sourceCounts) +
                        ' sortedCounts: ' + JSON.stringify(sortedCounts);
