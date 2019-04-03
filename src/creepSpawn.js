@@ -15,19 +15,8 @@ module.exports = {
                 room.energyAvailable + ', can\'t spawn creep');
             return;
         }
-        let creepCountsByRole = util.getCreepRoleCounts();
-        let maxHarvesterCount = data.maxHarvesterCount(room);
-        let haveZeroHarvesters = !creepCountsByRole.hasOwnProperty(roles.RoleHarvester);
-        let lessThanMaxHarvesters = creepCountsByRole[roles.RoleHarvester] < maxHarvesterCount;
-        let potentialHarvestersAboutToDie = _.filter(Game.creeps, 
-            c => c.memory.role == roles.RoleHarvester && 
-                 c.ticksToLive < data.harvesterTicksToLive(room));
-        let harvesterAboutToDie = potentialHarvestersAboutToDie != undefined &&
-            potentialHarvestersAboutToDie.length > 0;
-        let harvesterCountLessThanSourceCount = room.find(FIND_SOURCES).length <=
-            creepCountsByRole[roles.RoleHarvester];
-        if (haveZeroHarvesters || lessThanMaxHarvesters || 
-            (harvesterAboutToDie && harvesterCountLessThanSourceCount)) {
+        let creepCountsByRole = util.getCreepRoleCounts();    
+        if (this.shouldSpawnHarvester(room, creepCountsByRole)) {
             this.spawnHarvester(room, spawn, creepCountsByRole);
         } else {
             let maxWorkerCount = data.maxWorkerCount(room);
@@ -47,6 +36,20 @@ module.exports = {
                 }
             }
         }
+    },
+    shouldSpawnHarvester: function(room, creepCountsByRole) {
+        let maxHarvesterCount = data.maxHarvesterCount(room);
+        let haveZeroHarvesters = !creepCountsByRole.hasOwnProperty(roles.RoleHarvester);
+        let lessThanMaxHarvesters = creepCountsByRole[roles.RoleHarvester] < maxHarvesterCount;
+        let potentialHarvestersAboutToDie = _.filter(Game.creeps, 
+            c => c.memory.role == roles.RoleHarvester && 
+                 c.ticksToLive < data.harvesterTicksToLive(room));
+        let harvesterAboutToDie = potentialHarvestersAboutToDie != undefined &&
+            potentialHarvestersAboutToDie.length > 0;
+        let harvesterCountLessThanSourceCount = 
+            room.find(FIND_SOURCES).length <= creepCountsByRole[roles.RoleHarvester];
+        return haveZeroHarvesters || lessThanMaxHarvesters || 
+            (harvesterAboutToDie && harvesterCountLessThanSourceCount);
     },
     spawnHarvester: function(room, spawn, creepCountsByRole) {
         let canWaitToSpawnGoodHarvester = 

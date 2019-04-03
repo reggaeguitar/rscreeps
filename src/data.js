@@ -1,6 +1,7 @@
 module.exports = {
     // globals
     log: false,
+    notify: true,
     roleSayInterval: 5,
     buildInterval: 100,
     containerCapacity: 2000,
