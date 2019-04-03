@@ -53,7 +53,7 @@ module.exports = {
         // this only looks at the closest tombstone
         let closestTombstone = creep.pos.findClosestByPath(FIND_TOMBSTONES);
         if (closestTombstone != undefined && closestTombstone.store[RESOURCE_ENERGY] != 0) {
-            this.withdraw(creep, closestTombstone[0]);
+            this.withdraw(creep, closestTombstone);
             return true;
         }
     },
