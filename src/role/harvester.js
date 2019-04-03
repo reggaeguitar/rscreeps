@@ -40,14 +40,15 @@ module.exports = {
                     message += ' i: ' + i.toString();
                     sourceToHarvest = i;
                     assignedSource = true;
+                    message += ' assigned i to sourceToHarvest';
                     break;
                 }
                 message += '\n';
             }
             if (assignedSource == false) {
                 sourceToHarvest = sortedCounts[0];
+                message += ' assigned sortedCounts[0]: ' + sortedCounts[0].toString() + ' to sourceToHarvest';
             }
-            message += ' assigned sortedCounts[0]: ' + sortedCounts[0].toString() + ' to sourceToHarvest';
             if (data.log) console.log(message);
             if (data.notify) Game.notify(message);
         } else {
