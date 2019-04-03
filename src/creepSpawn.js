@@ -48,8 +48,17 @@ module.exports = {
             potentialHarvestersAboutToDie.length > 0;
         let harvesterCountLessThanSourceCount = 
             room.find(FIND_SOURCES).length <= creepCountsByRole[roles.RoleHarvester];
-        return haveZeroHarvesters || lessThanMaxHarvesters || 
+        let ret = haveZeroHarvesters || lessThanMaxHarvesters || 
             (harvesterAboutToDie && harvesterCountLessThanSourceCount);
+        if (ret && data.notify) {
+            let message = 'shouldSpawnCreep returned true\r\n' +
+                ' haveZeroHarvesters: ' + haveZeroHarvesters +
+                ' lessThanMaxHarvesters: ' + lessThanMaxHarvesters +
+                ' harvesterAboutToDie: ' + harvesterAboutToDie +
+                ' harvesterCountLessThanSourceCount: ' + harvesterCountLessThanSourceCount;
+            Game.notify(message);
+        }
+        return ret;
     },
     spawnHarvester: function(room, spawn, creepCountsByRole) {
         let canWaitToSpawnGoodHarvester = 
