@@ -62,9 +62,13 @@ module.exports = {
         }           
     },
     pickUpDroppedEnergy: function(creep) {
-        let droppedEnergy = creep.pos.findClosestByPath(FIND_DROPPED_RESOURCES);
-        if (droppedEnergy != undefined && droppedEnergy.amount > creep.carryCapacity) {
-            return pickup(creep, droppedEnergy);
+        let droppedEnergies = creep.room.find(FIND_DROPPED_RESOURCES);
+        if (droppedEnergies != undefined) {
+            droppedEnergies.forEach(e => {
+                if (e.amount > creep.carryCapacity) {
+                    return pickup(creep, e);
+                }
+            });
         } else {
             return false;
         }
