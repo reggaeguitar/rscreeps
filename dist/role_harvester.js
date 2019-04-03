@@ -32,16 +32,21 @@ module.exports = {
             message += ' harvestersSources: ' + JSON.stringify(harvestersSources) +
                        ' sourceCounts: ' + JSON.stringify(sourceCounts) +
                        ' sortedCounts: ' + JSON.stringify(sortedCounts);
+            let assignedSource = false;
             for (let i = 0; i < sources.length; ++i) {
                 let potentialMatch = sortedCounts.find(x => x == i);
                 message += ' potentialMatch: ' + potentialMatch || 'was undefined';
                 if (potentialMatch == undefined) {
                     message += ' i: ' + i.toString();
                     sourceToHarvest = i;
+                    assignedSource = true;
+                    break;
                 }
                 message += '\n';
             }
-            sourceToHarvest = sortedCounts[0];
+            if (assignedSource == false) {
+                sourceToHarvest = sortedCounts[0];
+            }
             message += ' assigned sortedCounts[0]: ' + sortedCounts[0].toString() + ' to sourceToHarvest';
             if (data.log) console.log(message);
             if (data.notify) Game.notify(message);
