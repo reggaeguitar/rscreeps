@@ -189,7 +189,7 @@ module.exports = {
             room.energyAvailable + ', can\'t spawn creep';
             if (data.log) console.log(message);
             if (data.notify) Game.notify(message);
-            return;
+            return true;
         }
     }
 };
