@@ -1,6 +1,6 @@
 const _ = require('lodash');
 const data = require('data');
-const roles = require('roles');
+const roles = require('role_roles');
 
 module.exports = {     
     doHarvest: function (creep) {
