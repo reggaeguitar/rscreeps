@@ -63,6 +63,10 @@ module.exports = {
         }           
     },
     pickUpDroppedEnergy: function(creep) {
+        let closestDroppedEnergy = creep.pos.findClosestByPath(FIND_DROPPED_RESOURCES);
+        if (closestDroppedEnergy != undefined && closestDroppedEnergy.amount > creep.carryCapacity) {
+            return pickup(creep, closestDroppedEnergy);
+        }
         let droppedEnergies = creep.room.find(FIND_DROPPED_RESOURCES);
         if (droppedEnergies != undefined) {
             let sortedDescByAmount = droppedEnergies.sort((a, b) => b.amount - a.amount);
