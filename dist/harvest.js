@@ -63,7 +63,7 @@ module.exports = {
     },
     pickUpDroppedEnergy: function(creep) {
         let droppedEnergy = creep.pos.findClosestByPath(FIND_DROPPED_RESOURCES);
-        if (droppedEnergy != undefined) {
+        if (droppedEnergy != undefined && droppedEnergy.amount > creep.carryCapacity) {
             return pickup(creep, droppedEnergy);
         } else {
             return false;
