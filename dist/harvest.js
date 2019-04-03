@@ -54,6 +54,7 @@ module.exports = {
         let closestTombstone = creep.pos.findClosestByPath(FIND_TOMBSTONES);
         if (closestTombstone != undefined && closestTombstone.store[RESOURCE_ENERGY] != 0) {
             this.withdraw(creep, closestTombstone[0]);
+            return true;
         }
     },
     withdraw: function(creep, buildingOrTombstone) {
