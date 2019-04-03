@@ -22,13 +22,14 @@ module.exports = {
         let sourceToHarvest = 0;
         let message = 'creepRoleCounts:' +  JSON.stringify(creepRoleCounts);
         if (creepRoleCounts.hasOwnProperty('true')) {
-            let harvesters = _.filter(creepsInSameRoom, c => c.memory.role == roles.RoleHarvester);
+            let harvesters = _.filter(creepsInSameRoom, c => c.memory.role == roles.RoleHarvester
+                && c.memory.sourceToHarvest != undefined);
             let harvestersSources = harvesters.map(h => h.memory.sourceToHarvest);
             let sourceCounts = _.countBy(harvestersSources, x => x);           
             // assign the harvester to the source with no harvesters
             // or the least amount of harvesters
             // (a, b) => a - b makes the sort ascending            
-            let sortedCounts = Object.keys(sourceCounts).sort((a, b) => a - b);
+            let sortedCounts = Object.keys(sourceCounts).sort((a, b) => b - a);
             message += ' harvestersSources: ' + JSON.stringify(harvestersSources) +
                        ' sourceCounts: ' + JSON.stringify(sourceCounts) +
                        ' sortedCounts: ' + JSON.stringify(sortedCounts);
