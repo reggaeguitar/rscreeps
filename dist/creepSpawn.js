@@ -8,13 +8,7 @@ module.exports = {
     run: function(room, spawn) {
         if (spawn.spawning) return;
         //if (this.spawnedClaimer(room, spawn)) return;
-        let energyAvailable = room.energyAvailable;
-        const cheapestCreepCost = 200;
-        if (energyAvailable < cheapestCreepCost) {
-            if (data.log) console.log('room has less than ' + cheapestCreepCost + ' energy ' + 
-                room.energyAvailable + ', can\'t spawn creep');
-            return;
-        }
+        if (this.notEnoughEnergyToSpawnCreep(room)) return;
         let creepCountsByRole = util.getCreepRoleCounts();    
         if (this.shouldSpawnHarvester(room, creepCountsByRole)) {
             this.spawnHarvester(room, spawn, creepCountsByRole);
@@ -187,4 +181,15 @@ module.exports = {
         }
         return false;
     },
+    notEnoughEnergyToSpawnCreep: function(room) {
+        let energyAvailable = room.energyAvailable;
+        const cheapestCreepCost = 200;
+        if (energyAvailable < cheapestCreepCost) {
+            let message = 'room has less than ' + cheapestCreepCost + ' energy ' + 
+            room.energyAvailable + ', can\'t spawn creep';
+            if (data.log) console.log(message);
+            if (data.notify) Game.notify(message);
+            return;
+        }
+    }
 };

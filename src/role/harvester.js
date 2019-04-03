@@ -1,4 +1,5 @@
 const roles = require('role_roles');
+const data = require('data');
 
 module.exports = {
     run: function(creep) {
@@ -19,22 +20,33 @@ module.exports = {
         let creepsInSameRoom = _.filter(Game.creeps, c => c.room.name == creep.room.name);
         let creepRoleCounts = _.countBy(creepsInSameRoom, c => c.memory.role == roles.RoleHarvester);
         let sourceToHarvest = 0;
+        let message = 'creepsInSameRoom: ' + JSON.stringify(creepsInSameRoom) +
+                      ' creepRoleCounts:' +  JSON.stringify(creepRoleCounts);
         if (creepRoleCounts.hasOwnProperty(roles.RoleHarvester)) {
             let harvesters = _.filter(creepsInSameRoom, c => c.memory.role == roles.RoleHarvester);
             let harvestersSources = harvesters.map(h => h.memory.sourceToHarvest);
-            let sourceCounts = _.countBy(harvestersSources, x => x);
+            let sourceCounts = _.countBy(harvestersSources, x => x);           
             // assign the harvester to the source with no harvesters
             // or the least amount of harvesters
             // (a, b) => a - b makes the sort ascending            
             let sortedCounts = Object.keys(sourceCounts).sort((a, b) => a - b);
+            message += ' harvesters: ' + JSON.stringify(harvesters) +
+                       ' harvestersSources: ' + JSON.stringify(harvestersSources) +
+                       ' sourceCounts: ' + JSON.stringify(sourceCounts) +
+                       ' sortedCounts: ' + JSON.stringify(sortedCounts);
             for (let i = 0; i < sources.length; ++i) {
-                if (sortedCounts.find(x => x == i) == undefined) {
+                let potentialMatch = sortedCounts.find(x => x == i);
+                message += ' potentialMatch: ' + potentialMatch || 'was undefined';
+                if (potentialMatch == undefined) {
+                    message += ' i: ' + i.toString();
                     sourceToHarvest = i;
                 }
             }
             sourceToHarvest = sortedCounts[0];
+            message += ' assigned sortedCounts[0]: ' + sortedCounts[0].toString() + ' to sourceToHarvest';
+            if (data.log) console.log(message);
+            if (data.notify) Game.notify(message);
         } else {
-            // todo try changin to closest source instead of random
             sourceToHarvest = _.random(0, sources.length - 1);
         }        
         creep.memory.sourceToHarvest = sourceToHarvest;
