@@ -31,16 +31,15 @@ module.exports = {
             this.spawnHarvester(room, spawn, creepCountsByRole);
         } else {
             let maxWorkerCount = data.maxWorkerCount(room);
-            let hasALotOfEnergy = room.energyAvailable >= (room.energyCapacityAvailable * 0.9);
-            // todo make this room independent
+            let hasALotOfEnergyInSpawnAndExtensions = room.energyAvailable >= (room.energyCapacityAvailable * 0.9);
             if (creepCountsByRole.hasOwnProperty(roles.RoleHarvester)) {
                 let creepsInRoom = _.filter(Game.creeps, c => c.room.name == room.name);
                 let workerCount = Object.keys(creepsInRoom).length - creepCountsByRole[roles.RoleHarvester];
                 if (data.log) console.log('workerCount: ' + workerCount + ' maxWorkerCount: ' + maxWorkerCount);
                 let potentialStorage = room.find(STRUCTURE_STORAGE);
                 let hasStoredEnergy = potentialStorage.length > 0 && 
-                    potentialStorage[0].store > (room.controller.level * 200);
-                let shouldSpawnCreep = (hasALotOfEnergy && hasStoredEnergy)
+                    potentialStorage[0].store['energy'] > (room.controller.level * 400);
+                let shouldSpawnCreep = (hasALotOfEnergyInSpawnAndExtensions && hasStoredEnergy)
                     || workerCount < maxWorkerCount;
                 if (shouldSpawnCreep) {
                     let role = this.getWorkerRole(room, creepCountsByRole);

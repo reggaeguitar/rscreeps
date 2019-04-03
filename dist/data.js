@@ -12,7 +12,7 @@ module.exports = {
         // todo hauler count depends on hauling distance,
         // might not need many with links too
         let sourceCount = room.find(FIND_SOURCES).length;
-        let extraHaulerCount = room.controller.level - 5;
+        let extraHaulerCount = room.controller.level - 4;
         return sourceCount + (extraHaulerCount > 0 ? extraHaulerCount : 0);
     },
     maxHarvesterCount: room => room.find(FIND_SOURCES).length,
@@ -20,5 +20,5 @@ module.exports = {
     goodHarvesterWorkCount: room => room.controller.level > 2 ? 6 : 3,
     harvesterMoveCount: room => 1,
     harvesterTicksToLive: room => 50,
-    minEnergy: room => room.controller.level * 500,
+    minEnergy: room => room.controller.level * 100,
 };
