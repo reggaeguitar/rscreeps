@@ -64,11 +64,8 @@ module.exports = {
     pickUpDroppedEnergy: function(creep) {
         let droppedEnergies = creep.room.find(FIND_DROPPED_RESOURCES);
         if (droppedEnergies != undefined) {
-            droppedEnergies.forEach(e => {
-                if (e.amount > creep.carryCapacity) {
-                    return pickup(creep, e);
-                }
-            });
+            let sortedDescByAmount = droppedEnergies.sort((a, b) => a.amount + b.amount);
+            return pickup(creep, sortedDescByAmount[0]);
         } else {
             return false;
         }
