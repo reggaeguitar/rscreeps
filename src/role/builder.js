@@ -13,7 +13,7 @@ module.exports = {
         }
 
         function repair() {
-            let closestDamagedStructure = creep.pos.findClosestByRange(FIND_STRUCTURES, {
+            let closestDamagedStructure = creep.pos.findClosestByPath(FIND_STRUCTURES, {
                 filter: struc => struc.hits < struc.hitsMax
             });
             if (closestDamagedStructure != undefined && 

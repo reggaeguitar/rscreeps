@@ -38,7 +38,7 @@ module.exports = {
                 if (data.log) console.log('workerCount: ' + workerCount + ' maxWorkerCount: ' + maxWorkerCount);
                 let potentialStorage = room.find(STRUCTURE_STORAGE);
                 let hasStoredEnergy = potentialStorage.length > 0 && 
-                    potentialStorage[0].store['energy'] > (room.controller.level * 400);
+                    potentialStorage[0].store[RESOURCE_ENERGY] > (room.controller.level * 400);
                 let shouldSpawnCreep = (hasALotOfEnergyInSpawnAndExtensions && hasStoredEnergy)
                     || workerCount < maxWorkerCount;
                 if (shouldSpawnCreep) {
