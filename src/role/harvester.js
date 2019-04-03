@@ -12,7 +12,7 @@ module.exports = {
     mineSources: function(creep, sources) {
         if (creep.harvest(sources[creep.memory.sourceToHarvest]) == ERR_NOT_IN_RANGE) {
             creep.moveTo(sources[creep.memory.sourceToHarvest], 
-                { visualizePathStyle: {stroke: '#ffaa00' } });
+                { visualizePathStyle: { stroke: '#ffaa00' } });
         }
     },    
     startHarvest: function(creep, sources) {
@@ -20,9 +20,8 @@ module.exports = {
         let creepsInSameRoom = _.filter(Game.creeps, c => c.room.name == creep.room.name);
         let creepRoleCounts = _.countBy(creepsInSameRoom, c => c.memory.role == roles.RoleHarvester);
         let sourceToHarvest = 0;
-        let message = 'creepsInSameRoom: ' + JSON.stringify(creepsInSameRoom) +
-                      ' creepRoleCounts:' +  JSON.stringify(creepRoleCounts);
-        if (creepRoleCounts.hasOwnProperty(roles.RoleHarvester)) {
+        let message = 'creepRoleCounts:' +  JSON.stringify(creepRoleCounts);
+        if (creepRoleCounts.hasOwnProperty('true')) {
             let harvesters = _.filter(creepsInSameRoom, c => c.memory.role == roles.RoleHarvester);
             let harvestersSources = harvesters.map(h => h.memory.sourceToHarvest);
             let sourceCounts = _.countBy(harvestersSources, x => x);           
@@ -30,8 +29,7 @@ module.exports = {
             // or the least amount of harvesters
             // (a, b) => a - b makes the sort ascending            
             let sortedCounts = Object.keys(sourceCounts).sort((a, b) => a - b);
-            message += ' harvesters: ' + JSON.stringify(harvesters) +
-                       ' harvestersSources: ' + JSON.stringify(harvestersSources) +
+            message += ' harvestersSources: ' + JSON.stringify(harvestersSources) +
                        ' sourceCounts: ' + JSON.stringify(sourceCounts) +
                        ' sortedCounts: ' + JSON.stringify(sortedCounts);
             for (let i = 0; i < sources.length; ++i) {
@@ -41,6 +39,7 @@ module.exports = {
                     message += ' i: ' + i.toString();
                     sourceToHarvest = i;
                 }
+                message += '\n';
             }
             sourceToHarvest = sortedCounts[0];
             message += ' assigned sortedCounts[0]: ' + sortedCounts[0].toString() + ' to sourceToHarvest';
