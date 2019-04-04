@@ -25,9 +25,9 @@ module.exports = {
         }
 
         function isValid(pos, roomTerrain) {
-            // todo add logic to avoid squares where harvesters harvest (right next to a source)
-            if (storagePos != undefined &&
-                pos.x == storagePos.x && pos.y == storagePos.y) return false;
+            // avoid squares where harvesters harvest (right next to a source)            
+            if (pos.getRangeTo(pos.findClosestByRange(FIND_SOURCES)) <= 1) return false;
+            if (storagePos != undefined && pos.x == storagePos.x && pos.y == storagePos.y) return false;
             if (roomTerrain.get(pos.x, pos.y) == TERRAIN_MASK_WALL) return false;
             let ret = true;
             // look returns an object for each thing on the position
