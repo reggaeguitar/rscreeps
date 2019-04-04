@@ -28,14 +28,18 @@ module.exports = {
             let sourceCounts = _.countBy(harvestersSources, x => x);           
             // assign the harvester to the source with no harvesters
             // or the least amount of harvesters
-            // (a, b) => a - b makes the sort ascending            
-            let sortedCounts = Object.keys(sourceCounts).sort((a, b) => a - b);
+            // (a, b) => a - b makes the sort ascending    
+            let sortedCounts = [];
+            for (let source in sourceCounts) {
+                sortedCounts.push([source, sourceCounts[source]]);
+            }
+            sortedCounts.sort((a, b) => a[1] - b[1]);       
             message += ' harvestersSources: ' + JSON.stringify(harvestersSources) +
                        ' sourceCounts: ' + JSON.stringify(sourceCounts) +
                        ' sortedCounts: ' + JSON.stringify(sortedCounts);
             let assignedSource = false;
             for (let i = 0; i < sources.length; ++i) {
-                let potentialMatch = sortedCounts.find(x => x == i);
+                let potentialMatch = sortedCounts.find(x => x[0] == i);
                 message += ' potentialMatch: ' + potentialMatch || 'was undefined';
                 if (potentialMatch == undefined) {
                     message += ' i: ' + i.toString();
@@ -47,8 +51,8 @@ module.exports = {
                 message += '\n';
             }
             if (assignedSource == false) {
-                sourceToHarvest = sortedCounts[0];
-                message += ' assigned sortedCounts[0]: ' + sortedCounts[0].toString() + ' to sourceToHarvest';
+                sourceToHarvest = sortedCounts[0][0];
+                message += ' assigned sortedCounts[0][0]: ' + sortedCounts[0][0].toString() + ' to sourceToHarvest';
             }
             if (data.log) console.log(message);
             if (data.notify) Game.notify(message);
