@@ -51,6 +51,7 @@ module.exports = {
                 message += '\n';
             }
             if (assignedSource == false) {
+                // todo take into account age of creeps when sources have the same amount there
                 sourceToHarvest = sortedCounts[0][0];
                 message += ' assigned sortedCounts[0][0]: ' + sortedCounts[0][0].toString() + ' to sourceToHarvest';
             }

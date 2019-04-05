@@ -1,36 +1,53 @@
+const data = require('data');
+
 module.exports = {
     nextStoragePos: function(room, spawn, storagePos) {
-        const maxDistUnits = 6;
+        console.log('nextStoragePos called at time: ' + Game.time);
         const distIncrement = 2;
-        let dist = 2;
-        // todo dry these out with mutator funcs for creeps
-        // up, up right, right, down right, down, down left, left, up left
         const mutatorFuncs = [(pos, dist) => new RoomPosition(pos.x, pos.y + dist, room.name),
-                              (pos, dist) => new RoomPosition(pos.x + dist, pos.y + dist, room.name),
                               (pos, dist) => new RoomPosition(pos.x + dist, pos.y, room.name),
-                              (pos, dist) => new RoomPosition(pos.x + dist, pos.y - dist, room.name),
                               (pos, dist) => new RoomPosition(pos.x, pos.y - dist, room.name),
-                              (pos, dist) => new RoomPosition(pos.x - dist, pos.y - dist, room.name),
-                              (pos, dist) => new RoomPosition(pos.x - dist, pos.y, room.name),
-                              (pos, dist) => new RoomPosition(pos.x - dist, pos.y + dist, room.name)];
+                              (pos, dist) => new RoomPosition(pos.x - dist, pos.y, room.name)];
                               
         const roomTerrain = new Room.Terrain(room.name);
 
         let searchedPositions = [];
-        let newfoundPos = findNewPos(spawn.pos, roomTerrain);
+        let newfoundPos;
+        let maxDistFromSpawn = 0;
+        while (newfoundPos == undefined) {
+            maxDistFromSpawn += distIncrement;
+            findNewPos(spawn.pos, 0, maxDistFromSpawn);
+        }
+        
+        console.log('newfoundPos: ' + newfoundPos);
         let message = 'found new construction site: ' + JSON.stringify(newfoundPos);
         if (data.log) console.log(message);
-        if (data.notify) Gamepad.notify(message);
+        if (data.notify) Game.notify(message);
         
-        function findNewPos(pos) {
-            if (isValid(pos)) return true;
+        function findNewPos(pos, depth, maxDistFromSpawn) {
+            if (newfoundPos != undefined) return;
+            searchedPositions.push(pos);
+            if (pos.getRangeTo(spawn.pos) > maxDistFromSpawn) return;
+            if (depth > 14) return;
+            console.log('depth: ' + depth + 'pos: ' + JSON.stringify(pos));
+            if (isValid(pos)) {
+                newfoundPos = pos;
+                console.log('found valid pos: ' + JSON.stringify(pos));
+            }
             for (let func = 0; func < mutatorFuncs.length; func++) {
-                let newPos = mutatorFuncs[func](spawn.pos, distIncrement);
-                if (searchedPositions.find(posAlreadySearched => 
-                    posAlreadySearched.x == pos.x && 
-                    posAlreadySearched.y == pos.y &&
-                    posAlreadySearched.roomName == pos.roomName) != undefined) return false;
-                if (findNewPos(newPos)) return newPos;
+                let newPos = mutatorFuncs[func](pos, distIncrement);
+                console.log('newPos: ' + newPos);
+                console.log('searchedPositions: ' + searchedPositions);
+                let alreadyCheckedPos = searchedPositions.find(posAlreadySearched => 
+                    posAlreadySearched.x == newPos.x && 
+                    posAlreadySearched.y == newPos.y &&
+                    posAlreadySearched.roomName == newPos.roomName) == undefined;
+                console.log(alreadyCheckedPos);
+                if (alreadyCheckedPos) {
+                    console.log('wam');
+                    //searchedPositions.push(newPos);
+                    findNewPos(newPos, depth + 1, maxDistFromSpawn);
+                }
             }
 
             // is valid
