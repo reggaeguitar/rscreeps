@@ -3,7 +3,7 @@ module.exports = {
         const maxDistUnits = 6;
         const distIncrement = 2;
         let dist = 2;
-        // todo add diagonal ones too, and dry it out with mutator funcs for creeps
+        // todo dry these out with mutator funcs for creeps
         // up, up right, right, down right, down, down left, left, up left
         const mutatorFuncs = [(pos, dist) => new RoomPosition(pos.x, pos.y + dist, room.name),
                               (pos, dist) => new RoomPosition(pos.x + dist, pos.y + dist, room.name),

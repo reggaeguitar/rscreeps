@@ -41,7 +41,7 @@ module.exports = {
         let harvesterAboutToDie = potentialHarvestersAboutToDie != undefined &&
             potentialHarvestersAboutToDie.length > 0;
         let harvesterCountLessThanSourceCount = 
-            room.find(FIND_SOURCES).length <= creepCountsByRole[roles.RoleHarvester];
+            creepCountsByRole[roles.RoleHarvester] <= room.find(FIND_SOURCES).length;
         let ret = haveZeroHarvesters || lessThanMaxHarvesters || 
             (harvesterAboutToDie && harvesterCountLessThanSourceCount);
         let message = 'shouldSpawnCreep returned true\r\n' +
@@ -187,8 +187,7 @@ module.exports = {
         if (energyAvailable < cheapestCreepCost) {
             let message = 'room has less than ' + cheapestCreepCost + ' energy ' + 
             room.energyAvailable + ', can\'t spawn creep';
-            if (data.log) console.log(message);
-            if (data.notify) Game.notify(message);
+            if (data.log) console.log(message);            
             return true;
         }
     }
