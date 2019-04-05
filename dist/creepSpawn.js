@@ -40,6 +40,7 @@ module.exports = {
                  c.ticksToLive < data.harvesterTicksToLive(room));
         let harvesterAboutToDie = potentialHarvestersAboutToDie != undefined &&
             potentialHarvestersAboutToDie.length > 0;
+        // perf cache source count for each room in Memory
         let harvesterCountLessThanSourceCount = 
             creepCountsByRole[roles.RoleHarvester] <= room.find(FIND_SOURCES).length;
         let ret = haveZeroHarvesters || lessThanMaxHarvesters || 
