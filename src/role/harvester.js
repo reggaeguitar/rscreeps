@@ -24,7 +24,7 @@ module.exports = {
         if (creepRoleCounts.hasOwnProperty('true')) {
             let harvesters = _.filter(creepsInSameRoom, c => c.memory.role == roles.RoleHarvester
                 && c.memory.sourceToHarvest != undefined);
-            let harvestersSources = harvesters.map(h => h.memory.sourceToHarvest);
+            let harvestersSources = harvesters.map(h => { source: h.memory.sourceToHarvest, ticksToLive: h.ticksToLive });
             let sourceCounts = _.countBy(harvestersSources, x => x);           
             // assign the harvester to the source with no harvesters
             // or the least amount of harvesters
