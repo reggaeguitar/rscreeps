@@ -7,10 +7,10 @@ const constructionDecider = require('buildingPlacement_constructionDecider');
 const mapUtil = require('mapUtil');
 const creepData = require('role_creepData');
 
-const firstRoom = Game.rooms['E24N7']; // todo when respawning change this to new room name
-
 module.exports.loop = function () {    
     function main() {
+        const firstRoom = ['E13S43']; // todo when respawning change this to new room name
+
         util.printCreepRoleCounts(creepData.creepData());
         util.clearDeadCreepsFromMemory();
         let rooms = util.getRoomNames();
