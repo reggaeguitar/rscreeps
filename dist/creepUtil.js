@@ -28,7 +28,7 @@ module.exports = {
         let terrain = Game.map.getRoomTerrain(creep.room.name).get(newPos.x, newPos.y);
         let creepsOnNewPos = _.filter(newPos.look(), x => x.type == 'creep');
         let posHasCreep = creepsOnNewPos != undefined && creepsOnNewPos.length;
-        logger.log('in isPassable', { terrain, creepsOnNewPos, posHasCreep });
+        logger.log('in isPassable', { terrain, creepsOnNewPosIsDefined: creepsOnNewPos != undefined, posHasCreep });
         return terrain == 'plain' && !posHasCreep;
     },    
 }
