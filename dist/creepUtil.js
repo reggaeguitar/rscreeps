@@ -14,6 +14,7 @@ module.exports = {
       for (let i = 0; i < mapUtil.directions.length; i++) {
         const element = mapUtil.directions[i];
         let newPos = element.mutatorFunc(creep.pos);
+        logger.log('newPos:', newPos);
         if (this.isPassable(creep, newPos)) {
           foundPassable = true;
           creep.moveTo(newPos);
