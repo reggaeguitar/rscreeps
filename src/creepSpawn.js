@@ -3,6 +3,7 @@ const util = require('util');
 const data = require('data');
 const roles = require('role_roles');
 const roomPicker = require('roomExpansion_roomPicker');
+const logger = require('logger');
 
 module.exports = {    
     run: function(room, spawn) {
@@ -18,6 +19,7 @@ module.exports = {
             if (creepCountsByRole.hasOwnProperty(roles.RoleHarvester)) {
                 let creepsInRoom = _.filter(Game.creeps, c => c.room.name == room.name);
                 let workerCount = Object.keys(creepsInRoom).length - creepCountsByRole[roles.RoleHarvester];
+
                 if (data.log) console.log('workerCount: ' + workerCount + ' maxWorkerCount: ' + maxWorkerCount);
                 let potentialStorage = _.filter(room.find(FIND_MY_STRUCTURES), s => s.structureType == STRUCTURE_STORAGE);
                 let hasStoredEnergy = potentialStorage.length > 0 && 
@@ -50,7 +52,7 @@ module.exports = {
             ' lessThanMaxHarvesters: ' + lessThanMaxHarvesters +
             ' harvesterAboutToDie: ' + harvesterAboutToDie +
             ' harvesterCountLessThanSourceCount: ' + harvesterCountLessThanSourceCount;
-        if (data.log) console.log(message);
+        logger.log(message);
         if (ret && data.notify) {            
             Game.notify(message);
         }
