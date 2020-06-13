@@ -53,9 +53,7 @@ module.exports = {
             ' harvesterAboutToDie: ' + harvesterAboutToDie +
             ' harvesterCountLessThanSourceCount: ' + harvesterCountLessThanSourceCount;
         logger.log(message);
-        if (ret && data.notify) {            
-            Game.notify(message);
-        }
+        logger.email(message);
         return ret;
     },
     spawnHarvester: function(room, spawn, creepCountsByRole) {
