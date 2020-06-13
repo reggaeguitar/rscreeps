@@ -1,5 +1,4 @@
 const test = require('./test.js');
-// const harvester = require('../dist/role_harvester');
 const harvester = require('../dist/role_harvester');
 
 
@@ -9,7 +8,6 @@ function harvester_decideWhichSourceToHarvest_noOtherHarvesters_assignsToRandomS
 }
 
 (function harvester_decideWhichSourceToHarvest_oneOtherHarvester_assignsToOtherSource() {
-    test.assertEqual(1, 1);
     // arrange
     const creeps = [{ sourceToHarvest: 0, ticksToLive: 1500 }];
     // act

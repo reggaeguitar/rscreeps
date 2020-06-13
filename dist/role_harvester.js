@@ -29,14 +29,14 @@ module.exports = {
         const creepsInSameRoom = _.filter(Game.creeps, c => c.room.name == creep.room.name);
         const creepRoleCounts = _.countBy(creepsInSameRoom, c => c.memory.role == roles.RoleHarvester);
         let sourceToHarvest = 0;
-        let message = 'in startHarvestcreepRoleCounts: ' +  JSON.stringify(creepRoleCounts);
         if (!creepRoleCounts.hasOwnProperty('./true')) {
             sourceToHarvest = _.random(0, sources.length - 1);
         } else {
             const harvesters = _.filter(creepsInSameRoom, c => c.memory.role == roles.RoleHarvester
                 && c.memory.sourceToHarvest != undefined);
-            creep.memory.sourceToHarvest = this.decideWhichSourceToHarvest(harvesters);
+            sourceToHarvest = this.decideWhichSourceToHarvest(harvesters);
         }
+        creep.memory.sourceToHarvest = sourceToHarvest;
         //     let harvestersSources = harvesters.map(h => h.memory.sourceToHarvest);
         //     let sourceCounts = _.countBy(harvestersSources, x => x);           
         //     // todo sort by time to live also

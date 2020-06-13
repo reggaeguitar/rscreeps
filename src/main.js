@@ -9,6 +9,7 @@ const creepData = require('./role_creepData');
 
 module.exports.loop = function () {    
     function main() {
+        // todo find inital spawn and use roomname instead
         const firstRoom = ['E13S43']; // todo when respawning change this to new room name
 
         util.printCreepRoleCounts(creepData.creepData());
