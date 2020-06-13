@@ -1,5 +1,6 @@
 const roles = require('./role_roles');
 const logger = require('./logger');
+const _ = require('lodash');
 
 module.exports = {
     run: function(creep) {
@@ -17,7 +18,23 @@ module.exports = {
     },
     decideWhichSourceToHarvest: function(harvesters) {
         // find source with least count of harvesters assigned
+        const harvestersSources = harvesters.map(h => h.memory.sourceToHarvest);
+        const sourceCounts = _.countBy(harvestersSources, x => x);           
+        // todo sort by time to live also
+        // assign the harvester to the source with no harvesters
+        // or the least amount of harvesters
+        // (a, b) => a - b makes the sort ascending
+        // todo get rid of loop and use map
+        // const sortedCounts = sourceCounts.map(x => x)
+        const sortedCounts = [];
+        for (let source in sourceCounts) {
+            sortedCounts.push([source, sourceCounts[source]]);
+        }
+        const potentialTies = _.takeWhile(sortedCounts, x => x === sortedCounts[0]);
+        console.log(JSON.stringify(potentialTies));
         // if there is a tie choose the one that has the oldest (soonest to die) harvester assigned
+        if (potentialTies.length == 1) return potentialTies[0][0];
+        
         return 0;
     },
     startHarvest: function(creep, sources) {

@@ -1,8 +1,8 @@
 module.exports = {
-    assertEqual: function (expected, actual) {
-        console.log('in assertEqual');
+    assertEqual: function assertEqualImpl(expected, actual) {
         if (expected !== actual) {
-            console.log(`expected ${expected} but got ${actual}`)
-        } else {console.log('foo')}
+            console.error(assertEqualImpl.caller);
+            console.error(`expected ${expected} but got ${actual}`);
+        }
     }
 };
