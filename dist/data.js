@@ -1,6 +1,6 @@
 module.exports = {
     // globals
-    log: false,
+    log: true,
     notify: true,
     roleSayInterval: 5,
     buildInterval: 100,

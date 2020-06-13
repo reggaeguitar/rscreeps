@@ -7,7 +7,7 @@ module.exports = {
         if (Memory[room.name + storagePosStr] == undefined) {
             Memory[room.name + storagePosStr] = constructionUtil.nextStoragePos(room, spawn);
         }
-        let storagePos = Memory[room.name + storagePosStr];
+        const storagePos = Memory[room.name + storagePosStr];
         if (room.controller.level >= ctrlLevelForStorage &&
             room.find(STRUCTURE_STORAGE).length == 0) {
         }
@@ -18,13 +18,13 @@ module.exports = {
                           //[STRUCTURE_CONTAINER, 'container'],
                           [STRUCTURE_TOWER, 'tower']];
         nonRoads.forEach(structureTypeAndPropName => {
-            let structureType = structureTypeAndPropName[0];
-            let propName = structureTypeAndPropName[1];
-            let structureCount = room.find(structureType).length;
-            let amountCanBuild = CONTROLLER_STRUCTURES[propName][room.controller.level];
-            let canBuild = structureCount < amountCanBuild;
+            const structureType = structureTypeAndPropName[0];
+            const propName = structureTypeAndPropName[1];
+            const structureCount = room.find(structureType).length;
+            const amountCanBuild = CONTROLLER_STRUCTURES[propName][room.controller.level];
+            const canBuild = structureCount < amountCanBuild;
             if (canBuild) {
-                let pos = constructionUtil.nextStoragePos(room, spawn, storagePos);
+                const pos = constructionUtil.nextStoragePos(room, spawn, storagePos);
                 room.createConstructionSite(pos, structureType);
             }
         });

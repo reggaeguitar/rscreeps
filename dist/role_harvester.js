@@ -16,6 +16,10 @@ module.exports = {
         }
     },    
     startHarvest: function(creep, sources) {
+      //in startHarvestcreepRoleCounts: {"false":1,"true":2} 
+      // harvestersSources: [null] sourceCounts: {"undefined":1} 
+      // sortedCounts: [["undefined",1]] potentialMatch: undefined 
+      // i: 0 assigned i to sourceToHarvest
         if (sources.length == 1) return 0;
         const creepsInSameRoom = _.filter(Game.creeps, c => c.room.name == creep.room.name);
         const creepRoleCounts = _.countBy(creepsInSameRoom, c => c.memory.role == roles.RoleHarvester);
@@ -24,7 +28,7 @@ module.exports = {
         if (creepRoleCounts.hasOwnProperty('true')) {
             let harvesters = _.filter(creepsInSameRoom, c => c.memory.role == roles.RoleHarvester
                 && c.memory.sourceToHarvest != undefined);            
-            let harvestersSources = harvesters.map(h => { source: h.memory.sourceToHarvest });
+            let harvestersSources = harvesters.map(h => h.memory.sourceToHarvest);
             let sourceCounts = _.countBy(harvestersSources, x => x);           
             // assign the harvester to the source with no harvesters
             // or the least amount of harvesters
