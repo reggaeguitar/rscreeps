@@ -151,6 +151,7 @@ module.exports = {
         }
         const logObject = { bodyParts, spawnEnergy: spawn.store[RESOURCE_ENERGY] };
         if (data.log) data.logObject(logObject);
+        if (bodyParts.length == 0) return;
         const ret = spawn.spawnCreep(bodyParts, role + Game.time, memoryObj);
         if (ret != OK) {
             console.log('could not spawn creep: ' + JSON.stringify(ret));

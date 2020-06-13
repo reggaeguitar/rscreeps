@@ -39,9 +39,13 @@ module.exports = {
         });
 
         function buildRoadImpl(orig, dest) {
+            // build one way then the reverse
             PathFinder.search(orig, 
                 { pos: dest, range: 0 }).path
                 .map(pos => room.createConstructionSite(pos, STRUCTURE_ROAD));
+            PathFinder.search(dest, 
+              { pos: orig, range: 0 }).path
+              .map(pos => room.createConstructionSite(pos, STRUCTURE_ROAD));
         }
     },    
 }
