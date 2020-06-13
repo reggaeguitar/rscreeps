@@ -29,6 +29,6 @@ module.exports = {
         let creepsOnNewPos = _.filter(newPos.look(), x => x.type == 'creep');
         let posHasCreep = creepsOnNewPos != undefined && creepsOnNewPos.length;
         logger.log('in isPassable', { newPos, terrain, creepsOnNewPosIsDefined: creepsOnNewPos != undefined, posHasCreep });
-        return terrain == 'plain' && !posHasCreep;
+        return terrain == 0 && !posHasCreep;
     },    
 }
