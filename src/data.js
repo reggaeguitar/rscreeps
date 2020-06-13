@@ -18,7 +18,7 @@ module.exports = {
         return sourceCount + (extraHaulerCount > 0 ? extraHaulerCount : 0);
     },
     maxHarvesterCount: room => room.find(FIND_SOURCES).length,
-    maxWorkerCount: room => 6,
+    maxWorkerCount: room => room.controller.level > 2 ? 6 : 10,
     // todo change to 200 when done testing
     cheapestCreepCost: room => 150,
     goodHarvesterWorkCount: room => {
