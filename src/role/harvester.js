@@ -17,10 +17,10 @@ module.exports = {
     },    
     startHarvest: function(creep, sources) {
         if (sources.length == 1) return 0;
-        let creepsInSameRoom = _.filter(Game.creeps, c => c.room.name == creep.room.name);
-        let creepRoleCounts = _.countBy(creepsInSameRoom, c => c.memory.role == roles.RoleHarvester);
+        const creepsInSameRoom = _.filter(Game.creeps, c => c.room.name == creep.room.name);
+        const creepRoleCounts = _.countBy(creepsInSameRoom, c => c.memory.role == roles.RoleHarvester);
         let sourceToHarvest = 0;
-        let message = 'in startHarvestcreepRoleCounts:' +  JSON.stringify(creepRoleCounts);
+        let message = 'in startHarvestcreepRoleCounts: ' +  JSON.stringify(creepRoleCounts);
         if (creepRoleCounts.hasOwnProperty('true')) {
             let harvesters = _.filter(creepsInSameRoom, c => c.memory.role == roles.RoleHarvester
                 && c.memory.sourceToHarvest != undefined);            
@@ -33,9 +33,9 @@ module.exports = {
             for (let source in sourceCounts) {
                 sortedCounts.push([source, sourceCounts[source]]);
             }
-            sortedCounts.sort((a, b) => a[1] - b[1]);       
-            message += ' harvesters:' + JSON.stringify(harvesters) + 
-                       ' harvestersSources: ' + JSON.stringify(harvestersSources) +
+            sortedCounts.sort((a, b) => a[1] - b[1]);
+
+            message += ' harvestersSources: ' + JSON.stringify(harvestersSources) +
                        ' sourceCounts: ' + JSON.stringify(sourceCounts) +
                        ' sortedCounts: ' + JSON.stringify(sortedCounts);
             let assignedSource = false;
