@@ -39,6 +39,22 @@ module.exports = {
                 sortedCounts.push([source, sourceCounts[source]]);
             }
             sortedCounts.sort((a, b) => a[1] - b[1]);
+          //   function sortF(ob1, ob2) {
+          //     if (ob1.strength > ob2.strength) {
+          //         return 1;
+          //     } else if (ob1.strength < ob2.strength) { 
+          //         return -1;
+          //     }
+          
+          //     // Else go to the 2nd item
+          //     if (ob1.name < ob2.name) { 
+          //         return -1;
+          //     } else if (ob1.name > ob2.name) {
+          //         return 1
+          //     } else { // nothing to split them
+          //         return 0;
+          //     }
+          // }
 
             message += ' harvestersSources: ' + JSON.stringify(harvestersSources) +
                        ' sourceCounts: ' + JSON.stringify(sourceCounts) +
