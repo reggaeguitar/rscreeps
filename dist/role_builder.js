@@ -1,6 +1,6 @@
-const roles = require('role_roles');
-const worker = require('role_worker');
-const util = require('util');
+const roles = require('./role_roles');
+const worker = require('./role_worker');
+const util = require('./util');
 
 module.exports = {
     run: function(creep) {

@@ -1,4 +1,4 @@
-const constructionUtil = require('buildingPlacement_constructionUtil');
+const constructionUtil = require('./buildingPlacement_constructionUtil');
           
 module.exports = {
     run: function(room, spawn) {

@@ -1,5 +1,5 @@
-const harvest = require('harvest');
-const creepUtil = require('creepUtil');
+const harvest = require('./harvest');
+const creepUtil = require('./creepUtil');
 
 module.exports = {
     run: function(creep, doWork) {

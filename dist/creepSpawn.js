@@ -1,9 +1,9 @@
-const _ = require('lodash');
-const util = require('util');
-const data = require('data');
-const roles = require('role_roles');
-const roomPicker = require('roomExpansion_roomPicker');
-const logger = require('logger');
+const _ = require('./lodash');
+const util = require('./util');
+const data = require('./data');
+const roles = require('./role_roles');
+const roomPicker = require('./roomExpansion_roomPicker');
+const logger = require('./logger');
 
 module.exports = {    
     run: function(room, spawn) {

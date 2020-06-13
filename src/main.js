@@ -1,11 +1,11 @@
-const _ = require('lodash');
-const util = require('util');
-const creepSpawn = require('creepSpawn');
-const data = require('data');
-const roleTower = require('role_tower');
-const constructionDecider = require('buildingPlacement_constructionDecider');
-const mapUtil = require('mapUtil');
-const creepData = require('role_creepData');
+const _ = require('./lodash');
+const util = require('./util');
+const creepSpawn = require('./creepSpawn');
+const data = require('./data');
+const roleTower = require('./role_tower');
+const constructionDecider = require('./buildingPlacement_constructionDecider');
+const mapUtil = require('./mapUtil');
+const creepData = require('./role_creepData');
 
 module.exports.loop = function () {    
     function main() {

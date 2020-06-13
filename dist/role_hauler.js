@@ -1,6 +1,6 @@
-const _ = require('lodash');
-const worker = require('role_worker');
-const data = require('data');
+const _ = require('./lodash');
+const worker = require('./role_worker');
+const data = require('./data');
 
 module.exports = {
     run: function(creep) {

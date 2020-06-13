@@ -1,5 +1,5 @@
-const roles = require('role_roles');
-const logger = require('logger');
+const roles = require('./role_roles');
+const logger = require('./logger');
 
 module.exports = {
     run: function(creep) {
@@ -25,7 +25,7 @@ module.exports = {
         const creepRoleCounts = _.countBy(creepsInSameRoom, c => c.memory.role == roles.RoleHarvester);
         let sourceToHarvest = 0;
         let message = 'in startHarvestcreepRoleCounts: ' +  JSON.stringify(creepRoleCounts);
-        if (creepRoleCounts.hasOwnProperty('true')) {
+        if (creepRoleCounts.hasOwnProperty('./true')) {
             let harvesters = _.filter(creepsInSameRoom, c => c.memory.role == roles.RoleHarvester
                 && c.memory.sourceToHarvest != undefined);            
             let harvestersSources = harvesters.map(h => h.memory.sourceToHarvest);

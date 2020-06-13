@@ -1,5 +1,5 @@
-const mapUtil = require('mapUtil');
-const logger = require('logger');
+const mapUtil = require('./mapUtil');
+const logger = require('./logger');
 
 module.exports = {   
     creepIsNextToSource: function(creep) {

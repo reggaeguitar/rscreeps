@@ -1,5 +1,5 @@
-const _ = require('lodash');
-const logger = require('logger');
+const _ = require('./lodash');
+const logger = require('./logger');
 
 module.exports = {
     // perf cache results from these methods   
