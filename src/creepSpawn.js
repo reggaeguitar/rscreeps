@@ -90,6 +90,7 @@ module.exports = {
         const goodHarvesterWorkCount = data.goodHarvesterWorkCount(room);
         const logObject = { moveCount, movePartsCost, energyLeftForWorkParts, workCount, goodHarvesterWorkCount };
         if (data.log) console.log('in trySpawnGoodHarvester ' + JSON.stringify(logObject));
+        // {"moveCount":1,"movePartsCost":50,"energyLeftForWorkParts":250,"workCount":2.5,"goodHarvesterWorkCount":3}
         if (workCount >= goodHarvesterWorkCount) {
             let bodyParts = this.getBodyPartsFromCounts(goodHarvesterWorkCount, 0, moveCount);
             this.spawnCreepImpl(bodyParts, roles.RoleHarvester, spawn);

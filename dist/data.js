@@ -19,7 +19,10 @@ module.exports = {
     },
     maxHarvesterCount: room => room.find(FIND_SOURCES).length,
     maxWorkerCount: room => 6,
-    goodHarvesterWorkCount: room => room.controller.level > 2 ? 6 : 3,
+    goodHarvesterWorkCount: room => {
+      if (room.controller.level == 2) return 2;
+      return room.controller.level > 2 ? 6 : 3;
+    },
     harvesterMoveCount: room => 1,
     harvesterTicksToLive: room => 50,
     minEnergy: room => room.controller.level * 100,
