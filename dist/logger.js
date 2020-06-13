@@ -6,6 +6,7 @@ module.exports = {
         if (msg) {
           console.log(msg + ' ');
         }
+        console.log('foo ' + JSON.stringify(obj));
         if (obj) {
           console.log(JSON.stringify(obj));
         }
