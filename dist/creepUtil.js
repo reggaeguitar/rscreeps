@@ -10,14 +10,16 @@ module.exports = {
         return _.findIndex(sources, src => src.pos.isNearTo(creep.pos));
     },
     moveAwayFromSource: function(creep) {
-        logger.log('in moveAwayFromSource', { creep });
-        for (let i = 0; i < mapUtil.directions.length; i++) {
-            const element = mapUtil.directions[i];
-            let newPos = element.mutatorFunc(creep.pos);
-            if (this.isPassable(creep, newPos)) {
-                creep.moveTo(newPos);
-            }
+      let foundPassable = false;
+      for (let i = 0; i < mapUtil.directions.length; i++) {
+        const element = mapUtil.directions[i];
+        let newPos = element.mutatorFunc(creep.pos);
+        if (this.isPassable(creep, newPos)) {
+          foundPassable = true;
+          creep.moveTo(newPos);
         }
+      }
+      logger.log('in moveAwayFromSource', { creep, foundPassable });
     },
     isPassable: function(creep, newPos) {
         // is passable if plain and not occupied by a creep
