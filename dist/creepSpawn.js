@@ -188,7 +188,7 @@ module.exports = {
     },
     notEnoughEnergyToSpawnCreep: function(room) {
         let energyAvailable = room.energyAvailable;
-        const cheapestCreepCost = 200;
+        const cheapestCreepCost = data.cheapestCreepCost(room);
         if (energyAvailable < cheapestCreepCost) {
             let message = 'room has less than ' + cheapestCreepCost + ' energy ' + 
             room.energyAvailable + ', can\'t spawn creep';

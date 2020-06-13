@@ -30,9 +30,10 @@ module.exports = {
                 && c.memory.sourceToHarvest != undefined);            
             let harvestersSources = harvesters.map(h => h.memory.sourceToHarvest);
             let sourceCounts = _.countBy(harvestersSources, x => x);           
+            // todo sort by time to live also
             // assign the harvester to the source with no harvesters
             // or the least amount of harvesters
-            // (a, b) => a - b makes the sort ascending    
+            // (a, b) => a - b makes the sort ascending
             let sortedCounts = [];
             for (let source in sourceCounts) {
                 sortedCounts.push([source, sourceCounts[source]]);
