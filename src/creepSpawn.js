@@ -45,7 +45,7 @@ module.exports = {
             creepCountsByRole[roles.RoleHarvester] <= room.find(FIND_SOURCES).length;
         let ret = haveZeroHarvesters || lessThanMaxHarvesters || 
             (harvesterAboutToDie && harvesterCountLessThanSourceCount);
-        let message = 'shouldSpawnCreep returned true\r\n' +
+        let message = 'shouldSpawnHarvester returned true\r\n' +
             ' haveZeroHarvesters: ' + haveZeroHarvesters +
             ' lessThanMaxHarvesters: ' + lessThanMaxHarvesters +
             ' harvesterAboutToDie: ' + harvesterAboutToDie +
@@ -60,6 +60,7 @@ module.exports = {
         let canWaitToSpawnGoodHarvester = 
             creepCountsByRole.hasOwnProperty(roles.RoleHauler) &&
             creepCountsByRole.hasOwnProperty(roles.RoleHarvester);
+        if (data.log) console.log('in spawnHarvester canWaitToSpawnGoodHarvester: ' + canWaitToSpawnGoodHarvester);
         if (canWaitToSpawnGoodHarvester) {
             this.trySpawnGoodHarvester(room, spawn);
         } else {
@@ -82,11 +83,13 @@ module.exports = {
         }
     },
     trySpawnGoodHarvester: function(room, spawn) {
-        let moveCount = this.getHarvesterMoveCount(room);
-        let movePartsCost = BODYPART_COST[MOVE] * moveCount;
-        let energyLeftForWorkParts = room.energyAvailable - movePartsCost;
-        let workCount = energyLeftForWorkParts / BODYPART_COST[WORK];
-        let goodHarvesterWorkCount = data.goodHarvesterWorkCount(room);
+        const moveCount = this.getHarvesterMoveCount(room);
+        const movePartsCost = BODYPART_COST[MOVE] * moveCount;
+        const energyLeftForWorkParts = room.energyAvailable - movePartsCost;
+        const workCount = energyLeftForWorkParts / BODYPART_COST[WORK];
+        const goodHarvesterWorkCount = data.goodHarvesterWorkCount(room);
+        const logObject = { moveCount, movePartsCost, energyLeftForWorkParts, workCount, goodHarvesterWorkCount };
+        if (data.log) console.log('in trySpawnGoodHarvester ' + JSON.stringify(logObject));
         if (workCount >= goodHarvesterWorkCount) {
             let bodyParts = this.getBodyPartsFromCounts(goodHarvesterWorkCount, 0, moveCount);
             this.spawnCreepImpl(bodyParts, roles.RoleHarvester, spawn);

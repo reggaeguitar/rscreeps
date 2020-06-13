@@ -20,7 +20,7 @@ module.exports = {
         let creepsInSameRoom = _.filter(Game.creeps, c => c.room.name == creep.room.name);
         let creepRoleCounts = _.countBy(creepsInSameRoom, c => c.memory.role == roles.RoleHarvester);
         let sourceToHarvest = 0;
-        let message = 'creepRoleCounts:' +  JSON.stringify(creepRoleCounts);
+        let message = 'in startHarvestcreepRoleCounts:' +  JSON.stringify(creepRoleCounts);
         if (creepRoleCounts.hasOwnProperty('true')) {
             let harvesters = _.filter(creepsInSameRoom, c => c.memory.role == roles.RoleHarvester
                 && c.memory.sourceToHarvest != undefined);            
