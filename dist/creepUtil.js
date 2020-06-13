@@ -1,5 +1,5 @@
 const mapUtil = require('mapUtil');
-const data = require('data');
+const logger = require('logger');
 
 module.exports = {   
     creepIsNextToSource: function(creep) {
@@ -10,7 +10,7 @@ module.exports = {
         return _.findIndex(sources, src => src.pos.isNearTo(creep.pos));
     },
     moveAwayFromSource: function(creep) {
-        if (data.log) data.logObject('in moveAwayFromSource', { creep });
+        logger.log('in moveAwayFromSource', { creep });
         for (let i = 0; i < mapUtil.directions.length; i++) {
             const element = mapUtil.directions[i];
             let newPos = element.mutatorFunc(creep.pos);

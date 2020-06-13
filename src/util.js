@@ -1,10 +1,10 @@
 const _ = require('lodash');
-const data = require('data');
+const logger = require('logger');
 
 module.exports = {
     // perf cache results from these methods   
     printCreepRoleCounts: function() {
-        if (data.log) console.log(JSON.stringify(this.getCreepRoleCounts()));
+        logger.log('creepRoleCounts:', this.getCreepRoleCounts());
     },
     getCreepRoleCounts: function() {
         return _.countBy(Game.creeps, c => c.memory.role);

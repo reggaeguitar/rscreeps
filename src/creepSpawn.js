@@ -20,7 +20,7 @@ module.exports = {
                 let creepsInRoom = _.filter(Game.creeps, c => c.room.name == room.name);
                 let workerCount = Object.keys(creepsInRoom).length - creepCountsByRole[roles.RoleHarvester];
 
-                if (data.log) console.log('workerCount: ' + workerCount + ' maxWorkerCount: ' + maxWorkerCount);
+                logger.log('workerCount: ' + workerCount + ' maxWorkerCount: ' + maxWorkerCount);
                 let potentialStorage = _.filter(room.find(FIND_MY_STRUCTURES), s => s.structureType == STRUCTURE_STORAGE);
                 let hasStoredEnergy = potentialStorage.length > 0 && 
                     potentialStorage[0].store[RESOURCE_ENERGY] > (room.controller.level * 400);
@@ -62,7 +62,7 @@ module.exports = {
         let canWaitToSpawnGoodHarvester = 
             creepCountsByRole.hasOwnProperty(roles.RoleHauler) &&
             creepCountsByRole.hasOwnProperty(roles.RoleHarvester);
-        if (data.log) console.log('in spawnHarvester canWaitToSpawnGoodHarvester: ' + canWaitToSpawnGoodHarvester);
+        logger.log('in spawnHarvester canWaitToSpawnGoodHarvester: ' + canWaitToSpawnGoodHarvester);
         if (canWaitToSpawnGoodHarvester) {
             this.trySpawnGoodHarvester(room, spawn);
         } else {
@@ -91,7 +91,7 @@ module.exports = {
         const workCount = energyLeftForWorkParts / BODYPART_COST[WORK];
         const goodHarvesterWorkCount = data.goodHarvesterWorkCount(room);
         const logObject = { moveCount, movePartsCost, energyLeftForWorkParts, workCount, goodHarvesterWorkCount };
-        if (data.log) console.log('in trySpawnGoodHarvester ' + JSON.stringify(logObject));
+        logger.log('in trySpawnGoodHarvester ' + JSON.stringify(logObject));
         // {"moveCount":1,"movePartsCost":50,"energyLeftForWorkParts":250,"workCount":2.5,"goodHarvesterWorkCount":3}
         if (workCount >= goodHarvesterWorkCount) {
             let bodyParts = this.getBodyPartsFromCounts(goodHarvesterWorkCount, 0, moveCount);
@@ -99,7 +99,7 @@ module.exports = {
         }
     },
     spawnBestHarvesterPossible: function(room, spawn) {
-        if (data.log) console.log('spawnBestHarvesterPossible called');
+        logger.log('spawnBestHarvesterPossible called');
         let moveCount = this.getHarvesterMoveCount(room);
         let movePartsCost = BODYPART_COST[MOVE] * moveCount;
         let energyLeftForWorkParts = room.energyAvailable - movePartsCost;
@@ -110,7 +110,7 @@ module.exports = {
         if (workCount == 0) {
             return;
         }
-        if (data.log) console.log('workCount: ' + workCount);
+        logger.log('workCount: ' + workCount);
         let bodyParts = this.getBodyPartsFromCounts(workCount, 0, moveCount);
         this.spawnCreepImpl(bodyParts, roles.RoleHarvester, spawn);
     },
@@ -119,7 +119,7 @@ module.exports = {
         let half = room.energyAvailable / 2;
         let workCount = half / BODYPART_COST[WORK];
         if (BODYPART_COST[MOVE] != BODYPART_COST[CARRY]) {
-            console.log('MOVE and CARRY no longer the same cost, update creepSpawn.js');
+            logger.log('MOVE and CARRY no longer the same cost, update creepSpawn.js');
         }
         if (workCount == 0) return;
 
@@ -128,7 +128,7 @@ module.exports = {
         let bodyParts = this.getBodyPartsFromCounts(
             workCount, carryAndMoveCount, carryAndMoveCount);
         if (this.creepCost(bodyParts) > room.energyAvailable) {
-            console.log('error in creepSpawn, bodyParts: ' + JSON.stringify(bodyParts) 
+            logger.log('error in creepSpawn, bodyParts: ' + JSON.stringify(bodyParts) 
                 + ' cost more than energyAvailable: ' + room.energyAvailable);
         }
         this.spawnCreepImpl(bodyParts, role, spawn);
@@ -152,11 +152,11 @@ module.exports = {
             memoryObj.memory.roomToClaim = roomToClaim;
         }
         const logObject = { bodyParts, spawnEnergy: spawn.store[RESOURCE_ENERGY] };
-        if (data.log) data.logObject('in spawnCreepImpl', logObject);
+        logger.log('in spawnCreepImpl', logObject);
         if (bodyParts.length == 0) return;
         const ret = spawn.spawnCreep(bodyParts, role + Game.time, memoryObj);
         if (ret != OK) {
-            console.log('could not spawn creep: ' + JSON.stringify(ret));
+            logger.log('could not spawn creep: ', ret);
         }
     },
     creepCost: function(bodyParts) {
@@ -173,12 +173,12 @@ module.exports = {
         const claimCost = 600;
         if (util.getRoomNames().length < Game.gcl.level) {
             if (BODYPART_COST[CLAIM] != claimCost) {
-                console.log('Claim bodypart no longer costs 600 energy, update creepSpawn.js');
+                logger.log('Claim bodypart no longer costs 600 energy, update creepSpawn.js');
             }
             let bodyParts = [CLAIM];
             let movePartCount = ((room.energyAvailable - claimCost) / BODYPART_COST[MOVE]) - 1;
             if (movePartCount == 0) {
-                if (data.log) console.log('Not enough energy to spawn claimer');
+                logger.log('Not enough energy to spawn claimer');
                 return true;
             }
             for (let i = 0; i < movePartCount; ++i) {
@@ -197,7 +197,7 @@ module.exports = {
         if (energyAvailable < cheapestCreepCost) {
             let message = 'room has less than ' + cheapestCreepCost + ' energy ' + 
             room.energyAvailable + ', can\'t spawn creep';
-            if (data.log) console.log(message);            
+            logger.log(message);            
             return true;
         }
     }

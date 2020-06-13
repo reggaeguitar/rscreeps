@@ -1,5 +1,5 @@
 const roles = require('role_roles');
-const data = require('data');
+const logger = require('logger');
 
 module.exports = {
     run: function(creep) {
@@ -60,8 +60,8 @@ module.exports = {
                 sourceToHarvest = sortedCounts[0][0];
                 message += ' assigned sortedCounts[0][0]: ' + sortedCounts[0][0].toString() + ' to sourceToHarvest';
             }
-            if (data.log) console.log(message);
-            if (data.notify) Game.notify(message);
+            logger.log(message);
+            logger.email(message);
         } else {
             sourceToHarvest = _.random(0, sources.length - 1);
         }        

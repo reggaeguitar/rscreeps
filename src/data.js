@@ -29,9 +29,4 @@ module.exports = {
     harvesterMoveCount: room => 1,
     harvesterTicksToLive: room => 50,
     minEnergy: room => room.controller.level * 100,
-    logObject: (msg, obj) => {
-        if (this.log) {
-          console.log(msg + ' ' + JSON.stringify(obj));
-        }
-    },  
 };
