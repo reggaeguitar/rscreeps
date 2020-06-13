@@ -145,11 +145,13 @@ module.exports = {
         return ret;
     },   
     spawnCreepImpl: function(bodyParts, role, spawn, roomToClaim) {
-        let memoryObj = { memory: { role: role } };
+        const memoryObj = { memory: { role: role } };
         if (roomToClaim != undefined) {
             memoryObj.memory.roomToClaim = roomToClaim;
         }
-        let ret = spawn.spawnCreep(bodyParts, role + Game.time, memoryObj);
+        const logObject = { bodyParts, spawnEnergy: spawn.store[RESOURCE_ENERGY] };
+        if (data.log) data.logObject(logObject);
+        const ret = spawn.spawnCreep(bodyParts, role + Game.time, memoryObj);
         if (ret != OK) {
             console.log('could not spawn creep: ' + JSON.stringify(ret));
         }
