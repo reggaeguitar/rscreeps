@@ -150,7 +150,7 @@ module.exports = {
             memoryObj.memory.roomToClaim = roomToClaim;
         }
         const logObject = { bodyParts, spawnEnergy: spawn.store[RESOURCE_ENERGY] };
-        if (data.log) data.logObject(logObject);
+        if (data.log) data.logObject('in spawnCreepImpl', logObject);
         if (bodyParts.length == 0) return;
         const ret = spawn.spawnCreep(bodyParts, role + Game.time, memoryObj);
         if (ret != OK) {
