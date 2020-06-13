@@ -16,6 +16,7 @@ module.exports = {
         let newPos = element.mutatorFunc(creep.pos);
         logger.log('newPos:', newPos);
         if (this.isPassable(creep, newPos)) {
+          logger.log('foundPassable square to move to', { creep, newPos });
           foundPassable = true;
           creep.moveTo(newPos);
         }
