@@ -1,4 +1,4 @@
-const _ = require('./lodash');
+const _ = require('lodash');
 const util = require('./util');
 const creepSpawn = require('./creepSpawn');
 const data = require('./data');

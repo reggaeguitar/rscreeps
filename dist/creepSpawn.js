@@ -1,4 +1,4 @@
-const _ = require('./lodash');
+const _ = require('lodash');
 const util = require('./util');
 const data = require('./data');
 const roles = require('./role_roles');
