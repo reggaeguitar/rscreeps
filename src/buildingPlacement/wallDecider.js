@@ -9,5 +9,6 @@ module.exports = {
         // bottom
         // left
         // right
+        console.log('foo');
     },
 }

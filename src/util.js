@@ -1,5 +1,7 @@
 const _ = require('lodash');
 const logger = require('./logger');
+const gameAbstraction = require('./gameAbstraction');
+const memoryAbstraction = require('./memoryAbstraction');
 
 module.exports = {
     // perf cache results from these methods   
@@ -7,31 +9,31 @@ module.exports = {
         logger.log('creepRoleCounts:', this.getCreepRoleCounts());
     },
     getCreepRoleCounts: function() {
-        return _.countBy(Game.creeps, c => c.memory.role);
+        return _.countBy(gameAbstraction.creeps(), c => c.memory.role);
     },   
     clearDeadCreepsFromMemory: function() {
-        for (let name in Memory.creeps) {
-            if (!Game.creeps[name]) {
+        for (let name in memoryAbstraction.creeps()) {
+            if (!gameAbstraction.creeps()[name]) {
                 delete Memory.creeps[name];                
             }
         }
     },    
     getCreepCount: function() {
-        return Object.keys(Game.creeps).length;
+        return Object.keys(gameAbstraction.creeps()).length;
     },
     getRoles: function() {
         return Object.keys(this.creepData);
     },    
     getRoomNames: function() {
         // todo use uniqBy when able to
-        // _.uniqBy(Game.creeps, c => c.room.name);
+        // _.uniqBy(gameAbstraction.creeps(), c => c.room.name);
         let _roomCache;
         if (_roomCache != undefined) {
             return _roomCache;
         } else {
             let rooms = [];
-            for (let name in Game.creeps) {
-                let roomName = Game.creeps[name].room.name;
+            for (let name in gameAbstraction.creeps()) {
+                let roomName = gameAbstraction.creeps()[name].room.name;
                 if (rooms.find(r => r == roomName) == undefined) {
                     rooms.push(roomName)
                 }
