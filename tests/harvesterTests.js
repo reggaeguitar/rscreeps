@@ -11,15 +11,28 @@ const sourceCount = 2;
     // arrange
     const creeps = [{ memory: { sourceToHarvest: 0 }, ticksToLive: 1500 }];
     // act
-    const result = harvester.decideWhichSourceToHarvest(creeps, 7);
+    const result = harvester.decideWhichSourceToHarvest(creeps, sourceCount);
     // assert
     const expected = 1;
     test.assertEqual(expected, result);
 })();
 
-(function foo() {
+(function harvester_decideWhichSourceToHarvest_threeOtherHarvesters_assignsToSourceWithLeastAssigned() {
     // arrange
-    const creeps = [{ memory: { sourceToHarvest: 1 }, ticksToLive: 1500 }, 
+    const creeps = [{ memory: { sourceToHarvest: 0 }, ticksToLive: 1500 }, 
+                    { memory: { sourceToHarvest: 0 }, ticksToLive: 10 },
+                    { memory: { sourceToHarvest: 1 }, ticksToLive: 10 }];
+    // act
+    const result = harvester.decideWhichSourceToHarvest(creeps, sourceCount);
+    // assert
+    const expected = 1;
+    test.assertEqual(expected, result);
+})();
+
+(function harvester_decideWhichSourceToHarvest_complexExample() {
+    // arrange
+    const creeps = [
+        { memory: { sourceToHarvest: 1 }, ticksToLive: 1500 }, 
         { memory: { sourceToHarvest: 3 }, ticksToLive: 10 },
         { memory: { sourceToHarvest: 2 }, ticksToLive: 10 },
         { memory: { sourceToHarvest: 2 }, ticksToLive: 10 },
@@ -30,11 +43,11 @@ const sourceCount = 2;
         { memory: { sourceToHarvest: 0 }, ticksToLive: 10 },
         { memory: { sourceToHarvest: 17 }, ticksToLive: 10 },
         { memory: { sourceToHarvest: 23 }, ticksToLive: 10 },
-                ];
+    ];
     // act
-    const result = harvester.decideWhichSourceToHarvest(creeps, sourceCount);
+    const result = harvester.decideWhichSourceToHarvest(creeps, 6);
     // assert
-    const expected = 1;
+    const expected = 17;
     test.assertEqual(expected, result);
 })();
 

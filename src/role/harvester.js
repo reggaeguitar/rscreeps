@@ -16,32 +16,38 @@ module.exports = {
                 { visualizePathStyle: { stroke: '#ffaa00' } });
         }
     },
-    decideWhichSourceToHarvest: function(harvesters) {
+    decideWhichSourceToHarvest: function(harvesters, sourceCount) {
         // find source with least count of harvesters assigned
         const harvestersSources = harvesters.map(h => h.memory.sourceToHarvest);
         const sourceCounts = _.countBy(harvestersSources, x => x);           
-        // todo sort by time to live also
         // assign the harvester to the source with no harvesters
-        // or the least amount of harvesters
-        // (a, b) => a - b makes the sort ascending
-        // todo get rid of loop and use map
-        // const sortedCounts = sourceCounts.map(x => x)
-        const sortedCounts = [];
-        for (let source in sourceCounts) {
-            sortedCounts.push([source, sourceCounts[source]]);
+        const min = _.min(sourceCounts, x => x);
+        const entries = Object.entries(sourceCounts);
+        if (entries.length != sourceCount) {
+            // there is a source with no harvester assigned
+            // const allSources = 
+            function* generator() {
+                let index = sourceCount;
+                while (index > 0) {
+                    index = index - 1;
+                    yield index;
+                }
+              }
+            const allSources = Array.from(generator());
+            const keysAsInts = Object.keys(entries).map(x => +x);
+            const sourcesWithNoHarvestersAssigned = _.pull(allSources, ...keysAsInts);
+            return sourcesWithNoHarvestersAssigned[0];
         }
-        const potentialTies = _.takeWhile(sortedCounts, x => x === sortedCounts[0]);
-        console.log(JSON.stringify(potentialTies));
-        // if there is a tie choose the one that has the oldest (soonest to die) harvester assigned
-        if (potentialTies.length == 1) return potentialTies[0][0];
-        
-        return 0;
+        const sourcesWithMinHarvestersAssigned = entries.filter(x => x[1] == min).map(x => +x[0]);
+        if (sourcesWithMinHarvestersAssigned.length == 1) return sourcesWithMinHarvestersAssigned[0];
+        // if there is a tie return the source with the oldest harvester assigned, aka soonest to die
+        const harvestersAtMinSources = harvesters.filter(x => 
+            sourcesWithMinHarvestersAssigned.includes(x.memory.sourceToHarvest));
+        const oldestAge = _.min(harvestersAtMinSources.map(x => x.ticksToLive));
+        const ret = harvestersAtMinSources.find(x => x.ticksToLive == oldestAge).memory.sourceToHarvest;
+        return ret;
     },
     startHarvest: function(creep, sources) {
-      //in startHarvestcreepRoleCounts: {"false":1,"true":2} 
-      // harvestersSources: [null] sourceCounts: {"undefined":1} 
-      // sortedCounts: [["undefined",1]] potentialMatch: undefined 
-      // i: 0 assigned i to sourceToHarvest
         if (sources.length == 1) return 0;
         const creepsInSameRoom = _.filter(Game.creeps, c => c.room.name == creep.room.name);
         const creepRoleCounts = _.countBy(creepsInSameRoom, c => c.memory.role == roles.RoleHarvester);
@@ -51,61 +57,8 @@ module.exports = {
         } else {
             const harvesters = _.filter(creepsInSameRoom, c => c.memory.role == roles.RoleHarvester
                 && c.memory.sourceToHarvest != undefined);
-            sourceToHarvest = this.decideWhichSourceToHarvest(harvesters);
+            sourceToHarvest = this.decideWhichSourceToHarvest(harvesters, source.length);
         }
         creep.memory.sourceToHarvest = sourceToHarvest;
-        //     let harvestersSources = harvesters.map(h => h.memory.sourceToHarvest);
-        //     let sourceCounts = _.countBy(harvestersSources, x => x);           
-        //     // todo sort by time to live also
-        //     // assign the harvester to the source with no harvesters
-        //     // or the least amount of harvesters
-        //     // (a, b) => a - b makes the sort ascending
-        //     let sortedCounts = [];
-        //     for (let source in sourceCounts) {
-        //         sortedCounts.push([source, sourceCounts[source]]);
-        //     }
-        //     sortedCounts.sort((a, b) => a[1] - b[1]);
-        //   //   function sortF(ob1, ob2) {
-        //   //     if (ob1.strength > ob2.strength) {
-        //   //         return 1;
-        //   //     } else if (ob1.strength < ob2.strength) { 
-        //   //         return -1;
-        //   //     }
-          
-        //   //     // Else go to the 2nd item
-        //   //     if (ob1.name < ob2.name) { 
-        //   //         return -1;
-        //   //     } else if (ob1.name > ob2.name) {
-        //   //         return 1
-        //   //     } else { // nothing to split them
-        //   //         return 0;
-        //   //     }
-        //   // }
-
-        //     message += ' harvestersSources: ' + JSON.stringify(harvestersSources) +
-        //                ' sourceCounts: ' + JSON.stringify(sourceCounts) +
-        //                ' sortedCounts: ' + JSON.stringify(sortedCounts);
-        //     let assignedSource = false;
-        //     for (let i = 0; i < sources.length; ++i) {
-        //         let potentialMatch = sortedCounts.find(x => x[0] == i);
-        //         message += ' potentialMatch: ' + potentialMatch || 'was undefined';
-        //         if (potentialMatch == undefined) {
-        //             message += ' i: ' + i.toString();
-        //             sourceToHarvest = i;
-        //             assignedSource = true;
-        //             message += ' assigned i to sourceToHarvest';
-        //             break;
-        //         }
-        //         message += '\n';
-        //     }
-        //     if (assignedSource == false) {
-        //         sourceToHarvest = sortedCounts[0][0];
-        //         message += ' assigned sortedCounts[0][0]: ' + sortedCounts[0][0].toString() + ' to sourceToHarvest';
-        //     }
-        //     logger.log(message);
-        //     logger.email(message);
-        // } else {
-        // }        
-        // creep.memory.sourceToHarvest = sourceToHarvest;
     }
 };
