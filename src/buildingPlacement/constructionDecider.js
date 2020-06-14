@@ -1,5 +1,5 @@
 const constructionUtil = require('./buildingPlacement_constructionUtil');
-const wallDecider = require('./wallDecider');
+const wallDecider = require('./buildingPlacement_wallDecider');
 
 module.exports = {
     run: function(room, spawn) {
