@@ -3,3 +3,4 @@ package-lock.json
 screeps.json
 .gitconfig
 .bash_history
+coverage/
