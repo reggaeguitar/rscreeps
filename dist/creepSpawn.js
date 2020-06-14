@@ -1,4 +1,4 @@
-const _ = require('./lodash');
+const _ = require('lodash');
 const util = require('./util');
 const data = require('./data');
 const roles = require('./role_roles');
@@ -113,6 +113,9 @@ module.exports = {
         logger.log('workCount: ' + workCount);
         let bodyParts = this.getBodyPartsFromCounts(workCount, 0, moveCount);
         this.spawnCreepImpl(bodyParts, roles.RoleHarvester, spawn);
+    },
+    fooTest: function() {
+        return data.fooTestProp;
     },
     getHarvesterMoveCount: room => data.harvesterMoveCount(room),
     spawnBestWorkerPossible: function(room, spawn, role) {

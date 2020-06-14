@@ -2,6 +2,9 @@ const mapUtil = require('./mapUtil');
 const logger = require('./logger');
 
 module.exports = {   
+    fooTest: function() {
+        return logger.fooTestProp;
+    },
     creepIsNextToSource: function(creep) {
         return this.sourceCreepIsNear(creep) != -1;
     },

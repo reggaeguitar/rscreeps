@@ -1,6 +1,7 @@
 const data = require('./data');
 
 module.exports = {
+    fooTestProp: 4,
   log: (msg, obj) => {
       if (data.log) {
         if (msg) {

@@ -17,6 +17,7 @@ module.exports = {
         let extraHaulerCount = room.controller.level - 3;
         return sourceCount + (extraHaulerCount > 0 ? extraHaulerCount : 0);
     },
+    fooTestProp: 4,
     maxHarvesterCount: room => room.find(FIND_SOURCES).length,
     maxWorkerCount: room => 6,
     // todo change to 200 when done testing
