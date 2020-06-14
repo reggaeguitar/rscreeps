@@ -1,21 +1,48 @@
 const simplemock = require('simple-mock');
 const test = require('./test');
-const sut = require('../src/creepUtil');
-const logger = require('../src/logger');
+const creepSpawn = require('../dist/creepSpawn');
+const logger = require('../dist/logger');
+const data = require('../dist/data');
 
-// find source with least count of harvesters assigned
-// if there is a tie choose the one that has the oldest (soonest to die) harvester assigned
-
-(function harvester_decideWhichSourceToHarvest_oneOtherHarvester_assignsToOtherSource() {
+(function creepSpawn_run_returnsFalseIfSpawnAlreadySpawning() {
     // arrange
-    simplemock.mock(logger, 'fooPropTest');
-    logger.fooPropTest.returnWith(45789);
-    const creeps = [{ memory: { sourceToHarvest: 0 }, ticksToLive: 1500 }];
+    simplemock.restore();
+    const room = {};
+    const spawn = { spawning: true };
 
     // act
-    const result = sut.fooTest();
+    const result = creepSpawn.run(room, spawn);
 
     // assert
-    const expected = 1;
+    const expected = false;
     test.assertEqual(expected, result);
 })();
+
+(function creepSpawn_run_returnsFalseIfNotEnoughEnergyToSpawnCreepInRoom() {
+    // arrange
+    simplemock.restore();
+   
+    const room = { energyAvailable: 42 };
+    const spawn = { spawning: false };
+
+    const cheapestCreepCost = 50;
+    simplemock.mock(data, 'cheapestCreepCost');
+    data.cheapestCreepCost.returnWith(cheapestCreepCost);
+
+    simplemock.mock(logger, 'log');
+
+    // act
+    const result = creepSpawn.run(room, spawn);
+
+    // assert
+    const expected = false;
+    test.assertEqual(expected, result);
+
+    // assert logger was called
+    const expectedMessage = 'room has less than ' + cheapestCreepCost + ' energy ' + 
+    room.energyAvailable + ', can\'t spawn creep';
+    test.assertEqual(1, logger.log.callCount);
+
+    test.assertEqual(expectedMessage, logger.log.lastCall.arg);
+})();
+

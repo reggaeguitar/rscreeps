@@ -7,9 +7,9 @@ const logger = require('./logger');
 
 module.exports = {    
     run: function(room, spawn) {
-        if (spawn.spawning) return;
+        if (spawn.spawning) return false;
         //if (this.spawnedClaimer(room, spawn)) return;
-        if (this.notEnoughEnergyToSpawnCreep(room)) return;
+        if (this.notEnoughEnergyToSpawnCreep(room)) return false;
         let creepCountsByRole = util.getCreepRoleCounts();    
         if (this.shouldSpawnHarvester(room, creepCountsByRole)) {
             this.spawnHarvester(room, spawn, creepCountsByRole);

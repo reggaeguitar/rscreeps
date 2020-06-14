@@ -1,3 +1,5 @@
+const simplemock = require('simple-mock');
+
 module.exports = {
     assertEqual: function assertEqualImpl(expected, actual) {
         if (expected !== actual) {
