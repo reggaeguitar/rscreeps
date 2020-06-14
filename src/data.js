@@ -23,7 +23,6 @@ module.exports = {
     cheapestCreepCost: room => 150,
     goodHarvesterWorkCount: room => {
       // todo change this back to "return 2" when done testing
-      if (room.controller.level == 2) return 1;
       return room.controller.level > 2 ? 6 : 3;
     },
     harvesterMoveCount: room => 1,

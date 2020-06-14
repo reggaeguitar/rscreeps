@@ -21,9 +21,6 @@ module.exports = {
     getCreepCount: function() {
         return Object.keys(gameAbstraction.creeps()).length;
     },
-    getRoles: function() {
-        return Object.keys(this.creepData);
-    },    
     getRoomNames: function() {
         // todo use uniqBy when able to
         // _.uniqBy(gameAbstraction.creeps(), c => c.room.name);

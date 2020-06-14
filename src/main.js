@@ -1,6 +1,6 @@
 const _ = require('lodash');
 const util = require('./util');
-const creepSpawn = require('./creepSpawn');
+const creepSpawn = require('./spawn_creepSpawn');
 const data = require('./data');
 const roleTower = require('./role_tower');
 const constructionDecider = require('./buildingPlacement_constructionDecider');

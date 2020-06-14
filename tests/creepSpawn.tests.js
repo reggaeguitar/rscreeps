@@ -1,6 +1,6 @@
 const simplemock = require('simple-mock');
 const test = require('./test');
-const creepSpawn = require('../dist/creepSpawn');
+const creepSpawn = require('../dist/spawn_creepSpawn');
 const logger = require('../dist/logger');
 const data = require('../dist/data');
 
