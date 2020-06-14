@@ -38,9 +38,9 @@ module.exports = function(grunt) {
                     filter: 'isFile',
                     rename: function(dest, src) {
                         // Change the path name to utilize underscores for folders
-                        console.log('in rename ' + JSON.stringify({dest, src}));
+                        // console.log('in rename ' + JSON.stringify({dest, src}));
                         var ret = dest + './' + src.replace(/\//g, '_');
-                        console.log('ret: ' + ret);
+                        // console.log('ret: ' + ret);
                         return ret;
                     }
                 }]
