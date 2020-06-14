@@ -1,3 +1,5 @@
+const logger = require('logger');
+
 module.exports = {
     getBodyPartsFromCounts: function(workCount, carryCount, moveCount) {
         let ret = [];
