@@ -15,7 +15,7 @@ module.exports = {
         const result = creepSpawn.run(room, spawn);
     
         // assert
-        const expected = true;
+        const expected = false;
         test.assertEqual(expected, result);
     },
     creepSpawn_run_returnsFalseIfNotEnoughEnergyToSpawnCreepInRoom: () => {

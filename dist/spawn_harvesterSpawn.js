@@ -1,6 +1,6 @@
 const logger = require('./logger');
 const data = require('./data');
-const spawnUtil = require('./spawnUtil');
+const spawnUtil = require('./spawn_spawnUtil');
 
 module.exports = {
     spawnHarvester: function(room, spawn, creepCountsByRole) {

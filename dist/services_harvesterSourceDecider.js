@@ -3,7 +3,8 @@ const _ = require('lodash');
 module.exports = {
     decideWhichSourceToHarvest: function(harvesters, sourceCount) {
         // find source with least count of harvesters assigned
-        const harvestersSources = harvesters.map(h => h.memory.sourceToHarvest);
+        const harvestersSources = harvesters
+            .map(h => h.memory.sourceToHarvest).filter(x => x);
         const sourceCounts = _.countBy(harvestersSources, x => x);           
         // assign the harvester to the source with no harvesters
         const min = _.min(sourceCounts, x => x);

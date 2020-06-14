@@ -4,8 +4,8 @@ const data = require('./data');
 const roles = require('./role_roles');
 const roomPicker = require('./roomExpansion_roomPicker');
 const logger = require('./logger');
-const harvesterSpawn = require('./harvesterSpawn');
-const spawnUtil = require('./spawnUtil');
+const harvesterSpawn = require('./spawn_harvesterSpawn');
+const spawnUtil = require('./spawn_spawnUtil');
 
 module.exports = {    
     run: function(room, spawn) {

@@ -10,7 +10,10 @@ const sourceCount = 2;
 module.exports = {
     harvester_decideWhichSourceToHarvest_oneOtherHarvester_assignsToOtherSource: () => {
         // arrange
-        const creeps = [{ memory: { sourceToHarvest: 0 }, ticksToLive: 1500 }];
+        const creeps = [
+            { memory: { }, ticksToLive: 1500 },
+            { memory: { sourceToHarvest: 0 }, ticksToLive: 1234 },
+        ];
     
         // act
         const result = harvesterSourceDecider.decideWhichSourceToHarvest(creeps, sourceCount);
@@ -21,9 +24,12 @@ module.exports = {
     },
     harvester_decideWhichSourceToHarvest_threeOtherHarvesters_assignsToSourceWithLeastAssigned: () => {
         // arrange
-        const creeps = [{ memory: { sourceToHarvest: 0 }, ticksToLive: 1500 }, 
-                        { memory: { sourceToHarvest: 0 }, ticksToLive: 10 },
-                        { memory: { sourceToHarvest: 1 }, ticksToLive: 10 }];
+        const creeps = [
+            { memory: { }, ticksToLive: 1500 },
+            { memory: { sourceToHarvest: 0 }, ticksToLive: 1500 }, 
+            { memory: { sourceToHarvest: 0 }, ticksToLive: 10 },
+            { memory: { sourceToHarvest: 1 }, ticksToLive: 10 }
+        ];
     
         // act
         const result = harvesterSourceDecider.decideWhichSourceToHarvest(creeps, sourceCount);
@@ -35,6 +41,7 @@ module.exports = {
     harvester_decideWhichSourceToHarvest_complexExample: () => {
         // arrange
         const creeps = [
+            { memory: { }, ticksToLive: 1500 },
             { memory: { sourceToHarvest: 1 }, ticksToLive: 1500 }, 
             { memory: { sourceToHarvest: 3 }, ticksToLive: 10 },
             { memory: { sourceToHarvest: 2 }, ticksToLive: 10 },
@@ -44,21 +51,26 @@ module.exports = {
             { memory: { sourceToHarvest: 0 }, ticksToLive: 10 },
             { memory: { sourceToHarvest: 1 }, ticksToLive: 10 },
             { memory: { sourceToHarvest: 0 }, ticksToLive: 10 },
-            { memory: { sourceToHarvest: 17 }, ticksToLive: 10 },
-            { memory: { sourceToHarvest: 23 }, ticksToLive: 10 },
+            { memory: { sourceToHarvest: 4 }, ticksToLive: 10 },
+            { memory: { sourceToHarvest: 5 }, ticksToLive: 10 },
         ];
     
         // act
         const result = harvesterSourceDecider.decideWhichSourceToHarvest(creeps, 6);
     
         // assert
-        const expected = 17;
+        // looks like it picks the biggest number when there's ties
+        // todo base off of distance to source in case of ties
+        const expected = 5;
         test.assertEqual(expected, result);
     },
     harvester_decideWhichSourceToHarvest_twoOtherHarvesters_assignsToSourceWithOldestHarvester: () => {
         // arrange
-        const creeps = [{ memory: { sourceToHarvest: 0 }, ticksToLive: 1500 }, 
-                        { memory: { sourceToHarvest: 1 }, ticksToLive: 10 }];
+        const creeps = [
+            { memory: { }, ticksToLive: 1500 },
+            { memory: { sourceToHarvest: 0 }, ticksToLive: 1500 }, 
+            { memory: { sourceToHarvest: 1 }, ticksToLive: 10 }
+        ];
                         
         // act
         const result = harvesterSourceDecider.decideWhichSourceToHarvest(creeps, sourceCount);
