@@ -1,9 +1,11 @@
 const constructionUtil = require('./buildingPlacement_constructionUtil');
-          
+const wallDecider = require('./wallDecider');
+
 module.exports = {
     run: function(room, spawn) {
         const ctrlLevelForStorage = 4;
         const storagePosStr = 'storagePos';
+        // todo clear memory for old rooms after respawning
         if (Memory[room.name + storagePosStr] == undefined) {
             Memory[room.name + storagePosStr] = constructionUtil.nextStoragePos(room, spawn);
         }
@@ -49,14 +51,7 @@ module.exports = {
         }
     },
     buildWallsAndRamparts: function(room) {
-      // look at each square along the edge
-      // if it's not a wall then build a wall two squares away and flip wallMode = true
-      // once another wall found when wallMode == true, then build out from that square 2 spaces
-      // make sure to put a rampart in middle 
-      // (optimization: call describeExits and then Pathfinder and build it on the square on the path)
-      // top      
-      // bottom
-      // left
-      // right
-    } 
+        const locations = wallDecider.getWallAndRampartLocations(room);
+        locations.map(x => room.createConstructionSite(x.pos, x.type));
+    },    
 }
