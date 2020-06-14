@@ -11,7 +11,7 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}\\tests\\harvesterTests.js"
+            "program": "${workspaceFolder}\\tests\\mainTestRunner.js"
         }
     ]
 }

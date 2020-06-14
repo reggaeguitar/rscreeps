@@ -4,7 +4,7 @@
   "description": "screeps ai",
   "main": "index.js",
   "scripts": {
-    "test": "grunt && node tests/harvesterTests.js"
+    "test": "grunt && node tests/mainTestRunner.js"
   },
   "repository": {
     "type": "git",
