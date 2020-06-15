@@ -55,7 +55,6 @@ module.exports = {
             (harvesterAboutToDie && harvesterCountLessThanSourceCount);
         logger.log('in shouldSpawnHarvester', { ret, haveZeroHarvesters, 
             lessThanMaxHarvesters, harvesterAboutToDie, harvesterCountLessThanSourceCount})
-        logger.log(message); 
         // logger.email(message);
         return ret;
     },   
