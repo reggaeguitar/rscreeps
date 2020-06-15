@@ -26,7 +26,7 @@ module.exports = {
         };
         function build() {
             // todo dry out this method
-            const room = Game.rooms[creep.homeRoom];
+            const room = Game.rooms[creep.memory.homeRoom];
             let nonRoadTargets = room.find(FIND_CONSTRUCTION_SITES)
                 .filter(x => x.structureType != STRUCTURE_ROAD);
             

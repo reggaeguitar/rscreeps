@@ -4,7 +4,8 @@ const harvesterSourceDecider = require('services_harvesterSourceDecider');
 
 module.exports = {
     run: function(creep) {
-        let sources = creep.homeRoom.find(FIND_SOURCES)
+        const room = Game.rooms[creep.memory.homeRoom];
+        let sources = room.find(FIND_SOURCES)
         if (creep.memory.sourceToHarvest == undefined) {
             this.startHarvest(creep, sources);
         }        
@@ -18,7 +19,7 @@ module.exports = {
     },    
     startHarvest: function(creep, sources) {
         if (sources.length == 1) return 0;
-        const creepsInSameRoom = _.filter(Game.creeps, c => c.room.name == creep.homeRoom);
+        const creepsInSameRoom = _.filter(Game.creeps, c => c.room.name == creep.memory.homeRoom);
         const creepRoleCounts = _.countBy(creepsInSameRoom, c => c.memory.role == roles.RoleHarvester);
         let sourceToHarvest = 0;
         if (!creepRoleCounts.hasOwnProperty('./true')) {
