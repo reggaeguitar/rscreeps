@@ -29,7 +29,7 @@ module.exports = {
             let hasStoredEnergy = potentialStorage.length > 0 && 
             potentialStorage[0].store[RESOURCE_ENERGY] > (room.controller.level * 400);
             let shouldSpawnCreep = (hasALotOfEnergyInSpawnAndExtensions && hasStoredEnergy)
-            || workerCount < maxWorkerCount;
+            || workerCount < maxWorkerCountInRoom;
             
             logger.log('in spawnWorker', { workerCount, maxWorkerCountInRoom, shouldSpawnCreep });
 
