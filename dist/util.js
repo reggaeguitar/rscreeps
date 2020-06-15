@@ -26,6 +26,9 @@ module.exports = {
         // }
     },
     workerCount: function(roomName, creepCountsByRole) {
+        if (!creepCountsByRole) {
+            creepCountsByRole = this.getCreepRoleCounts();
+        }
         const creepsInRoom = _.filter(Game.creeps, c => c.room.name == roomName);
         const workerCount = Object.keys(creepsInRoom).length - creepCountsByRole[roles.RoleHarvester];
         return workerCount;
