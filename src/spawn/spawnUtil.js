@@ -16,7 +16,7 @@ module.exports = {
     spawnCreepImpl: function(bodyParts, role, spawn, roomToClaim) {
         const memoryObj = { memory: { 
             role: role,
-            homeRoom: spawn.room
+            homeRoom: spawn.room.name
         } };
         if (roomToClaim != undefined) {
             memoryObj.memory.roomToClaim = roomToClaim;

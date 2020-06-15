@@ -4,7 +4,7 @@ const roles = require('./role_roles');
 
 module.exports = {     
     doHarvest: function (creep) {
-        let minEnergy = data.minEnergy(creep.homeRoom);
+        let minEnergy = data.minEnergy(Game.rooms[creep.homeRoom]);
         let closestEnergyLocation;
         if (creep.memory.role == roles.RoleHauler) {
             closestEnergyLocation = this.runHauler(creep, minEnergy);
@@ -67,7 +67,7 @@ module.exports = {
         if (closestDroppedEnergy != undefined && closestDroppedEnergy.amount > creep.carryCapacity) {
             return pickup(creep, closestDroppedEnergy);
         }
-        let droppedEnergies = creep.homeRoom.find(FIND_DROPPED_RESOURCES);
+        let droppedEnergies = Game.rooms[creep.homeRoom].find(FIND_DROPPED_RESOURCES);
         if (droppedEnergies != undefined) {
             let sortedDescByAmount = droppedEnergies.sort((a, b) => b.amount - a.amount);
             return pickup(creep, sortedDescByAmount[0]);

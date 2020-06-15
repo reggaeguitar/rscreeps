@@ -6,11 +6,11 @@ module.exports = {
         worker.run(creep, this.doWork);        
     },
     doWork: function(creep) {
-        const isNotInRange = creep.upgradeController(creep.homeRoom.controller) == ERR_NOT_IN_RANGE;
+        const controller = Game.rooms[creep.homeRoom].controller;
+        const isNotInRange = creep.upgradeController(controller) == ERR_NOT_IN_RANGE;
         //logger.log('./in upgrader.doWork', {isNotInRange});
         if (isNotInRange) {
-            creep.moveTo(creep.homeRoom.controller, 
-                { visualizePathStyle: { stroke: '#ffffff' } });
+            creep.moveTo(controller, { visualizePathStyle: { stroke: '#ffffff' } });
         }
     }
 };

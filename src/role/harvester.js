@@ -18,7 +18,7 @@ module.exports = {
     },    
     startHarvest: function(creep, sources) {
         if (sources.length == 1) return 0;
-        const creepsInSameRoom = _.filter(Game.creeps, c => c.room.name == creep.homeRoom.name);
+        const creepsInSameRoom = _.filter(Game.creeps, c => c.room.name == creep.homeRoom);
         const creepRoleCounts = _.countBy(creepsInSameRoom, c => c.memory.role == roles.RoleHarvester);
         let sourceToHarvest = 0;
         if (!creepRoleCounts.hasOwnProperty('./true')) {
