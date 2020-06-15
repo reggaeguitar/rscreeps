@@ -3,7 +3,7 @@ const _ = require('lodash');
 
 
 module.exports = {
-    energyThreshold: 100,
+    energyThreshold: 150,
     maxWorkerCount: function(room, creepCountsByRole) {
         const droppedEnergy = room.find(FIND_DROPPED_RESOURCES)
             .filter(x => x.resourceType = RESOURCE_ENERGY);

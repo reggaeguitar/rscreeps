@@ -5,7 +5,7 @@ const util = require('../dist/util');
 module.exports = {
     // energy threshold = room.controller.level * energyThreshold
     maxWorkerCount_maxWorkerCount_energyThreshold_setProperly: function() {
-        const energyThreshold = 100;
+        const energyThreshold = 150;
         test.assertEqual(energyThreshold, maxWorkerCount.energyThreshold);
     },
     maxWorkerCount_maxWorkerCount_notEnoughDroppedEnergy_returnsSixForLevelOneController: () => {
@@ -103,8 +103,8 @@ module.exports = {
                 "roomName": "W18S31"
               },
               "id": "5ee6f0d63e1ffd5923e44397",
-              "energy": 126,
-              "amount": 126,
+              "energy": 226,
+              "amount": 226,
               "resourceType": "energy"
             },
             {
