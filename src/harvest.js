@@ -4,6 +4,8 @@ const roles = require('./role_roles');
 
 module.exports = {     
     doHarvest: function (creep) {
+        console.log('groking ' + creep.homeRoom);
+        console.log('groking ' + Game.rooms[creep.homeRoom]);
         let minEnergy = data.minEnergy(Game.rooms[creep.homeRoom]);
         let closestEnergyLocation;
         if (creep.memory.role == roles.RoleHauler) {
