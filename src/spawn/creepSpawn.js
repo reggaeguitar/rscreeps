@@ -30,7 +30,7 @@ module.exports = {
                     || workerCount < maxWorkerCount;
                 if (shouldSpawnCreep) {
                     let role = this.getWorkerRole(room, creepCountsByRole);
-                    this.spawnBestWorkerPossible(room, spawn, role);
+                    this.spawnBestWorkerPossible(room.energyAvailable, spawn, role);
                 }
             }
         }
@@ -75,21 +75,20 @@ module.exports = {
             return roles.RoleUpgrader;
         }
     },
-    spawnBestWorkerPossible: function(room, spawn, role) {
-        let half = room.energyAvailable / 2;
-        let workCount = half / BODYPART_COST[WORK];
+    spawnBestWorkerPossible: function(energyAvailable, spawn, role) {        
+        let workCount = energyAvailable / BODYPART_COST[WORK];
         if (BODYPART_COST[MOVE] != BODYPART_COST[CARRY]) {
             logger.log('MOVE and CARRY no longer the same cost, update creepSpawn.js');
         }
         if (workCount == 0) return;
 
-        let carryAndMoveCount = (half / BODYPART_COST[MOVE]) / 2;
+        let carryAndMoveCount = (energyAvailable / BODYPART_COST[MOVE]) / 2;
         workCount = role != roles.RoleHauler ? workCount : 0;
         let bodyParts = spawnUtil.getBodyPartsFromCounts(
             workCount, carryAndMoveCount, carryAndMoveCount);
-        if (spawnUtil.creepCost(bodyParts) > room.energyAvailable) {
+        if (spawnUtil.creepCost(bodyParts) > energyAvailable) {
             logger.log('error in creepSpawn, bodyParts: ' + JSON.stringify(bodyParts) 
-                + ' cost more than energyAvailable: ' + room.energyAvailable);
+                + ' cost more than energyAvailable: ' + energyAvailable);
         }
         spawnUtil.spawnCreepImpl(bodyParts, role, spawn);
     },
