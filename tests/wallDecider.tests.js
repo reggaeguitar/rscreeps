@@ -1,12 +1,12 @@
 const test = require('./test');
 const roomUtil = require('./roomUtil');
 const wallDecider = require('../dist/buildingPlacement_wallDecider');
-const data = require('./data');
+const data = require('../dist/data');
 
 module.exports = {
     wallDecider_aeu: () => {
         // arrange
-        const room = roomUtil.newRoom(5, 5, roomUtil.plain);
+        // const room = roomUtil.newRoom(5, 5, roomUtil.plain);
         
         // mock data.wallDistanceFromSpawn
         const room = [

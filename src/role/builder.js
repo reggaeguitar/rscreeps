@@ -26,7 +26,7 @@ module.exports = {
         };
         function build() {
             // todo dry out this method
-            let nonRoadTargets = creep.room.find(FIND_CONSTRUCTION_SITES)
+            let nonRoadTargets = creep.homeRoom.find(FIND_CONSTRUCTION_SITES)
                 .filter(x => x.structureType != STRUCTURE_ROAD);
             
             if (nonRoadTargets.length) {
@@ -37,7 +37,7 @@ module.exports = {
                 return true;
             }
 
-            let roadTargets = creep.room.find(FIND_CONSTRUCTION_SITES)
+            let roadTargets = creep.homeRoom.find(FIND_CONSTRUCTION_SITES)
                 .filter(x => x.structureType == STRUCTURE_ROAD);
             if (roadTargets.length) {
                 if (creep.build(roadTargets[0]) == ERR_NOT_IN_RANGE) {

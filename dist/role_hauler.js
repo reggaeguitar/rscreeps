@@ -11,20 +11,20 @@ module.exports = {
         const towerFillFactor = 0.90;        
         // fill spawns and extensions first, then towers
         let nonFullSpawnOrExtension = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-            filter: s => (s.room == creep.room &&
+            filter: s => (s.room == creep.homeRoom &&
                           (s.structureType == STRUCTURE_SPAWN ||
                            s.structureType == STRUCTURE_EXTENSION)
                            && s.energy < s.energyCapacity)});
         let nonFullTower = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-            filter: s => s.room == creep.room &&
+            filter: s => s.room == creep.homeRoom &&
                          s.structureType == STRUCTURE_TOWER && 
                          s.energy < s.energyCapacity * towerFillFactor });
         let nonFullStorage = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-            filter: s => s.room == creep.room &&
+            filter: s => s.room == creep.homeRoom &&
                          s.structureType == STRUCTURE_STORAGE && 
                          _.sum(s.store) < s.storeCapacity });
         let nonFullContainer = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-            filter: s => s.room == creep.room &&
+            filter: s => s.room == creep.homeRoom &&
                          s.structureType == STRUCTURE_CONTAINER &&
                          _.sum(s.store) < data.containerCapacity });        
          if (nonFullTower != undefined) {

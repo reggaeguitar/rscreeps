@@ -7,7 +7,7 @@ module.exports = {
         return this.sourceCreepIsNear(creep) != -1;
     },
     sourceCreepIsNear: function(creep) {
-        let sources = creep.room.find(FIND_SOURCES)
+        let sources = creep.homeRoom.find(FIND_SOURCES)
         return _.findIndex(sources, src => src.pos.isNearTo(creep.pos));
     },
     moveAwayFromSource: function(creep) {
@@ -26,7 +26,7 @@ module.exports = {
     },
     isPassable: function(creep, newPos) {
         // is passable if plain and not occupied by a creep
-        let terrain = Game.map.getRoomTerrain(creep.room.name).get(newPos.x, newPos.y);
+        let terrain = Game.map.getRoomTerrain(creep.homeRoom.name).get(newPos.x, newPos.y);
         let creepsOnNewPos = _.filter(newPos.look(), x => x.type == 'creep');
         let posHasCreep = creepsOnNewPos != undefined && creepsOnNewPos.length;
         logger.log('in isPassable', { newPos, terrain, creepsOnNewPosIsDefined: creepsOnNewPos != undefined, posHasCreep });

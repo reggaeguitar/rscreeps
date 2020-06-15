@@ -14,7 +14,10 @@ module.exports = {
         return ret;
     },
     spawnCreepImpl: function(bodyParts, role, spawn, roomToClaim) {
-        const memoryObj = { memory: { role: role } };
+        const memoryObj = { memory: { 
+            role: role,
+            homeRoom: spawn.room
+        } };
         if (roomToClaim != undefined) {
             memoryObj.memory.roomToClaim = roomToClaim;
         }
