@@ -75,7 +75,10 @@ module.exports = {
             return roles.RoleUpgrader;
         }
     },
-    spawnBestWorkerPossible: function(energyAvailable, spawn, role) {        
+    spawnBestWorkerPossible: function(energyAvailable, spawn, role) {
+        // need half the energy for work and half for move and/or carry
+        // work part costs double what move and carry cost (100 vs 50 currently)
+        energyAvailable = energyAvailable / 2;       
         let workCount = energyAvailable / BODYPART_COST[WORK];
         if (BODYPART_COST[MOVE] != BODYPART_COST[CARRY]) {
             logger.log('MOVE and CARRY no longer the same cost, update creepSpawn.js');
