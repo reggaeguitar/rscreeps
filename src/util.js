@@ -23,7 +23,7 @@ module.exports = {
         //     if (!gameAbstraction.creeps()[name]) {
         //         delete Memory.creeps[name];                
         //     }
-        // }
+        // } 
     },
     workerCount: function(roomName, creepCountsByRole) {        
         const creepsInRoom = _.filter(Game.creeps, c => c.room.name == roomName);
