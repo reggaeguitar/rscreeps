@@ -17,10 +17,10 @@ module.exports = {
         if (this.shouldSpawnHarvester(room, creepCountsByRole)) {
             harvesterSpawn.spawnHarvester(room, spawn, creepCountsByRole);
         } else {
-            this.spawnWorker(room, creepCountsByRole);
+            this.spawnWorker(room, spawn, creepCountsByRole);
         }
     },
-    spawnWorker: function(room, creepCountsByRole) {
+    spawnWorker: function(room, spawn, creepCountsByRole) {
         const maxWorkerCountInRoom = maxWorkerCount.maxWorkerCount(room, creepCountsByRole);
         let hasALotOfEnergyInSpawnAndExtensions = room.energyAvailable >= (room.energyCapacityAvailable * 0.9);
         if (creepCountsByRole.hasOwnProperty(roles.RoleHarvester)) {
