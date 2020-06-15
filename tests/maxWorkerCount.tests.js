@@ -104,7 +104,7 @@ module.exports = {
               },
               "id": "5ee6f0d63e1ffd5923e44397",
               "energy": 126,
-              "amount": 26,
+              "amount": 126,
               "resourceType": "energy"
             },
             {
