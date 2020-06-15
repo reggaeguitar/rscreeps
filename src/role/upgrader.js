@@ -7,7 +7,7 @@ module.exports = {
     },
     doWork: function(creep) {
         const isNotInRange = creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE;
-        logger.log('./in upgrader.doWork', {isNotInRange});
+        //logger.log('./in upgrader.doWork', {isNotInRange});
         if (isNotInRange) {
             creep.moveTo(creep.room.controller, 
                 { visualizePathStyle: { stroke: '#ffffff' } });
