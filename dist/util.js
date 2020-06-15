@@ -2,6 +2,7 @@ const _ = require('lodash');
 const logger = require('./logger');
 const gameAbstraction = require('./gameAbstraction');
 const memoryAbstraction = require('./memoryAbstraction');
+const roles = require('./role_roles');
 
 module.exports = {
     // perf cache results from these methods   

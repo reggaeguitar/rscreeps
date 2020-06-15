@@ -1,6 +1,7 @@
 const util = require('./util');
 const _ = require('lodash');
 
+
 module.exports = {
     maxWorkerCount: (room, creepCountsByRole) => {
         const droppedEnergy = room.find(FIND_DROPPED_RESOURCES)
