@@ -21,7 +21,7 @@ module.exports = {
         }
     },
     spawnWorker: (room, creepCountsByRole) => {
-        const maxWorkerCountInRoom = maxWorkerCount.maxWorkerCount(room);
+        const maxWorkerCountInRoom = maxWorkerCount.maxWorkerCount(room, creepCountsByRole);
         let hasALotOfEnergyInSpawnAndExtensions = room.energyAvailable >= (room.energyCapacityAvailable * 0.9);
         if (creepCountsByRole.hasOwnProperty(roles.RoleHarvester)) {
             const workerCount = util.workerCount(room.name, creepCountsByRole);

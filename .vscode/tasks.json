@@ -1,0 +1,14 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "grunt",
+        "command": "grunt",
+        "args": ["--force"],
+        "type": "shell",
+        "options": {
+            "cwd": "${workspaceFolder}"
+          }
+      }
+    ]
+  }
