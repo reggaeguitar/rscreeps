@@ -24,9 +24,7 @@ module.exports = {
         const maxWorkerCountInRoom = maxWorkerCount.maxWorkerCount(room);
         let hasALotOfEnergyInSpawnAndExtensions = room.energyAvailable >= (room.energyCapacityAvailable * 0.9);
         if (creepCountsByRole.hasOwnProperty(roles.RoleHarvester)) {
-            let creepsInRoom = _.filter(Game.creeps, c => c.room.name == room.name);
-            let workerCount = Object.keys(creepsInRoom).length - creepCountsByRole[roles.RoleHarvester];
-
+            const workerCount = util.workerCount(room.name, creepCountsByRole);
             logger.log('in spawnWorker', { workerCount, maxWorkerCountInRoom });
             let potentialStorage = _.filter(room.find(FIND_MY_STRUCTURES), s => s.structureType == STRUCTURE_STORAGE);
             let hasStoredEnergy = potentialStorage.length > 0 && 

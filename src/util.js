@@ -17,13 +17,19 @@ module.exports = {
                 delete Memory.creeps[name];                
             }
         }
+        // todo test switching back to using gameAbstraction
         // console.log(JSON.stringify(memoryAbstraction.creeps()));
         // for (let name in memoryAbstraction.creeps()) {
         //     if (!gameAbstraction.creeps()[name]) {
         //         delete Memory.creeps[name];                
         //     }
         // }
-    },    
+    },
+    workerCount: function(roomName, creepCountsByRole) {
+        const creepsInRoom = _.filter(Game.creeps, c => c.room.name == roomName);
+        const workerCount = Object.keys(creepsInRoom).length - creepCountsByRole[roles.RoleHarvester];
+        return workerCount;
+    },
     getCreepCount: function() {
         return Object.keys(gameAbstraction.creeps()).length;
     },

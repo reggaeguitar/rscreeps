@@ -10,7 +10,8 @@ function loadModules(path) {
         if (stat.isDirectory()) {
             // we have a directory: do a tree walk
             fs.readdir(path, function(err, files) {
-                const testFiles = files.filter(x => x.includes('.tests.js'));
+                const testFiles = files.filter(x => 
+                    x.includes('.tests.js') || x.includes('.screeps.js'));
                 for (let i = 0; i < testFiles.length; i++) {
                     const fullPath = path_module.join(path, testFiles[i]);
                     loadModules(fullPath);
