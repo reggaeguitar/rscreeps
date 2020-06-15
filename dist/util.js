@@ -7,7 +7,9 @@ const roles = require('./role_roles');
 module.exports = {
     // perf cache results from these methods   
     printCreepRoleCounts: function() {
-        logger.log('creepRoleCounts:', this.getCreepRoleCounts());
+        if (Game.time % 5 == 0) {
+            logger.log('creepRoleCounts:', this.getCreepRoleCounts());
+        }
     },
     getCreepRoleCounts: function() {
         return _.countBy(gameAbstraction.creeps(), c => c.memory.role);
