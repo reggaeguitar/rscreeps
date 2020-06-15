@@ -3,6 +3,16 @@ module.exports = {
     naturalWall: 'X',
     constructedWall: 'x',
     // todo make this into a stateful class that has operations to change the type of tiles
+    newRoom: (height, width, terrain) => {
+        let ret = [];
+        for (let row = 0; row < height; row++) {
+            ret.push([]);
+            for (let col = 0; col < width; col++) {
+                ret[row].push(terrain);
+            }
+        }
+        return ret;
+    },
     defaultRoom: [
         ["OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"],
         ["OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"],
