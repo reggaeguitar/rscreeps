@@ -31,7 +31,7 @@ module.exports = {
             let shouldSpawnCreep = (hasALotOfEnergyInSpawnAndExtensions && hasStoredEnergy)
             || workerCount < maxWorkerCountInRoom;
             
-            logger.log('in spawnWorker', { workerCount, maxWorkerCountInRoom, shouldSpawnCreep });
+            logger.log('in spawnWorker ', { workerCount, maxWorkerCountInRoom, shouldSpawnCreep });
 
             if (shouldSpawnCreep) {
                 let role = this.getWorkerRole(room, creepCountsByRole);
