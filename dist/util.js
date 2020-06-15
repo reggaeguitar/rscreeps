@@ -12,11 +12,17 @@ module.exports = {
         return _.countBy(gameAbstraction.creeps(), c => c.memory.role);
     },   
     clearDeadCreepsFromMemory: function() {
-        for (let name in memoryAbstraction.creeps()) {
-            if (!gameAbstraction.creeps()[name]) {
+        for (let name in Memory.creeps) {
+            if (!Game.creeps[name]) {
                 delete Memory.creeps[name];                
             }
         }
+        // console.log(JSON.stringify(memoryAbstraction.creeps()));
+        // for (let name in memoryAbstraction.creeps()) {
+        //     if (!gameAbstraction.creeps()[name]) {
+        //         delete Memory.creeps[name];                
+        //     }
+        // }
     },    
     getCreepCount: function() {
         return Object.keys(gameAbstraction.creeps()).length;
