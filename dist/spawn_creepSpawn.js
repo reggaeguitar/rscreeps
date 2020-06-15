@@ -6,6 +6,7 @@ const roomPicker = require('./roomExpansion_roomPicker');
 const logger = require('./logger');
 const harvesterSpawn = require('./spawn_harvesterSpawn');
 const spawnUtil = require('./spawn_spawnUtil');
+const maxWorkerCount = require('./services_maxWorkerCount');
 
 module.exports = {    
     run: function(room, spawn) {
@@ -16,22 +17,25 @@ module.exports = {
         if (this.shouldSpawnHarvester(room, creepCountsByRole)) {
             harvesterSpawn.spawnHarvester(room, spawn, creepCountsByRole);
         } else {
-            let maxWorkerCount = data.maxWorkerCount(room);
-            let hasALotOfEnergyInSpawnAndExtensions = room.energyAvailable >= (room.energyCapacityAvailable * 0.9);
-            if (creepCountsByRole.hasOwnProperty(roles.RoleHarvester)) {
-                let creepsInRoom = _.filter(Game.creeps, c => c.room.name == room.name);
-                let workerCount = Object.keys(creepsInRoom).length - creepCountsByRole[roles.RoleHarvester];
+            this.spawnWorker(room, creepCountsByRole);
+        }
+    },
+    spawnWorker: (room, creepCountsByRole) => {
+        const maxWorkerCountInRoom = maxWorkerCount.maxWorkerCount(room);
+        let hasALotOfEnergyInSpawnAndExtensions = room.energyAvailable >= (room.energyCapacityAvailable * 0.9);
+        if (creepCountsByRole.hasOwnProperty(roles.RoleHarvester)) {
+            let creepsInRoom = _.filter(Game.creeps, c => c.room.name == room.name);
+            let workerCount = Object.keys(creepsInRoom).length - creepCountsByRole[roles.RoleHarvester];
 
-                logger.log('workerCount: ' + workerCount + ' maxWorkerCount: ' + maxWorkerCount);
-                let potentialStorage = _.filter(room.find(FIND_MY_STRUCTURES), s => s.structureType == STRUCTURE_STORAGE);
-                let hasStoredEnergy = potentialStorage.length > 0 && 
-                    potentialStorage[0].store[RESOURCE_ENERGY] > (room.controller.level * 400);
-                let shouldSpawnCreep = (hasALotOfEnergyInSpawnAndExtensions && hasStoredEnergy)
-                    || workerCount < maxWorkerCount;
-                if (shouldSpawnCreep) {
-                    let role = this.getWorkerRole(room, creepCountsByRole);
-                    this.spawnBestWorkerPossible(room.energyAvailable, spawn, role);
-                }
+            logger.log('in spawnWorker', { workerCount, maxWorkerCountInRoom });
+            let potentialStorage = _.filter(room.find(FIND_MY_STRUCTURES), s => s.structureType == STRUCTURE_STORAGE);
+            let hasStoredEnergy = potentialStorage.length > 0 && 
+                potentialStorage[0].store[RESOURCE_ENERGY] > (room.controller.level * 400);
+            let shouldSpawnCreep = (hasALotOfEnergyInSpawnAndExtensions && hasStoredEnergy)
+                || workerCount < maxWorkerCount;
+            if (shouldSpawnCreep) {
+                let role = this.getWorkerRole(room, creepCountsByRole);
+                this.spawnBestWorkerPossible(room.energyAvailable, spawn, role);
             }
         }
     },

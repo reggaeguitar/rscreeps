@@ -11,6 +11,7 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
+            "preLaunchTask": "grunt",
             "program": "${workspaceFolder}\\tests\\mainTestRunner.js"
         }
     ]
