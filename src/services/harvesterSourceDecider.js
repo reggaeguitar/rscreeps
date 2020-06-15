@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const logger = require('./logger');
 
 module.exports = {
     decideWhichSourceToHarvest: function(harvesters, sourceCount) {
@@ -21,6 +22,7 @@ module.exports = {
             const allSources = Array.from(allSourcesGenerator());
             const keysAsInts = Object.keys(entries).map(x => +x);
             const sourcesWithNoHarvestersAssigned = _.pull(allSources, ...keysAsInts);
+            logger.email('in decideWhichSourceToHarvest 1', { allSources, keysAsInts, sourcesWithNoHarvestersAssigned });
             return sourcesWithNoHarvestersAssigned[0];
         }
         const sourcesWithMinHarvestersAssigned = entries.filter(x => x[1] == min).map(x => +x[0]);
@@ -30,6 +32,8 @@ module.exports = {
             sourcesWithMinHarvestersAssigned.includes(x.memory.sourceToHarvest));
         const oldestAge = _.min(harvestersAtMinSources.map(x => x.ticksToLive));
         const ret = harvestersAtMinSources.find(x => x.ticksToLive == oldestAge).memory.sourceToHarvest;
+        logger.email('in decideWhichSourceToHarvest 2', { sourcesWithMinHarvestersAssigned,
+            harvestersAtMinSources, oldestAge, ret });
         return ret;
     },
 }
