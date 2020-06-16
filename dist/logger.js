@@ -11,7 +11,10 @@ module.exports = {
         console.log(JSON.stringify(obj));       
       }
   },
-  email: msg => {
-    if (data.notify) gameAbstraction.notify(msg);
+  email: function (msg) {
+    if (data.notify) {
+        this.log(msg);
+        gameAbstraction.notify(msg);
+    }
   },
 };
