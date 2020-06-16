@@ -20,9 +20,9 @@ module.exports = {
     startHarvest: function(creep, sources) {
         if (sources.length == 1) return 0;
         const creepsInSameRoom = _.filter(Game.creeps, c => c.room.name == creep.memory.homeRoom);
-        const creepRoleCounts = _.countBy(creepsInSameRoom, c => c.memory.role == roles.RoleHarvester);
+        const harvesterRoleCounts = _.countBy(creepsInSameRoom, c => c.memory.role == roles.RoleHarvester);
         let sourceToHarvest = 0;
-        if (!creepRoleCounts.hasOwnProperty('./true')) {
+        if (!harvesterRoleCounts.hasOwnProperty('true')) {
             sourceToHarvest = _.random(0, sources.length - 1);
         } else {
             const harvesters = _.filter(creepsInSameRoom, c => c.memory.role == roles.RoleHarvester
