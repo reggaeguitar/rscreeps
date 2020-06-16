@@ -10,6 +10,7 @@ module.exports = {
         // assign the harvester to the source with no harvesters
         const min = _.min(sourceCounts, x => x);
         const entries = Object.entries(sourceCounts);
+        // in decideWhichSourceToHarvest 0: {"harvestersSources":[1],"sourceCounts":{"1":1},"min":1,"entries":[["1",1]]}
         console.log('in decideWhichSourceToHarvest 0: ' + JSON.stringify({ harvestersSources, sourceCounts, min, entries }));
         logger.email('in decideWhichSourceToHarvest 0: ', { harvestersSources, sourceCounts, min, entries });
         if (entries.length != sourceCount) {

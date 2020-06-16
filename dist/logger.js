@@ -3,18 +3,23 @@ const gameAbstraction = require('./gameAbstraction');
 
 module.exports = {
   fooPropTest: () => 789,
-  log: (msg, obj) => {
+  log: function(msg, obj) {
       if (data.log) {
-        if (msg) {
-          console.log(msg + ' ');
-        }
-        console.log(JSON.stringify(obj));       
+          const logMessage = this.getLogMessage(msg, obj);
+          console.log(logMessage);       
       }
   },
-  email: function (msg) {
+  email: function (msg, obj) {
     if (data.notify) {
-        this.log(msg);
-        gameAbstraction.notify(msg);
+        this.log(msg, obj);
+        const logMessage = this.getLogMessage(msg, obj);
+        gameAbstraction.notify(logMessage);
     }
   },
+  getLogMessage: (msg, obj) => {
+    if (obj) {
+        return msg + ' ' + JSON.stringify(obj);
+    }
+    return msg;
+  }
 };
