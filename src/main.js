@@ -20,10 +20,14 @@ module.exports.loop = function () {
         rooms.map(roomName => {
             const room = Game.rooms[roomName];
             runTowers(room);
+            if (Game.time % data.buildInterval == 0) {
+                runConstruction(room, spawn);
+                // save cpu by returning early
+                return;
+            }
             const spawn = mapUtil.getSpawnInRoom(room);
             if (spawn != undefined) {
                 creepSpawn.run(room, spawn);
-                runConstruction(room, spawn);
             }
         })
         runCreepRoles();
