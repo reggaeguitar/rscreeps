@@ -12,6 +12,20 @@ module.exports = {
         // arrange
         const creeps = [
             { memory: { }, ticksToLive: 1500 },
+            { memory: { sourceToHarvest: 1 }, ticksToLive: 1234 },
+        ];
+    
+        // act
+        const result = harvesterSourceDecider.decideWhichSourceToHarvest(creeps, sourceCount);
+    
+        // assert
+        const expected = 0;
+        test.assertEqual(expected, result);
+    },
+    harvester_decideWhichSourceToHarvest_oneOtherHarvester_assignsToOtherSource2: () => {
+        // arrange
+        const creeps = [
+            { memory: { }, ticksToLive: 1500 },
             { memory: { sourceToHarvest: 0 }, ticksToLive: 1234 },
         ];
     
@@ -52,6 +66,7 @@ module.exports = {
             { memory: { sourceToHarvest: 1 }, ticksToLive: 10 },
             { memory: { sourceToHarvest: 0 }, ticksToLive: 10 },
             { memory: { sourceToHarvest: 4 }, ticksToLive: 10 },
+            { memory: { sourceToHarvest: 4 }, ticksToLive: 10 },
             { memory: { sourceToHarvest: 5 }, ticksToLive: 10 },
         ];
     
@@ -59,7 +74,6 @@ module.exports = {
         const result = harvesterSourceDecider.decideWhichSourceToHarvest(creeps, 6);
     
         // assert
-        // looks like it picks the biggest number when there's ties
         // todo base off of distance to source in case of ties
         const expected = 5;
         test.assertEqual(expected, result);

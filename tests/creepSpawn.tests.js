@@ -8,16 +8,6 @@ module.exports = {
     setup: () => simplemock.restore(),
     creepSpawn_run_returnsFalseIfSpawnAlreadySpawning: () => {
         // arrange
-        const sourceCount = 2;
-        function* allSourcesGenerator() {
-            let index = sourceCount;
-            while (index > 0) {
-                index = index - 1;
-                yield index;
-            }
-        }
-        const allSources = Array.from(allSourcesGenerator());
-
         const room = {};
         const spawn = { spawning: true };
     
