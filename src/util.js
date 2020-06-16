@@ -44,6 +44,7 @@ module.exports = {
         } else {
             const rooms = [];
             const creeps = gameAbstraction.creeps();
+            logger.log('fizzam', { creeps });
             for (const creep in creeps) {
                 if (rooms.find(r => r == creep.memory.homeRoom) == undefined) {
                     rooms.push(creep.memory.homeRoom); 
