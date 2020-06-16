@@ -18,9 +18,9 @@ module.exports.loop = function () {
         if (rooms.length == 0) // will happen when respawning
             rooms = [firstRoom];
         rooms.map(roomName => {
-            let room = Game.rooms[roomName];
+            const room = Game.rooms[roomName];
             runTowers(room);
-            let spawn = mapUtil.getSpawnInRoom(room);
+            const spawn = mapUtil.getSpawnInRoom(room);
             if (spawn != undefined) {
                 creepSpawn.run(room, spawn);
                 runConstruction(room, spawn);

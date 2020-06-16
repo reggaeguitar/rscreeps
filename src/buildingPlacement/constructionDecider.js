@@ -3,6 +3,7 @@ const wallDecider = require('./buildingPlacement_wallDecider');
 
 module.exports = {
     run: function(room, spawn) {
+        // todo change to use value from global constant instead of hardcoding
         const ctrlLevelForStorage = 4;
         const storagePosStr = 'storagePos';
         // todo clear memory for old rooms after respawning
@@ -10,8 +11,9 @@ module.exports = {
             Memory[room.name + storagePosStr] = constructionUtil.nextStoragePos(room, spawn);
         }
         const storagePos = Memory[room.name + storagePosStr];
-        if (room.controller.level >= ctrlLevelForStorage &&
-            room.find(STRUCTURE_STORAGE).length == 0) {
+        const noStorageBuiltYet = room.find(STRUCTURE_STORAGE).length == 0;
+        if (room.controller.level >= ctrlLevelForStorage && noStorageBuiltYet) {
+                room.createConstructionSite(pos, STRUCTURE_STORAGE);
         }
         this.buildRoads(room, spawn);
         // todo add spawn building logic in

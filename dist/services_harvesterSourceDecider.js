@@ -10,6 +10,7 @@ module.exports = {
         // assign the harvester to the source with no harvesters
         const min = _.min(sourceCounts, x => x);
         const entries = Object.entries(sourceCounts);
+        logger.email('in decideWhichSourceToHarvest 0: ', { harvestersSources, sourceCounts, min, entries });
         if (entries.length != sourceCount) {
             // there is a source with no harvester assigned
             function* allSourcesGenerator() {
