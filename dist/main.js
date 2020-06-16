@@ -23,7 +23,7 @@ module.exports.loop = function () {
             const spawn = mapUtil.getSpawnInRoom(room);
             if (!spawn) return;
             if (Game.time % data.buildInterval == 0) {
-                runConstruction(room, spawn);
+                constructionDecider.run(room, spawn);
                 // save cpu by returning early
                 return;
             }
@@ -50,11 +50,6 @@ module.exports.loop = function () {
         if (potentialTowers != undefined) {
             potentialTowers.forEach(tower => roleTower.run(tower));        
         }
-    }
-
-    function runConstruction(room, spawn) {
-        if (Game.time % data.buildInterval == 0) 
-            constructionDecider.run(room, spawn);
     }
     
     main();

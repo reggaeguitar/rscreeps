@@ -1,4 +1,5 @@
 const data = require('./data');
+const gameAbstraction = require('./gameAbstraction');
 
 module.exports = {
   fooPropTest: () => 789,
@@ -11,6 +12,6 @@ module.exports = {
       }
   },
   email: msg => {
-    if (data.notify) Game.notify(msg);
+    if (data.notify) gameAbstraction.notify(msg);
   },
 };
