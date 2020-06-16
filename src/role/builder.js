@@ -52,7 +52,7 @@ module.exports = {
             for (let i = 0; i < rooms.length; ++i) {
                 // todo make code work for when older rooms have two spawns
                 // should only count spawns in brand new rooms
-                let spawnTargets = r.find(FIND_CONSTRUCTION_SITES)
+                let spawnTargets = room.find(FIND_CONSTRUCTION_SITES)
                     .filter(x => x.structureType == STRUCTURE_SPAWN);
                 if (spawnTargets.length) {
                     if (creep.build(spawnTargets[0]) == ERR_NOT_IN_RANGE) {
