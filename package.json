@@ -4,8 +4,8 @@
   "description": "screeps ai",
   "main": "index.js",
   "scripts": {
-    "test": "grunt --force && node tests/mainTestRunner.js",
-    "coverage": "grunt && c8 --all --include \"dist/*.js\" node tests/mainTestRunner.js"
+    "test": "grunt runClean && grunt && node tests/mainTestRunner.js",
+    "coverage": "grunt runClean && grunt && c8 --all --include \"dist/*.js\" node tests/mainTestRunner.js"
   },
   "repository": {
     "type": "git",

@@ -4,11 +4,11 @@ const util = require('../dist/util');
 
 module.exports = {
     // energy threshold = room.controller.level * energyThreshold
-    maxWorkerCount_maxWorkerCount_energyThreshold_setProperly: function() {
+    maxWorkerCount_maxWorkerCount_energyThreshold_setProperly: () => {
         const energyThreshold = 150;
         test.assertEqual(energyThreshold, maxWorkerCount.energyThreshold);
     },
-    maxWorkerCount_maxWorkerCount_energyAvailableThreshold_setProperly: function() {
+    maxWorkerCount_maxWorkerCount_energyAvailableThreshold_setProperly: () => {
         const energyAvailableThreshold = 0.8;
         test.assertEqual(energyAvailableThreshold, maxWorkerCount.energyAvailableThreshold);
     },
