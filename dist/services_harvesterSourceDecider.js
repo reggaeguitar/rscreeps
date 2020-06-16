@@ -10,9 +10,8 @@ module.exports = {
         // assign the harvester to the source with no harvesters
         const min = _.min(sourceCounts, x => x);
         const entries = Object.entries(sourceCounts);
-        // in decideWhichSourceToHarvest 0: {"harvestersSources":[1],"sourceCounts":{"1":1},"min":1,"entries":[["1",1]]}
-        console.log('in decideWhichSourceToHarvest 0: ' + JSON.stringify({ harvestersSources, sourceCounts, min, entries }));
-        logger.email('in decideWhichSourceToHarvest 0: ', { harvestersSources, sourceCounts, min, entries });
+        // in decideWhichSourceToHarvest 0:  {"harvestersSources":[1],"sourceCounts":{"1":1},"min":1,"entries":[["1",1]]} build.min.js:1:313830
+        logger.email('in decideWhichSourceToHarvest 0: ', { sourceCount, harvestersSources, sourceCounts, min, entries });
         if (entries.length != sourceCount) {
             // there is a source with no harvester assigned
             function* allSourcesGenerator() {
@@ -21,11 +20,12 @@ module.exports = {
                     index = index - 1;
                     yield index;
                 }
-              }
+            }
             const allSources = Array.from(allSourcesGenerator());
             const keysAsInts = Object.keys(entries).map(x => +x);
             const sourcesWithNoHarvestersAssigned = _.pull(allSources, ...keysAsInts);
             logger.email('in decideWhichSourceToHarvest 1', { allSources, keysAsInts, sourcesWithNoHarvestersAssigned });
+            // in decideWhichSourceToHarvest 1 {"allSources":[1],"keysAsInts":[0],"sourcesWithNoHarvestersAssigned":[1]}
             return sourcesWithNoHarvestersAssigned[0];
         }
         const sourcesWithMinHarvestersAssigned = entries.filter(x => x[1] == min).map(x => +x[0]);

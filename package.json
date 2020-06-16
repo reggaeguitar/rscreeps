@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "grunt runClean && grunt && node tests/mainTestRunner.js",
-    "coverage": "grunt runClean && grunt && c8 --all --include \"dist/*.js\" node tests/mainTestRunner.js"
+    "coverage": "grunt runClean && grunt && c8 --all --include \"dist/*.js\" node tests/mainTestRunner.js",
+    "clean": "grunt runClean"
   },
   "repository": {
     "type": "git",
