@@ -13,7 +13,8 @@ module.exports = {
             const hasEnoughEnergyInReserve = tower.energy > tower.energyCapacity * 0.5;
             // todo add logic to repair walls
             const closestDamagedStructure = tower.pos.findClosestByPath(FIND_STRUCTURES,                 
-                { filter: (structure) => structure !== STRUCTURE_WALL && structure.hits < structure.hitsMax });
+                { filter: (structure) => structure.structureType !== STRUCTURE_WALL && 
+                    structure.hits < structure.hitsMax });
             if (hasEnoughEnergyInReserve && closestDamagedStructure) {
                 tower.repair(closestDamagedStructure);
             }
