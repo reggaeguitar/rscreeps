@@ -25,8 +25,7 @@ module.exports = {
         if (!harvesterRoleCounts.hasOwnProperty('true')) {
             sourceToHarvest = _.random(0, sources.length - 1);
         } else {
-            const harvesters = _.filter(creepsInSameRoom, c => c.memory.role == roles.RoleHarvester
-                && c.memory.sourceToHarvest != undefined);
+            const harvesters = _.filter(creepsInSameRoom, c => c.memory.role == roles.RoleHarvester);
             sourceToHarvest = harvesterSourceDecider.decideWhichSourceToHarvest(harvesters, sources.length);
         }
         creep.memory.sourceToHarvest = sourceToHarvest;
