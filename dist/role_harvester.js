@@ -27,7 +27,7 @@ module.exports = {
         } else {
             const harvesters = _.filter(creepsInSameRoom, c => c.memory.role == roles.RoleHarvester
                 && c.memory.sourceToHarvest != undefined);
-            sourceToHarvest = harvesterSourceDecider.decideWhichSourceToHarvest(harvesters, source.length);
+            sourceToHarvest = harvesterSourceDecider.decideWhichSourceToHarvest(harvesters, sources.length);
         }
         creep.memory.sourceToHarvest = sourceToHarvest;
     }
