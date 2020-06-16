@@ -46,7 +46,7 @@ module.exports = {
             const creeps = gameAbstraction.creeps();
             for (const creep in creeps) {
                 if (rooms.find(r => r == creep.memory.homeRoom) == undefined) {
-                    rooms.push(roomName)
+                    rooms.push(creep.memory.homeRoom);
                 }
             }
             _roomCache = rooms;
