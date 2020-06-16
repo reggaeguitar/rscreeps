@@ -38,15 +38,14 @@ module.exports = {
     },
     getRoomNames: function() {
         // todo use uniqBy when able to
-        // _.uniqBy(gameAbstraction.creeps(), c => c.room.name);
         let _roomCache;
         if (_roomCache != undefined) {
             return _roomCache;
         } else {
-            let rooms = [];
-            for (let name in gameAbstraction.creeps()) {
-                let roomName = gameAbstraction.creeps()[name].room.name;
-                if (rooms.find(r => r == roomName) == undefined) {
+            const rooms = [];
+            const creeps = gameAbstraction.creeps();
+            for (const creep in creeps) {
+                if (rooms.find(r => r == creep.memory.homeRoom) == undefined) {
                     rooms.push(roomName)
                 }
             }
