@@ -13,7 +13,8 @@ module.exports = {
         const storagePos = Memory[room.name + storagePosStr];
         const noStorageBuiltYet = room.find(STRUCTURE_STORAGE).length == 0;
         if (room.controller.level >= ctrlLevelForStorage && noStorageBuiltYet) {
-            room.createConstructionSite(storagePos, STRUCTURE_STORAGE);
+            const pos = new RoomPosition(storagePos.x, storagePos.y, storagePos.roomName);
+            room.createConstructionSite(pos, STRUCTURE_STORAGE);
         }
         this.buildRoads(room, spawn);
         // todo add spawn building logic in
