@@ -3,9 +3,17 @@
     "tasks": [
       {
         "label": "grunt",
-        "command": "grunt",
-        "args": ["--force"],
+        "command": "grunt",        
         "type": "shell",
+        "options": {
+            "cwd": "${workspaceFolder}"
+          }
+      },
+      {
+        "label": "clean",
+        "command": "grunt",        
+        "type": "shell",
+        "args": ["runClean"],
         "options": {
             "cwd": "${workspaceFolder}"
           }

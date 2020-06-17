@@ -48,6 +48,6 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('default', ['clean', 'copy:screeps']);
+    grunt.registerTask('default', ['copy:screeps']);
     grunt.registerTask('runClean', ['clean']);
 }
