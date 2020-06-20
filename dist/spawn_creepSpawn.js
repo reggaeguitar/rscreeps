@@ -134,7 +134,7 @@ module.exports = {
             logger.log('Not enough energy to spawn scout');
             return true;
         }
-        const energyAvailable = room.energyAvailable;
+        let energyAvailable = room.energyAvailable;
         let moveCount = 0;
         const maxMoveParts = 5;
         const bodyParts = [];
