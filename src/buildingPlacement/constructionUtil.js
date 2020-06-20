@@ -21,7 +21,7 @@ module.exports = {
         const potentialSite = (pos, dist, funcIndex) => {
             const newPos = mutatorFuncs[funcIndex](pos, dist);
             if (newPos.x <= 0 || newPos.y <= 0 || newPos.x >= 49 || newPos.y >= 49) return undefined;
-            const newRoomPos = new RoomPosition(newPos.x, newPos.y);
+            const newRoomPos = new RoomPosition(newPos.x, newPos.y, room.name);
             if (!isValid(newRoomPos)) return undefined;
             return newPos;
         }
