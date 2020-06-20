@@ -33,7 +33,7 @@ function loadModules(path) {
                 // call setup
                 if (setupFn) setupFn[1]();
                 // call test
-                // console.log('running ' + x[0]);
+                console.log('TEST: ' + x[0]);
                 x[1]();
             } );
         }
