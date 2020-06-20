@@ -29,7 +29,9 @@ module.exports = {
         }
 
         function evaluate(roomName) {
-            let room = Game.rooms[roomName];
+            const room = Game.rooms[roomName];
+            const potentialControllerPos = room.find(STRUCTURE_CONTROLLER);
+            if (potentialControllerPos == undefined || potentialControllerPos.length == 0) return -1;
             let controllerPos = room.find(STRUCTURE_CONTROLLER)[0].pos;
             let sources = room.find(FIND_SOURCES);
             let totalSourcePathCost = 0;            
