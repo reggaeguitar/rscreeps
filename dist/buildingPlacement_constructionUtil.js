@@ -39,7 +39,7 @@ module.exports = {
 
         for (const distUnit = 0; distUnit < maxDistUnits; distUnit++) {
             for (const funcIndex = 0; funcIndex < mutatorFuncs.length; funcIndex++) {
-                const newPos = potentialSite(pos, dist, funcIndex);
+                const newPos = potentialSite(spawn.pos, dist, funcIndex);
                 if (newPos) return newPos;
             }
             dist += distIncrement;
