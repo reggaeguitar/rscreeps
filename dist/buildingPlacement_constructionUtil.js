@@ -1,3 +1,5 @@
+const logger = require('./logger');
+
 module.exports = {
     nextStoragePos: function(room, spawn, storagePos) {
         const maxDistUnits = 6;
