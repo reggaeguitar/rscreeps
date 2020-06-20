@@ -70,7 +70,7 @@ module.exports = {
         if (potentialController == undefined) return -1;
         const controllerPos = potentialController.pos;
         const sources = room.find(FIND_SOURCES);
-        const totalSourcePathCost = 0;            
+        let totalSourcePathCost = 0;            
         // count sources and path cost from sources to controller
         sources.forEach(s => {
             totalSourcePathCost += PathFinder.search(s.pos, controllerPos).cost;
