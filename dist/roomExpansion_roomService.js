@@ -2,7 +2,7 @@ const roomMemory = require('./roomExpansion_roomMemory');
 const _ = require('lodash');
 
 module.exports = {
-    run: function(rooms) {
+    run: function() {
         // loop through Game.rooms and all rooms adjacent to each room
         // Game.rooms returs a hash containing all the rooms available to you with room names as hash keys. 
         // A room is visible if you have a creep or an owned structure in it.
@@ -62,43 +62,6 @@ module.exports = {
             const roomToClaim = entries.find(x => x[1] == maxScore)[0];
             roomMemory.setRoomToClaim(roomToClaim);
         }
-    
-        // let rooms = util.getRoomNames();
-
-        // let bestScore = 0;
-        // let bestRoom;
-        // rooms.forEach(roomOwned => {
-        //     let roomsAdjacentToR = Object.entries(Game.map.describeExits(roomOwned));
-        //     roomsAdjacentToR.forEach(roomToEvaluate => {
-        //         // todo only look at rooms whose controller doesn't have an owner
-        //         const roomName = roomToEvaluate[1];
-        //         let roomScore;
-        //         if (!Memory.rooms) Memory.rooms = {};
-        //         if (Memory.rooms[roomName] && Memory.rooms[roomName].score) {
-        //             // already scouted and scored the room
-        //             roomScore = Memory.rooms[roomName].score;
-        //         } else {
-        //             const room = Game.rooms[roomName];
-        //             if (room == undefined) {
-        //                 // don't have access to the room, need to send out a scout
-        //                 Memory.roomToAdd = roomName;
-        //                 return;
-        //             }
-        //             // have access to room, evaluate and clear room to scout
-        //             roomScore = evaluate(roomName);
-        //             Memory.rooms[roomName].score = roomScore;
-        //             Memory.roomToAdd = undefined;
-        //             // add to claim if have open space for another room
-        //             if (util.getRoomNames().length < Game.gcl.level) {
-        //             // todo finish
-        //         }
-        //         if (roomScore > bestScore) {
-        //             bestScore = roomScore;
-        //             bestRoom = roomToEvaluate;
-        //         }
-        //     });
-        // });
-        // return bestRoom;        
     },
     evaluate: function(room) {
         const potentialController = room.controller;
