@@ -2,7 +2,7 @@ const logger = require('./logger');
 
 module.exports = {
     nextStoragePos: function(room, spawn, storagePos) {
-        const maxDistUnits = 6;
+        const maxDistUnits = 10;
         const distIncrement = 2;
         const roomTerrain = new Room.Terrain(room.name);
         
