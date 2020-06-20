@@ -2,7 +2,6 @@ module.exports = {
     nextStoragePos: function(room, spawn, storagePos) {
         const maxDistUnits = 6;
         const distIncrement = 2;
-        let dist = 2;
         const roomTerrain = new Room.Terrain(room.name);
         
         function isValid(pos) {
@@ -17,7 +16,7 @@ module.exports = {
             });
             return ret;
         }
-
+        
         const potentialSite = (pos, dist, funcIndex) => {
             const newPos = mutatorFuncs[funcIndex](pos, dist);
             if (newPos.x <= 0 || newPos.y <= 0 || newPos.x >= 49 || newPos.y >= 49) return undefined;
@@ -28,19 +27,19 @@ module.exports = {
         // todo dry these out with mutator funcs for creeps
         // up, up right, right, down right, down, down left, left, up left
         const mutatorFuncs = [(pos, dist) => ({ x: pos.x, y: pos.y + dist }),
-                              (pos, dist) => ({ x: pos.x + dist, y: pos.y + dist }),
-                              (pos, dist) => ({ x: pos.x + dist, y: pos.y }),
-                              (pos, dist) => ({ x: pos.x + dist, y: pos.y - dist }),
-                              (pos, dist) => ({ x: pos.x, y: pos.y - dist }),
-                              (pos, dist) => ({ x: pos.x - dist, y: pos.y - dist }),
-                              (pos, dist) => ({ x: pos.x - dist, y: pos.y }),
-                              (pos, dist) => ({ x: pos.x - dist, y: pos.y + dist })];
-                              
-
-        for (const distUnit = 0; distUnit < maxDistUnits; distUnit++) {
-            for (const funcIndex = 0; funcIndex < mutatorFuncs.length; funcIndex++) {
-                const newPos = potentialSite(spawn.pos, distUnit, funcIndex);
-                if (newPos) return newPos;
+            (pos, dist) => ({ x: pos.x + dist, y: pos.y + dist }),
+            (pos, dist) => ({ x: pos.x + dist, y: pos.y }),
+            (pos, dist) => ({ x: pos.x + dist, y: pos.y - dist }),
+            (pos, dist) => ({ x: pos.x, y: pos.y - dist }),
+            (pos, dist) => ({ x: pos.x - dist, y: pos.y - dist }),
+            (pos, dist) => ({ x: pos.x - dist, y: pos.y }),
+            (pos, dist) => ({ x: pos.x - dist, y: pos.y + dist })];            
+            
+            let dist = 2;
+            for (let distUnit = 0; distUnit < maxDistUnits; distUnit++) {
+                for (let funcIndex = 0; funcIndex < mutatorFuncs.length; funcIndex++) {
+                    const newPos = potentialSite(spawn.pos, dist, funcIndex);
+                    if (newPos) return newPos;
             }
             dist += distIncrement;
         }
