@@ -28,14 +28,16 @@ module.exports = {
             // if not add the ones that haven't to a toScout list
             // if they've all been scouted then put in Memory the name of the best one toClaim
         const ownedRooms = [];
-        const scoutedRooms = roomMemory.scoutedRooms();
-        const roomsToScout = roomMemory.roomsToScout();
+        const scoutedRooms = roomMemory.scoutedRooms() || {};
+        const roomsToScout = roomMemory.roomsToScout() || {};
         for (const roomName in allRooms) {
             const room = Game.rooms[roomName];
             if (room && room.controller && room.controller.my) {
                 ownedRooms.push(roomName);
             } else {
-                const hasAlreadyBeenScouted = Object.keys(scoutedRooms).includes(roomName);
+                const scoutedKeys = Object.keys(scoutedRooms);
+                const haveScoutedRooms = scoutedKeys.length > 0;
+                const hasAlreadyBeenScouted = haveScoutedRooms && scoutedKeys.includes(roomName);
                 if (hasAlreadyBeenScouted) continue;
                 const haveAccess = Object.keys(rooms).includes(roomName);
                 if (!haveAccess) {
