@@ -30,7 +30,7 @@ module.exports = {
             if (storagePos != undefined && pos.x == storagePos.x && pos.y == storagePos.y) return false;
             if (roomTerrain.get(pos.x, pos.y) == TERRAIN_MASK_WALL) return false;
             // can't build on the edge of the map
-            if (pos.x == 0 || pos.y == 0 || pos.x == 50 || pos.y == 50) return false;
+            if (pos.x == 0 || pos.y == 0 || pos.x == 49 || pos.y == 49) return false;
             let ret = true;
             // look returns an object for each thing on the position
             pos.look().forEach(x => {
