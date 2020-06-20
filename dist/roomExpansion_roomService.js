@@ -10,9 +10,10 @@ module.exports = {
         const rooms = Game.rooms;
         const allRooms = {};
         for (const roomName in rooms) {
-            logger.log('in roomService.run', { roomName });
+            logger.log('in roomService.run 1', { roomName });
             allRooms[roomName] = undefined;
             const exits = Game.map.describeExits(roomName);
+            logger.log('in roomService.run 1b', { exits, allRooms });
             // describe exits return example
             // {
             //     "1": "W8N4",    // TOP
@@ -24,7 +25,7 @@ module.exports = {
                 allRooms[exits[key]] = undefined;
             }
         }
-        logger.log('in roomService.run', { allRooms });
+        logger.log('in roomService.run 2', { allRooms });
         // divide rooms into those that we own (have a controller we own) and those we don't
         // if we can claim a room then try to claim
             // have all rooms that we don't own been scouted
@@ -41,7 +42,7 @@ module.exports = {
                 const scoutedKeys = Object.keys(scoutedRooms);
                 const haveScoutedRooms = scoutedKeys.length > 0;
                 const hasAlreadyBeenScouted = haveScoutedRooms && scoutedKeys.includes(roomName);
-                logger.log('in roomService.run', { roomName, scoutedRooms, scoutedKeys, haveScoutedRooms, hasAlreadyBeenScouted })
+                logger.log('in roomService.run 3', { roomName, scoutedRooms, scoutedKeys, haveScoutedRooms, hasAlreadyBeenScouted })
                 if (hasAlreadyBeenScouted) continue;
                 const haveAccess = Object.keys(rooms).includes(roomName);
                 if (!haveAccess) {
@@ -59,7 +60,7 @@ module.exports = {
         roomMemory.setOwnedRooms(ownedRooms);
         roomMemory.setScoutedRooms(scoutedRooms);
         roomMemory.setRoomsToScout(roomsToScout);
-        logger.log('in roomService.run', { ownedRooms, scoutedRooms, roomsToScout });
+        logger.log('in roomService.run 4', { ownedRooms, scoutedRooms, roomsToScout });
         const canClaimRoom = ownedRooms.length < Game.gcl.level;
         const allRoomsScouted = Object.keys(roomsToScout).length == 0;
         if (allRoomsScouted && canClaimRoom) {
