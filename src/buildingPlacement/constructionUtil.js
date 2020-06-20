@@ -10,7 +10,6 @@ module.exports = {
             if (pos.getRangeTo(pos.findClosestByRange(FIND_SOURCES)) <= 1) return false;
             if (storagePos != undefined && pos.x == storagePos.x && pos.y == storagePos.y) return false;
             if (roomTerrain.get(pos.x, pos.y) == TERRAIN_MASK_WALL) return false;
-            // can't build on the edge of the map
             let ret = true;
             // look returns an object for each thing on the position
             pos.look().forEach(x => {
@@ -40,7 +39,7 @@ module.exports = {
 
         for (const distUnit = 0; distUnit < maxDistUnits; distUnit++) {
             for (const funcIndex = 0; funcIndex < mutatorFuncs.length; funcIndex++) {
-                const newPos = potentialSite(spawn.pos, dist, funcIndex);
+                const newPos = potentialSite(spawn.pos, distUnit, funcIndex);
                 if (newPos) return newPos;
             }
             dist += distIncrement;
