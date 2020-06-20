@@ -7,7 +7,7 @@ const constructionDecider = require('./buildingPlacement_constructionDecider');
 const mapUtil = require('./mapUtil');
 const creepData = require('./role_creepData');
 const roomService = require('./roomExpansion_roomService');
-const roomMemory = require('./roomExpansion/roomMemory');
+const roomMemory = require('./roomExpansion_roomMemory');
 
 // This code assumes first spawn is named 'Spawn1'
 
