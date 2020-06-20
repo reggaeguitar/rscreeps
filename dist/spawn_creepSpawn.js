@@ -11,9 +11,9 @@ const maxWorkerCount = require('./services_maxWorkerCount');
 module.exports = {    
     run: function(room, spawn) {
         if (spawn.spawning) return false;
-        //if (this.spawnedClaimer(room, spawn)) return;
+        const creepCountsByRole = util.getCreepRoleCounts();    
+        if (this.spawnedClaimer(room, spawn, creepCountsByRole)) return;
         if (this.notEnoughEnergyToSpawnCreep(room)) return false;
-        let creepCountsByRole = util.getCreepRoleCounts();    
         if (this.shouldSpawnHarvester(room, creepCountsByRole)) {
             harvesterSpawn.spawnHarvester(room, spawn, creepCountsByRole);
         } else {
@@ -95,9 +95,11 @@ module.exports = {
         }
         spawnUtil.spawnCreepImpl(bodyParts, role, spawn);
     },
-    spawnedClaimer: function(room, spawn) {
+    spawnedClaimer: function(room, spawn, creepCountsByRole) {
         // todo add logic so that only the closest room
         // next to the room to claim will spawn the claimer
+        // if already have one then don't spawn one
+        if (creepCountsByRole.hasOwnProperty[roles.RoleClaimer]) return false;
         const claimCost = 600;
         if (util.getRoomNames().length < Game.gcl.level) {
             if (BODYPART_COST[CLAIM] != claimCost) {
