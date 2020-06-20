@@ -10,6 +10,7 @@ module.exports = {
         const rooms = Game.rooms;
         const allRooms = {};
         for (const roomName in rooms) {
+            logger.log('in roomService.run', { roomName });
             allRooms[roomName] = undefined;
             const exits = Game.map.describeExits(roomName);
             // describe exits return example
