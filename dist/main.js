@@ -6,17 +6,21 @@ const roleTower = require('./role_tower');
 const constructionDecider = require('./buildingPlacement_constructionDecider');
 const mapUtil = require('./mapUtil');
 const creepData = require('./role_creepData');
+const roomService = require('./roomExpansion_roomService');
+const roomMemory = require('./roomExpansion/roomMemory');
+
+// This code assumes first spawn is named 'Spawn1'
 
 module.exports.loop = function () {    
     function main() {
-        // todo find inital spawn and use roomname instead
-        const firstRoom = ['E13S43']; // todo when respawning change this to new room name
-
         util.printCreepRoleCounts(creepData.creepData());
+        
         util.clearDeadCreepsFromMemory();
-        let rooms = util.getRoomNames();
-        if (rooms.length == 0) // will happen when respawning
-            rooms = [firstRoom];
+
+        roomService.run();
+
+        const rooms = roomMemory.ownedRooms();
+
         rooms.map(roomName => {
             const room = Game.rooms[roomName];
             runTowers(room);
@@ -33,9 +37,9 @@ module.exports.loop = function () {
     }
     
     function runCreepRoles() {
-        let cd = creepData.creepData();
-        for (let name in Game.creeps) {
-            let creep = Game.creeps[name];
+        const cd = creepData.creepData();
+        for (const name in Game.creeps) {
+            const creep = Game.creeps[name];
             if (Game.time % data.roleSayInterval == 0) {
                 creep.say(creep.memory.role);
             }
@@ -45,7 +49,7 @@ module.exports.loop = function () {
  
     function runTowers(room) {
         // perf cache tower id
-        let potentialTowers = room.find(FIND_MY_STRUCTURES, { filter: 
+        const potentialTowers = room.find(FIND_MY_STRUCTURES, { filter: 
             s => s.structureType == STRUCTURE_TOWER });
         if (potentialTowers != undefined) {
             potentialTowers.forEach(tower => roleTower.run(tower));        

@@ -2,7 +2,7 @@ const _ = require('lodash');
 const util = require('./util');
 const data = require('./data');
 const roles = require('./role_roles');
-const roomPicker = require('./roomExpansion_roomPicker');
+const roomMemory = require('./roomExpansion_roomMemory');
 const logger = require('./logger');
 const harvesterSpawn = require('./spawn_harvesterSpawn');
 const spawnUtil = require('./spawn_spawnUtil');
@@ -11,13 +11,19 @@ const maxWorkerCount = require('./services_maxWorkerCount');
 module.exports = {    
     run: function(room, spawn) {
         if (spawn.spawning) return false;
-        const creepCountsByRole = util.getCreepRoleCounts();    
-        if (this.spawnedClaimer(room, spawn, creepCountsByRole)) return;
+        const creepCountsByRole = util.getCreepRoleCounts();
         if (this.notEnoughEnergyToSpawnCreep(room)) return false;
+        
         if (this.shouldSpawnHarvester(room, creepCountsByRole)) {
             harvesterSpawn.spawnHarvester(room, spawn, creepCountsByRole);
+            return true;
+        } else if (this.spawnedScout(room, spawn, creepCountsByRole)) {
+            return true;
+        } else if (this.spawnedClaimer(room, spawn, creepCountsByRole)) {
+            return true;
         } else {
             this.spawnWorker(room, spawn, creepCountsByRole);
+            return true;
         }
     },
     spawnWorker: function(room, spawn, creepCountsByRole) {
@@ -98,28 +104,47 @@ module.exports = {
     spawnedClaimer: function(room, spawn, creepCountsByRole) {
         // todo add logic so that only the closest room
         // next to the room to claim will spawn the claimer
-        // if already have one then don't spawn one
+        // only want one claimer at a time
         if (creepCountsByRole.hasOwnProperty[roles.RoleClaimer]) return false;
+        if (!roomMemory.roomToClaim()) return false;
         const claimCost = 600;
-        if (util.getRoomNames().length < Game.gcl.level) {
-            if (BODYPART_COST[CLAIM] != claimCost) {
-                logger.log('Claim bodypart no longer costs 600 energy, update creepSpawn.js');
-            }
-            let bodyParts = [CLAIM];
-            let movePartCount = ((room.energyAvailable - claimCost) / BODYPART_COST[MOVE]) - 1;
-            if (movePartCount == 0) {
-                logger.log('Not enough energy to spawn claimer');
-                return true;
-            }
-            for (let i = 0; i < movePartCount; ++i) {
-                bodyParts.push(MOVE);
-            }
-            let rooms = util.getRoomNames();
-            let roomToClaim = roomPicker.bestRoomNameNearExistingRooms(rooms);
-            spawnUtil.spawnCreepImpl(bodyParts, roles.RoleClaimer, spawn, roomToClaim);
+        if (BODYPART_COST[CLAIM] != claimCost) {
+            logger.log('Claim bodypart no longer costs 600 energy, update creepSpawn.js');
+        }
+        let bodyParts = [CLAIM];
+        let movePartCount = ((room.energyAvailable - claimCost) / BODYPART_COST[MOVE]) - 1;
+        if (movePartCount == 0) {
+            logger.log('Not enough energy to spawn claimer');
             return true;
         }
-        return false;
+        for (let i = 0; i < movePartCount; ++i) {
+            bodyParts.push(MOVE);
+        }
+        const roomToClaim = roomMemory.roomToClaim();
+        spawnUtil.spawnCreepImpl(bodyParts, roles.RoleClaimer, spawn, roomToClaim);
+        return true;
+    },
+    spawnedScout: function(room, spawn, creepCountsByRole) {
+        // only want one scout at a time
+        if (creepCountsByRole.hasOwnProperty(roles.RoleScout)) return false;
+        const roomsToScout = roomMemory.roomsToScout();
+        if (!roomsToScout || roomsToScout.length == 0) return false;
+        const moveCost = BODYPART_COST[MOVE];
+        if (room.energyAvailable < moveCost) {
+            logger.log('Not enough energy to spawn scout');
+            return true;
+        }
+        const energyAvailable = room.energyAvailable;
+        let moveCount = 0;
+        const maxMoveParts = 5;
+        const bodyParts = [];
+        while (energyAvailable > moveCost && moveCount < maxMoveParts) {
+            energyAvailable -= moveCost;
+            moveCount += 1;
+            bodyParts.push(MOVE);
+        }
+        spawnUtil.spawnCreepImpl(bodyParts, roles.RoleScout, spawn, roomsToScout[0]);
+        return true;        
     },
     notEnoughEnergyToSpawnCreep: function(room) {
         let energyAvailable = room.energyAvailable;

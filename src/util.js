@@ -36,21 +36,4 @@ module.exports = {
     getCreepCount: function() {
         return Object.keys(gameAbstraction.creeps()).length;
     },
-    getRoomNames: function() {
-        // todo use uniqBy when able to
-        let _roomCache;
-        if (_roomCache != undefined) {
-            return _roomCache;
-        } else {
-            let rooms = [];
-            for (let name in gameAbstraction.creeps()) {
-                let roomName = gameAbstraction.creeps()[name].memory.homeRoom;
-                if (roomName && rooms.find(r => r == roomName) == undefined) {
-                    rooms.push(roomName);
-                }
-            }
-            _roomCache = rooms;
-            return rooms;
-        }
-    }
 };
