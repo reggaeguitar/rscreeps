@@ -28,7 +28,7 @@ module.exports = {
             const newRoomPos = new RoomPosition(newPos.x, newPos.y, room.name);
             console.log('b' + JSON.stringify(newRoomPos));
             if (!isValid(newRoomPos)) return undefined;
-            return newPos;
+            return newRoomPos;
         }
         // todo dry these out with mutator funcs for creeps
         // up, up right, right, down right, down, down left, left, up left
