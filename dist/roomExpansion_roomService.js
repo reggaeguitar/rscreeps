@@ -11,7 +11,7 @@ module.exports = {
         const allRooms = {};
         for (const roomName in rooms) {
             logger.log('in roomService.run 1', { roomName });
-            allRooms[roomName] = undefined;
+            allRooms[roomName] = 'foo';
             const exits = Game.map.describeExits(roomName);
             logger.log('in roomService.run 1b', { exits, allRooms });
             // describe exits return example
@@ -22,7 +22,7 @@ module.exports = {
             //     "7": "W9N3"     // LEFT
             // }
             for (const key in exits) {
-                allRooms[exits[key]] = undefined;
+                allRooms[exits[key]] = 'foo';
             }
         }
         logger.log('in roomService.run 2', { allRooms });
@@ -47,7 +47,7 @@ module.exports = {
                 const haveAccess = Object.keys(rooms).includes(roomName);
                 if (!haveAccess) {
                     // don't have a creep or structure in the room, need to scout it
-                    roomsToScout[roomName] = undefined;
+                    roomsToScout[roomName] = 'foo';
                 } else {
                     // have a creep or structure in the room for the first time, score it and save
                     const score = this.evaluate(rooms[roomName]);
