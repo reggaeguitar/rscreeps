@@ -22,8 +22,9 @@ module.exports = {
         const potentialSite = (pos, dist, funcIndex) => {
             const newPos = mutatorFuncs[funcIndex](pos, dist);
             if (newPos.x <= 0 || newPos.y <= 0 || newPos.x >= 49 || newPos.y >= 49) return undefined;
-            if (!isValid(newPos)) return undefined;
-            return new RoomPosition(newPos.x, Pos.y);
+            const newRoomPos =  new RoomPosition(newPos.x, Pos.y);
+            if (!isValid(newRoomPos)) return undefined;
+            return newPos;
         }
         // todo dry these out with mutator funcs for creeps
         // up, up right, right, down right, down, down left, left, up left
