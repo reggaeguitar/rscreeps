@@ -85,7 +85,7 @@ module.exports = {
         });
         const avePathCostToSource = totalSourcePathCost / sources.length;
         const pathScore = data.pathScoreFactor / avePathCostToSource;
-        const score = pathScore + (source.length * data.sourceScore);
+        const score = pathScore + (sources.length * data.sourceScore);
         return score;
     }
 }
