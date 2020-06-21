@@ -64,7 +64,7 @@ module.exports = {
         const canClaimRoom = Object.keys(ownedRooms).length < Game.gcl.level;
         const allRoomsScouted = Object.keys(roomsToScout).length == 0;
         if (allRoomsScouted && canClaimRoom) {
-            const entries = Object.entries(roomMemory.scoutedRooms); 
+            const entries = Object.entries(roomMemory.scoutedRooms()); 
             const scores = entries.map(x => x[1]);
             const maxScore = _.max(scores);
             const roomToClaim = entries.find(x => x[1] == maxScore)[0];
