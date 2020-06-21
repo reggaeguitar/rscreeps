@@ -21,7 +21,7 @@ module.exports.loop = function () {
 
         const rooms = roomMemory.ownedRooms();
 
-        rooms.map(roomName => {
+        Object.keys(rooms).map(roomName => {
             const room = Game.rooms[roomName];
             runTowers(room);
             const spawn = mapUtil.getSpawnInRoom(room);
