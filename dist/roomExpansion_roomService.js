@@ -18,7 +18,7 @@ module.exports = {
                 ownedRooms[roomName] = placeHolder;
                 const exits = Game.map.describeExits(roomName);
                 logger.log('in roomService.run 1', { roomName });
-                logger.log('in roomService.run 1b', { exits, allRooms });
+                logger.log('in roomService.run 1b', { exits, adjacentRooms });
                 // describe exits return example
                 // {
                 //     "1": "W8N4",    // TOP
