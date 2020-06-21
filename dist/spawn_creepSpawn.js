@@ -131,7 +131,7 @@ module.exports = {
         const roomsToScout = roomMemory.roomsToScout();
         if (!roomsToScout) return false;
 
-        const roomsToScoutKeys = Object.keys(roomToScout);
+        const roomsToScoutKeys = Object.keys(roomsToScout);
         if (roomsToScoutKeys.length == 0) return false;
 
         const moveCost = BODYPART_COST[MOVE];
