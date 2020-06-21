@@ -61,7 +61,7 @@ module.exports = {
         roomMemory.setScoutedRooms(scoutedRooms);
         roomMemory.setRoomsToScout(roomsToScout);
         logger.log('in roomService.run 4', { ownedRooms, scoutedRooms, roomsToScout });
-        const canClaimRoom = Object.keys(ownedRooms.length) < Game.gcl.level;
+        const canClaimRoom = Object.keys(ownedRooms).length < Game.gcl.level;
         const allRoomsScouted = Object.keys(roomsToScout).length == 0;
         if (allRoomsScouted && canClaimRoom) {
             const entries = Object.entries(roomMemory.scoutedRooms); 
