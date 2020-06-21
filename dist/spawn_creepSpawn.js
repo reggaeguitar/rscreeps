@@ -117,7 +117,8 @@ module.exports = {
             logger.log('Not enough energy to spawn claimer');
             return true;
         }
-        for (let i = 0; i < movePartCount; ++i) {
+        const maxMoveParts = 5;
+        for (let i = 0; i < movePartCount && i < maxMoveParts; ++i) {
             bodyParts.push(MOVE);
         }
         const roomToClaim = roomMemory.roomToClaim();
