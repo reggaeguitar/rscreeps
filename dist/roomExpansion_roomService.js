@@ -5,26 +5,30 @@ const data = require('./data');
 
 module.exports = {
     run: function() {
-        // loop through Game.rooms and all rooms adjacent to each room
+        // loop through Game.rooms and all rooms adjacent to each owned room
         // Game.rooms returs a hash containing all the rooms available to you with room names as hash keys. 
         // A room is visible if you have a creep or an owned structure in it.
         const rooms = Game.rooms;
-        const allRooms = {};
+        const adjacentRooms = {};
+        const ownedRooms = {};
         const placeHolder = 'foo';
         for (const roomName in rooms) {
-            logger.log('in roomService.run 1', { roomName });
-            allRooms[roomName] = placeHolder;
-            const exits = Game.map.describeExits(roomName);
-            logger.log('in roomService.run 1b', { exits, allRooms });
-            // describe exits return example
-            // {
-            //     "1": "W8N4",    // TOP
-            //     "3": "W7N3",    // RIGHT
-            //     "5": "W8N2",    // BOTTOM
-            //     "7": "W9N3"     // LEFT
-            // }
-            for (const key in exits) {
-                allRooms[exits[key]] = placeHolder;
+            const room = Game.rooms[roomName];
+            if (room && room.controller && room.controller.my) {
+                ownedRooms[roomName] = placeHolder;
+                const exits = Game.map.describeExits(roomName);
+                logger.log('in roomService.run 1', { roomName });
+                logger.log('in roomService.run 1b', { exits, allRooms });
+                // describe exits return example
+                // {
+                //     "1": "W8N4",    // TOP
+                //     "3": "W7N3",    // RIGHT
+                //     "5": "W8N2",    // BOTTOM
+                //     "7": "W9N3"     // LEFT
+                // }
+                for (const key in exits) {
+                    adjacentRooms[exits[key]] = placeHolder;
+                }
             }
         }
         logger.log('in roomService.run 2', { allRooms });
@@ -33,37 +37,31 @@ module.exports = {
             // have all rooms that we don't own been scouted
             // if not add the ones that haven't to a toScout list
             // if they've all been scouted then put in Memory the name of the best one toClaim
-        const ownedRooms = [];
         const scoutedRooms = roomMemory.scoutedRooms() || {};
         const roomsToScout = roomMemory.roomsToScout() || {};
-        for (const roomName in allRooms) {
-            const room = Game.rooms[roomName];
-            if (room && room.controller && room.controller.my) {
-                ownedRooms.push(roomName);
+        for (const roomName in adjacentRooms) {
+            const scoutedKeys = Object.keys(scoutedRooms);
+            const haveScoutedRooms = scoutedKeys.length > 0;
+            const hasAlreadyBeenScouted = haveScoutedRooms && scoutedKeys.includes(roomName);
+            logger.log('in roomService.run 3', { roomName, scoutedRooms, scoutedKeys, haveScoutedRooms, hasAlreadyBeenScouted })
+            if (hasAlreadyBeenScouted) continue;
+            const haveAccess = Object.keys(rooms).includes(roomName);
+            if (!haveAccess) {
+                // don't have a creep or structure in the room, need to scout it
+                roomsToScout[roomName] = placeHolder;
             } else {
-                const scoutedKeys = Object.keys(scoutedRooms);
-                const haveScoutedRooms = scoutedKeys.length > 0;
-                const hasAlreadyBeenScouted = haveScoutedRooms && scoutedKeys.includes(roomName);
-                logger.log('in roomService.run 3', { roomName, scoutedRooms, scoutedKeys, haveScoutedRooms, hasAlreadyBeenScouted })
-                if (hasAlreadyBeenScouted) continue;
-                const haveAccess = Object.keys(rooms).includes(roomName);
-                if (!haveAccess) {
-                    // don't have a creep or structure in the room, need to scout it
-                    roomsToScout[roomName] = placeHolder;
-                } else {
-                    // have a creep or structure in the room for the first time, score it and save
-                    const score = this.evaluate(rooms[roomName]);
-                    scoutedRooms[roomName] = score;
-                    // remove from roomsToScout
-                    delete roomsToScout[roomName];
-                }
+                // have a creep or structure in the room for the first time, score it and save
+                const score = this.evaluate(rooms[roomName]);
+                scoutedRooms[roomName] = score;
+                // remove from roomsToScout
+                delete roomsToScout[roomName];
             }
         }
         roomMemory.setOwnedRooms(ownedRooms);
         roomMemory.setScoutedRooms(scoutedRooms);
         roomMemory.setRoomsToScout(roomsToScout);
         logger.log('in roomService.run 4', { ownedRooms, scoutedRooms, roomsToScout });
-        const canClaimRoom = ownedRooms.length < Game.gcl.level;
+        const canClaimRoom = Object.keys(ownedRooms.length) < Game.gcl.level;
         const allRoomsScouted = Object.keys(roomsToScout).length == 0;
         if (allRoomsScouted && canClaimRoom) {
             const entries = Object.entries(roomMemory.scoutedRooms); 
