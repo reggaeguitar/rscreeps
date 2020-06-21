@@ -31,7 +31,7 @@ module.exports = {
                 }
             }
         }
-        logger.log('in roomService.run 2', { allRooms });
+        logger.log('in roomService.run 2', { adjacentRooms });
         // divide rooms into those that we own (have a controller we own) and those we don't
         // if we can claim a room then try to claim
             // have all rooms that we don't own been scouted
