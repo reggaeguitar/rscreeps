@@ -1,6 +1,7 @@
 const roomMemory = require('./roomExpansion_roomMemory');
 const _ = require('lodash');
 const logger = require('./logger');
+const data = require('./data');
 
 module.exports = {
     run: function() {
