@@ -127,8 +127,13 @@ module.exports = {
     spawnedScout: function(room, spawn, creepCountsByRole) {
         // only want one scout at a time
         if (creepCountsByRole.hasOwnProperty(roles.RoleScout)) return false;
+
         const roomsToScout = roomMemory.roomsToScout();
-        if (!roomsToScout || roomsToScout.length == 0) return false;
+        if (!roomsToScout) return false;
+
+        const roomsToScoutKeys = Object.keys(roomToScout);
+        if (roomsToScoutKeys.length == 0) return false;
+
         const moveCost = BODYPART_COST[MOVE];
         if (room.energyAvailable < moveCost) {
             logger.log('Not enough energy to spawn scout');
@@ -143,7 +148,8 @@ module.exports = {
             moveCount += 1;
             bodyParts.push(MOVE);
         }
-        spawnUtil.spawnCreepImpl(bodyParts, roles.RoleScout, spawn, roomsToScout[0]);
+        const roomToScout = roomsToScoutKeys[0];
+        spawnUtil.spawnCreepImpl(bodyParts, roles.RoleScout, spawn, roomToScout);
         return true;        
     },
     notEnoughEnergyToSpawnCreep: function(room) {
