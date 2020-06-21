@@ -105,8 +105,12 @@ module.exports = {
         // todo add logic so that only the closest room
         // next to the room to claim will spawn the claimer
         // only want one claimer at a time
+        if (room.controller.level < 3) return false;
         if (creepCountsByRole.hasOwnProperty[roles.RoleClaimer]) return false;
         if (!roomMemory.roomToClaim()) return false;
+
+        logger.log('in spawnedClaimer', { creepCountsByRole });
+
         const claimCost = 600;
         if (BODYPART_COST[CLAIM] != claimCost) {
             logger.log('Claim bodypart no longer costs 600 energy, update creepSpawn.js');
@@ -126,8 +130,10 @@ module.exports = {
         return true;
     },
     spawnedScout: function(room, spawn, creepCountsByRole) {
+        if (room.controller.level < 3) return false;
         // only want one scout at a time
         if (creepCountsByRole.hasOwnProperty(roles.RoleScout)) return false;
+        logger.log('in spawnedScout', { creepCountsByRole });
 
         const roomsToScout = roomMemory.roomsToScout();
         if (!roomsToScout) return false;
